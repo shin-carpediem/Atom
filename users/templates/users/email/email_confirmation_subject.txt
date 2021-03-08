@@ -1,0 +1,3 @@
+ユーザー登録完了のメールです。
+
+You are registered as an user now.
