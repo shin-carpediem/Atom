@@ -1,0 +1,8 @@
+# Node8のイメージを基にする
+FROM node:8
+
+# ビルド時に/codeというディレクトリを作成する
+RUN mkdir /code
+
+# ワークディレクトリの設定
+WORKDIR /code
