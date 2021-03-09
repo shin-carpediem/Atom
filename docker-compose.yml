@@ -12,11 +12,14 @@ services:
 
   django:
     build:
+      # 現在のディレクトリの中から以下のdockerfileを探す
       context: .
       dockerfile: DockerfilePython
     command: python3 manage.py runserver 0.0.0.0:8000
+    # データを永続化させる場合の設定。`host:container`でパスを記載
     volumes:
       - .:/code
+    # 開放するポートを指定。`host:container`でポートを記載
     ports:
       - 8000:8000
     depends_on:

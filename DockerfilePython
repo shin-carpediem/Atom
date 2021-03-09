@@ -1,5 +1,6 @@
 # Python3.7のイメージを基にする
 FROM python:3.7
+# Pythonが標準入出力をバッファリングすることを防ぐ
 ENV PYTHONUNBUFFERED 1
 
 # ビルド時に/codeというディレクトリを作成する
