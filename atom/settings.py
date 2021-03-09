@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+import django_heroku
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -98,11 +99,16 @@ DATABASES = {
     }
 }
 
+
 # Heroku
+# Activate Django-Heroku.
+django_heroku.settings(locals())
+
 # https://qiita.com/yongjugithub/items/822e5f2f6211b2665acf
 if DEBUG == False:
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
