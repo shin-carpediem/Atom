@@ -10,7 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import dj_database_url
+# import dj_database_url
+import django_heroku
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -46,7 +47,7 @@ AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -99,10 +100,13 @@ DATABASES = {
 
 
 # Heroku
+# Activate Django-Heroku.
+django_heroku.settings(locals())
+
 # https://qiita.com/yongjugithub/items/822e5f2f6211b2665acf
-if DEBUG == False:
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
+# if DEBUG == False:
+#     db_from_env = dj_database_url.config(conn_max_age=500)
+#     DATABASES['default'].update(db_from_env)
 
 
 # Password validation

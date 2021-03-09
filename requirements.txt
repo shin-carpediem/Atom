@@ -4,8 +4,10 @@ psycopg2-binary==2.7.7
 djangorestframework==3.9.2
 django-cors-headers==2.5.2
 # herokuに必要
-dj-database-url
+# dj-database-url
 gunicorn
-whitenoise==3.0.0
+django-heroku
+whitenoise
+# whitenoise==3.0.0
 # メール認証付きユーザー登録機能に必要
 django-allauth
