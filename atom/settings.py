@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-# import django_heroku
 import dj_database_url
 import os
 
@@ -25,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+q4gt4jw7r9+c29+a0@-lt&-4yh-xt*awy+ku$1%2(e&ug(b$g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'immense-falls-08135.herokuapp.com']
 
@@ -100,9 +99,6 @@ DATABASES = {
 
 
 # Heroku
-# Activate Django-Heroku.
-# django_heroku.settings(locals())
-
 # https://qiita.com/yongjugithub/items/822e5f2f6211b2665acf
 if DEBUG == False:
     db_from_env = dj_database_url.config(conn_max_age=500)

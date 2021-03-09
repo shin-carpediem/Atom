@@ -1,1 +1,1 @@
-web: gunicorn atom.wsgi
+web: gunicorn atom.wsgi --log-file -

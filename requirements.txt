@@ -6,7 +6,6 @@ django-cors-headers==2.5.2
 # herokuに必要
 dj-database-url
 gunicorn
-# django-heroku
 whitenoise==3.0.0
 # メール認証付きユーザー登録機能に必要
 django-allauth
