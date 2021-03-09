@@ -14,7 +14,7 @@ services:
     build:
       # 現在のディレクトリの中から以下のdockerfileを探す
       context: .
-      dockerfile: DockerfilePython
+      dockerfile: Dockerfile.python
     command: python3 manage.py runserver 0.0.0.0:8000
     # データを永続化させる場合の設定。`host:container`でパスを記載
     volumes:
@@ -28,7 +28,7 @@ services:
   # react:
   #   build:
   #     context: .
-  #     dockerfile: DockerfileNode
+  #     dockerfile: Dockerfile.node
   #   volumes:
   #     - .:/code
   #   ports:

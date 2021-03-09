@@ -70,11 +70,11 @@ $ docker container exec -it {container_name} {command}
 - [ ] To migrate your model,
 
 ```
-$ docker container exec -it django python manage.py makemigrations
+$ docker container exec -it atom_django_1 python manage.py makemigrations
 ```
 
 ```
-$ docker container exec -it django python manage.py migrate
+$ docker container exec -it atom_django_1 python manage.py migrate
 ```
 
 ## How to deploy to Heroku?
