@@ -25,7 +25,7 @@ unique to production
 - heroku==3.0.0
 - gunicorn
 
-## How to SetUp Docker and PostgreSQL at local?
+## How to SetUp Docker?
 
 https://inglow.jp/techblog/docker-django/
 
@@ -59,6 +59,22 @@ $ docker ps
 
 ```
 $ docker-compose exec django python manage.py startapp hogehoge
+```
+
+- This is the basic template to do something at the Docker container.
+
+```
+$ docker container exec -it {container_name} {command}
+```
+
+- [ ] To migrate your model,
+
+```
+$ docker container exec -it django python manage.py makemigrations
+```
+
+```
+$ docker container exec -it django python manage.py migrate
 ```
 
 ## How to deploy to Heroku?

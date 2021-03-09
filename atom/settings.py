@@ -25,8 +25,9 @@ SECRET_KEY = '+q4gt4jw7r9+c29+a0@-lt&-4yh-xt*awy+ku$1%2(e&ug(b$g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# ALLOWED_HOSTS = ['127.0.0.1',
+#                  'https://immense-falls-08135.herokuapp.com/']
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -39,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
 ]
+
+# usersアプリケーション内で設定するUserというモデル(カスタムユーザーモデル)を、
+# このプロジェクトのUserモデルとして利用。
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -93,6 +98,7 @@ DATABASES = {
 }
 
 # Heroku
+# https://qiita.com/yongjugithub/items/822e5f2f6211b2665acf
 if DEBUG == False:
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES['default'].update(db_from_env)
@@ -119,9 +125,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -134,3 +140,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# クロスドメイン（異なるドメイン間）でのRequestを許可し、
+# 同一ドメインでのRequestのように処理できるようになるライブラリ。
+# React（localhost:3000）からDjango（localhost:8000）のAPIを叩く際に必要。
+# CORS_ORIGIN_WHITELIST = (
+#     'localhost:3000/',
+#     'localhost:3000',
+# )
