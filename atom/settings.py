@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'users',
+    'api',
+    'rest_framework',
 ]
 
 SITE_ID = 1
@@ -156,6 +158,17 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'users:index'
+LOGOUT_REDIRECT_URL = 'users:index'
+
+# https://www.valentinog.com/blog/drf/#Django_REST_with_React_setting_up_React_and_webpack
+# disable the browseable API in production with this configuration
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
 
 # TODO: 末尾に設置する
 # クロスドメイン（異なるドメイン間）でのRequestを許可し、

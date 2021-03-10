@@ -42,6 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField("email", unique=True)
     name = models.CharField(max_length=20, default="User")
+    # foriegnキーにする。
     # house = [
     #     ("eifukutyo", "Eifukutyo"),
     #     ("akasaka", "Akasaka"),
