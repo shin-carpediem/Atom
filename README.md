@@ -22,8 +22,9 @@ local
 
 unique to production
 
-- heroku==3.0.0
+- heroku==7.50.0
 - gunicorn
+- node==12.16.2
 
 ## How to SetUp Docker?
 
