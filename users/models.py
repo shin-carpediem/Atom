@@ -48,8 +48,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     #     ("akasaka", "Akasaka"),
     #     ("oyama-ikebukuro", "Oyama-Ikebukuro"),
     # ]
-    is_active = models.BooleanField("is_active", default=False) # 仮登録状態→本登録でTrueにする
     is_staff = models.BooleanField("is_staff", default=False)
+    is_active = models.BooleanField("is_active", default=True)
+    # 仮登録状態→本登録でTrueにするモデルを作成
     date_joined = models.DateTimeField("date_joined", default=timezone.now)
 
     objects = UserManager()
