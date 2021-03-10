@@ -144,17 +144,15 @@ static/vid/
 #vs code files
 .vscode/
 
-## virtual environment
+# virtual environment
 env-atom/
 
-## production
+# collectstatic
 /assets/
+/staticfiles/
 
 # code runner
 tempCodeRunnerFile.py
-
-# use for bundling JS files with webpack
-node_modules/
 
 # scss cache
 .sass-cache/
