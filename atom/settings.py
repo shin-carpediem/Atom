@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'django.contrib.sitemaps',
+    # 'django.contrib.sites',
+    # 'django.contrib.sitemaps',
     'users',
     'api',
     'rest_framework',
@@ -46,15 +46,15 @@ INSTALLED_APPS = [
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# # # メールサーバーへの接続設定
-# # # Gmailサーバーを経由
+# メールサーバーへの接続設定
+# Gmailサーバーを経由
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = 'buru.aoshin@gmail.com'
 EMAIL_HOST_PASSWORD = 'gngemuzxfpkpegsa'
 EMAIL_POST = '587'
 EMAIL_USE_TLS = True
 
-SITE_ID = 2
+# SITE_ID = 2
 
 
 DEFAULT_FROM_EMAIL = 'buru.aoshin@gmail.com'
