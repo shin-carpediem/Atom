@@ -12,6 +12,7 @@ local
 - pip==20.2.1
 - django==2.2.13
 - node==12.16.2
+- npm==
 - yarn==1.22.4
 - react
 - bootstrap(cdn)==4.5.0
@@ -110,7 +111,7 @@ $ docker-compose run --rm react npm install
 - [ ] Run server.
 
 ```
-$ docker-compose run --rm --service-ports node npm start
+$ docker-compose run --rm --service-ports react npm start
 ```
 
 ## How to deploy to Heroku?
