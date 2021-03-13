@@ -78,6 +78,18 @@ $ docker container exec -it atom_django_1 python manage.py makemigrations
 $ docker container exec -it atom_django_1 python manage.py migrate
 ```
 
+- [ ] To apply environment variables to Docker,
+
+```
+$ docker run -e hoge="hogehoge" -e hugo="hugohugo" ... django env
+```
+
+- [ ] To confirm environment variables to Docker,
+
+```
+$ docker-compose run --rm django env
+```
+
 ## How to run local server with React?
 
 https://hodalog.com/tutorial-django-rest-framework-and-react/
