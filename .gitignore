@@ -154,6 +154,9 @@ env-atom/
 # node.js
 node_modules/
 
+# environment variables
+.env
+
 # code runner
 tempCodeRunnerFile.py
 

@@ -9,19 +9,26 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
 
   django:
     build:
       # 現在のディレクトリの中から以下のdockerfileを探す
       context: .
       dockerfile: Dockerfile.python
+    # 正常起動後に実行するコマンド
     command: python3 manage.py runserver 0.0.0.0:8000
-    # データを永続化させる場合の設定。`host:container`でパスを記載
+    # データを永続化させる場合の設定。`host側のパス:container側のパス`でパスを記載
     volumes:
       - .:/code
-    # 開放するポートを指定。`host:container`でポートを記載
+    # 開放するポートを指定。`host側のポート:container側のポート`でポートを記載
     ports:
       - 8000:8000
+    # 環境変数に設定するファイル
+    env_file:
+      - .env
+    # 接続するサービス
     depends_on:
       - db
 
