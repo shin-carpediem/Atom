@@ -1,5 +1,5 @@
 from django.http import request
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 # from django.contrib.sites.shortcuts import get_current_site
 # from django.core.signing import BadSignature, SignatureExpired, loads, dumps
@@ -18,7 +18,7 @@ def signup(request):
         if form.is_valid():
             new_user = form.save()
             input_email = form.changed_data['email']
-            input_password = form.changed_data['password']
+            input_password = form.changed_data['password1']
             new_user = authenticate(email=input_email, password=input_password)
             if new_user is not None:
                 # アクティベーションURLの送付
