@@ -1,3 +1,0 @@
-パスワードリセットが完了しました。
-
-You succeeded to reset password.
