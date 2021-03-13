@@ -78,6 +78,16 @@ $ docker container exec -it atom_django_1 python manage.py makemigrations
 $ docker container exec -it atom_django_1 python manage.py migrate
 ```
 
+## How to create app with React?
+
+https://hodalog.com/tutorial-django-rest-framework-and-react/
+
+- [ ] Install create-react-app and use it to create app
+
+```
+$ docker-compose run --rm react sh -c "npm i -g create-react-app && create-react-app hogehoge"
+```
+
 ## How to deploy to Heroku?
 
 https://devcenter.heroku.com/articles/getting-started-with-python#deploy-the-app
@@ -118,4 +128,16 @@ $ heroku run python manage.py hogehoge
 
 ```
 $ heroku open
+```
+
+- [ ] To stop Heroku, stop every https processes.
+
+```
+$ heroku ps:scale web=0
+```
+
+- [ ] To restart Heroku,
+
+```
+$ heroku ps:scale web=1
 ```
