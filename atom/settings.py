@@ -39,12 +39,50 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
     'users',
     'api',
     'rest_framework',
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# # メールサーバーへの接続設定
+# # Gmailサーバーを経由
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = 'buru.aoshin@gmail.com'
+EMAIL_HOST_PASSWORD = 'uqhybktleaopdavb'
+EMAIL_POST = '587'
+EMAIL_USE_TLS = True
+
+# django-allauthで利用するdjango.contrib.sitesを使うためにサイト識別用IDを設定
 SITE_ID = 1
+
+# 認証バックエンド-ログイン時に何でログインするかを配列の先頭から順に認証する
+# AUTHENTICATION_BACKENDS = (
+#     # メールアドレス認証
+#     'allauth.account.auth_backends.AuthenticationBackend',
+#     # ユーザー名認証
+#     'django.contrib.auth.backends.ModelBackend',
+# )
+
+# # メールアドレス認証に変更する設定
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# # ユーザー名の入力を必要とする設定
+# ACCOUNT_USERNAME_REQUIRED = True
+# # サインアップにメールアドレス確認をはさむよう設定
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+# ACCOUNT_EMAIL_REQUIRED = True
+
+DEFAULT_FROM_EMAIL = 'buru.aoshin@gmail.com'
+
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'users:index'
+LOGOUT_REDIRECT_URL = 'users:login'
+
+# #ログアウトリンクのクリック一発でログアウトする設定
+# ACCOUNT_LOGOUT_ON_GET = True
 
 # usersアプリケーション内で設定するUserというモデル(カスタムユーザーモデル)を、
 # このプロジェクトのUserモデルとして利用。
@@ -158,9 +196,6 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'users:index'
-LOGOUT_REDIRECT_URL = 'users:index'
 
 # https://www.valentinog.com/blog/drf/#Django_REST_with_React_setting_up_React_and_webpack
 # disable the browseable API in production with this configuration
