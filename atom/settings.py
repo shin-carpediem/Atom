@@ -47,12 +47,15 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
+#コンソールに表示
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# # メールサーバーへの接続設定
-# # Gmailサーバーを経由
+# # # メールサーバーへの接続設定
+# # # Gmailサーバーを経由
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = 'buru.aoshin@gmail.com'
-EMAIL_HOST_PASSWORD = 'uqhybktleaopdavb'
+EMAIL_HOST_PASSWORD = 'wgrlfgkazekswvjl'
 EMAIL_POST = '587'
 EMAIL_USE_TLS = True
 

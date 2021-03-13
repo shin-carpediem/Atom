@@ -1,5 +1,5 @@
 from django.http import request
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login
 # from django.contrib.sites.shortcuts import get_current_site
 # from django.core.signing import BadSignature, SignatureExpired, loads, dumps
@@ -17,8 +17,8 @@ def signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             new_user = form.save()
-            input_email = form.changed_data['email']
-            input_password = form.changed_data['password1']
+            input_email = form.cleaned_data['email']
+            input_password = form.cleaned_data['password1']
             new_user = authenticate(email=input_email, password=input_password)
             if new_user is not None:
                 # アクティベーションURLの送付
@@ -37,7 +37,8 @@ def signup(request):
                 # send mail for is_active false to true
                 EMAIL = DEFAULT_FROM_EMAIL
                 PASSWORD = 'wgrlfgkazekswvjl'
-                TO = form.cleaned_data['email']
+                # TO = input_email
+                TO = 'buru.aoshin@gmail.com'
 
                 msg = MIMEText(
                     'Hello.\n'
@@ -59,16 +60,19 @@ def signup(request):
                     'Email: buru.aoshin@gmail.com\n'
                     '---------------------------------------------\n'
                 )
-            msg['Subject'] = '【Djamazon】Your account is created now'
-            msg['From'] = DEFAULT_FROM_EMAIL
-            msg['To'] = TO
+                msg['Subject'] = '【Djamazon】Your account is created now'
+                msg['From'] = DEFAULT_FROM_EMAIL
+                # msg['To'] = TO
+                msg['To'] = 'buru.aoshin@gmail.com'
 
-            # access to the socket
-            s = smtplib.SMTP(host='smtp.gmail.com', port=587)
-            s.starttls()
-            s.sendmail(EMAIL, TO, msg.as_string())
-            s.quit()
-            return render(request, 'users/pls_activate.html')
+                # access to the socket
+                s = smtplib.SMTP(host='smtp.gmail.com', port=587)
+                s.starttls()
+                s.login(EMAIL, PASSWORD)
+                s.sendmail(EMAIL, TO, msg.as_string())
+                s.quit()
+                # return redirect('user:pls_activate')
+                return render(request, 'users/pls_activate.html')
     else:
         form = CustomUserCreationForm()
     return render(request, 'users/signup.html', {'form': form})
