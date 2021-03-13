@@ -69,9 +69,21 @@ def pls_activate(request):
 def signup_done(request):
     user = request.user
     user.is_active = True
+    user.save()
     login(request, user)
     return render(request, 'users/signup_done.html')
 
 
+def password_reset(request):
+    return redirect('http://127.0.0.1:8000/admin/password_reset/')
+
+
 def index(request):
     return render(request, 'users/index.html')
+
+
+def withdraw(request):
+    user = request.user
+    user.is_active = False
+    user.save()
+    return render(request, 'users/withdraw.html')
