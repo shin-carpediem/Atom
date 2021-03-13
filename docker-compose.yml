@@ -25,16 +25,16 @@ services:
     depends_on:
       - db
 
-  # react:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.node
-  #   volumes:
-  #     - .:/code
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - django
+  react:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    volumes:
+      - .:/code
+    ports:
+      - 3000:3000
+    depends_on:
+      - django
 
 volumes:
   postgres_data:

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users',
     'api',
     'rest_framework',
+    'corsheaders',
 ]
 
 
@@ -50,7 +51,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # Gmailサーバーを経由
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = 'buru.aoshin@gmail.com'
-EMAIL_HOST_PASSWORD = 'gngemuzxfpkpegsa'
+EMAIL_HOST_PASSWORD = 'kbmpnuzrmwsqqvma'
 EMAIL_POST = '587'
 EMAIL_USE_TLS = True
 
@@ -189,7 +190,7 @@ REST_FRAMEWORK = {
 # クロスドメイン（異なるドメイン間）でのRequestを許可し、
 # 同一ドメインでのRequestのように処理できるようになるライブラリ。
 # React（localhost:3000）からDjango（localhost:8000）のAPIを叩く際に必要。
-# CORS_ORIGIN_WHITELIST = (
-#     'localhost:3000/',
-#     'localhost:3000',
-# )
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000/',
+    'localhost:3000',
+)

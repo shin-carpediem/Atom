@@ -23,7 +23,7 @@ def signup(request):
 
                 # send mail for is_active false to true
                 EMAIL = DEFAULT_FROM_EMAIL
-                PASSWORD = 'gngemuzxfpkpegsa'
+                PASSWORD = 'kbmpnuzrmwsqqvma'
                 TO = input_email
 
                 msg = MIMEText(

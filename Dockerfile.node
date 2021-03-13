@@ -6,3 +6,6 @@ RUN mkdir /code
 
 # ワークディレクトリの設定
 WORKDIR /code
+
+# 最初に「create-react-app」と「axios」をインストールする
+RUN npm install -g create-react-app axios
