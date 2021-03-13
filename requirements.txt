@@ -12,3 +12,5 @@ django-filter
 djangorestframework==3.9.2
 # React（localhost:3000）からDjango（localhost:8000）のAPIを叩く際に必要
 django-cors-headers==2.5.2
+# シークレット環境変数の設定に必要
+django-environ

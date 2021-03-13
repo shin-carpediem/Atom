@@ -1,5 +1,5 @@
-# Node8のイメージを基にする
-FROM node:8
+# Node12.16.2のイメージを基にする
+FROM node:12.16.2
 
 # ビルド時に/codeというディレクトリを作成する
 RUN mkdir /code

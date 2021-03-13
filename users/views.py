@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from email.mime.text import MIMEText
 import smtplib
 from .forms import CustomUserCreationForm
-from atom.settings import DEFAULT_FROM_EMAIL
+from atom.settings import DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
 # Create your views here.
@@ -23,7 +23,7 @@ def signup(request):
 
                 # send mail for is_active false to true
                 EMAIL = DEFAULT_FROM_EMAIL
-                PASSWORD = 'kbmpnuzrmwsqqvma'
+                PASSWORD = EMAIL_HOST_PASSWORD
                 TO = input_email
 
                 msg = MIMEText(
@@ -39,7 +39,7 @@ def signup(request):
                 msg['To'] = TO
 
                 # access to the socket
-                s = smtplib.SMTP(host='smtp.gmail.com', port=587)
+                s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
                 s.starttls()
                 s.login(EMAIL, PASSWORD)
                 s.sendmail(EMAIL, TO, msg.as_string())

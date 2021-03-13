@@ -11,13 +11,13 @@ local
 - python==3.7.10
 - pip==20.2.1
 - django==2.2.13
-- node==8
-- react==
+- node==12.16.2
+- react
 - bootstrap(cdn)==4.5.0
 - scss
 - sass compiler(vscode plugin)
 - minifer(vscode plugin)
-- postgresql==xx.x
+- postgresql
 - circleci==0.2.1
 
 unique to production
@@ -78,14 +78,26 @@ $ docker container exec -it atom_django_1 python manage.py makemigrations
 $ docker container exec -it atom_django_1 python manage.py migrate
 ```
 
-## How to create app with React?
+## How to run local server with React?
 
 https://hodalog.com/tutorial-django-rest-framework-and-react/
 
-- [ ] Install create-react-app and use it to create app
+- [ ] Install create-react-app and use it to create app.
 
 ```
 $ docker-compose run --rm react sh -c "npm i -g create-react-app && create-react-app hogehoge"
+```
+
+- [ ] Install npm.
+
+```
+$ docker-compose run --rm react npm install
+```
+
+- [ ] Run server.
+
+```
+$ docker-compose run --rm --service-ports node npm start
 ```
 
 ## How to deploy to Heroku?
