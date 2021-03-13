@@ -5,8 +5,7 @@
 <div class="hoge">
   hoge
 </div>
-
-<form method="post" action="{% url 'users:withdraw' %}">{% csrf_token %}
-  <button type="submit">退会</button>
-</form>
-{% endblock content %}
+<div class="pt-3">
+  <a href="{% url 'users:withdraw' %}">退会</a>
+</div>
+{% endblock %}

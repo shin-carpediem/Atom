@@ -2,17 +2,24 @@
 {% load static %}
 
 {% block content %}
-<h2>ユーザー登録</h2>
-<form method="post" action="{% url 'users:signup' %}">{% csrf_token %}
-  <label>メールアドレス</label>
+<div class="header">
+  <h5>新規登録</h5>
+</div>
+<form class="px-2 my-4" method="post" action="{% url 'users:signup' %}">{% csrf_token %}
+  <label>Email:</label><br>
   {{ form.email }}
   {{ form.email.errors }}<br>
-  <label>パスワード</label>
+  <label class="pt-3">パスワード:</label><br>
   {{ form.password1 }}
   {{ form.password1.errors }}<br>
-  <label>パスワード(確認)</label>
+  <label class="pt-3">パスワード(確認):</label><br>
   {{ form.password2 }}
   {{ form.password2.errors }}<br>
-  <input type="submit" value="新規登録">
+  <div class="mt-4 mb-3">
+    <input type="submit" value="新規登録" class="btn">
+  </div>
 </form>
+<div class="pl-2 pb-4">
+  <a href="{% url 'users:login' %}">ログイン</a>
+</div>
 {% endblock content %}

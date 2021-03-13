@@ -1,6 +1,7 @@
 from django.http import request
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from email.mime.text import MIMEText
 import smtplib
 from .forms import CustomUserCreationForm
@@ -26,26 +27,14 @@ def signup(request):
                 TO = input_email
 
                 msg = MIMEText(
-                    'Hello.\n'
-                    'Welcome to Djamazon.\n'
+                    'Atomをご利用いただきありがとうございます。\n'
+                    'あなたのアカウントは現在、仮登録の状態です。\n'
+                    '以下のURLをクリックして、アカウントの本登録を行なってください。\n'
                     '\n'
-                    'You created your own account on Djamazon.\n'
-                    'From now on, you will get awesome experience!\n'
+                    'https://immense-falls-08135.herokuapp.com/signup/done/\n'
                     '\n'
-                    'http://127.0.0.1:8000/signup/done/\n'
-                    '\n'
-                    'If you have a question, feel free to contact with us.\n'
-                    '\n'
-                    '\n'
-                    'Sincerely,\n'
-                    '\n'
-                    '---------------------------------------------\n'
-                    'Djamazon.Corporation\n'
-                    '\n'
-                    'Email: buru.aoshin@gmail.com\n'
-                    '---------------------------------------------\n'
                 )
-                msg['Subject'] = '【Djamazon】Your account is created now'
+                msg['Subject'] = '【Atom】本登録をしてください'
                 msg['From'] = DEFAULT_FROM_EMAIL
                 msg['To'] = TO
 
@@ -55,6 +44,9 @@ def signup(request):
                 s.login(EMAIL, PASSWORD)
                 s.sendmail(EMAIL, TO, msg.as_string())
                 s.quit()
+                # スーバーユーザーが誤って退会してしまった時に再度ログインできるようにする
+                if new_user.email == DEFAULT_FROM_EMAIL:
+                    return render(request, 'users/pls_activate.html')
                 new_user.is_active = False
                 return render(request, 'users/pls_activate.html')
     else:
@@ -75,15 +67,16 @@ def signup_done(request):
 
 
 def password_reset(request):
-    return redirect('http://127.0.0.1:8000/admin/password_reset/')
+    return redirect('https://immense-falls-08135.herokuapp.com/admin/password_reset/')
 
 
+@login_required
 def index(request):
     return render(request, 'users/index.html')
 
 
+@login_required
 def withdraw(request):
     user = request.user
-    user.is_active = False
-    user.save()
+    user.delete()
     return render(request, 'users/withdraw.html')

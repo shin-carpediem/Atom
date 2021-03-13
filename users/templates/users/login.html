@@ -2,19 +2,27 @@
 {% load static %}
 
 {% block content %}
-<form class="form-signin" method="post">{% csrf_token %}
-  {% if form.errors %}
-  <p>ユーザー名かパスワードが間違っています。</p>
-  {% endif %}
-  <h2>ログイン</h2>
-  <label>メールアドレス</label>
-  <input name="username"><!-- email ではない --><br>
-  <label>パスワード</label>
-  <input type="password" name="password"><br>
-  <input type="submit" value="ログイン">
-</form>
-
-<form method="post" action="{% url 'users:password_reset' %}">{% csrf_token %}
-  <button type="submit">パスワードを忘れましたか？</button>
-</form>
+<div class="header">
+  <h5>ログイン</h5>
+</div>
+<div class="px-2 my-4">
+  <form method="post">{% csrf_token %}
+    {% if form.errors %}
+    <p>メールアドレスかパスワードが間違っています。</p>
+    {% endif %}
+    <label>Email:</label><br>
+    <input name="username" class="w-100 py-1"><!-- email ではない --><br>
+    <label class="pt-3">パスワード:</label><br>
+    <input type="password" name="password" class="w-100 py-1"><br>
+    <div class="text-center mt-4 mb-3">
+      <input type="submit" value="ログイン" class="btn">
+    </div>
+  </form>
+  <div class="pt-3">
+    <a href="{% url 'users:password_reset' %}" target="_blank" rel="noopener noreferrer">パスワードを忘れましたか？</a>
+  </div>
+  <div class="pt-3">
+    <a href="{% url 'users:signup' %}">新規登録はこちらから</a>
+  </div>
+</div>
 {% endblock %}
