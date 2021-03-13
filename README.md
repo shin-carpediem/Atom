@@ -102,10 +102,16 @@ $ heroku login
 $ heroku create
 ```
 
-- [ ] Push local repository to the heroku remote repository.
+- [ ] Push local repository to the Heroku remote repository.
 
 ```
 $ git push heroku master
+```
+
+- [ ] To use python command at Heroku remote repository,
+
+```
+$ heroku run python manage.py hogehoge
 ```
 
 - [ ] You can see your application on the Internet.
