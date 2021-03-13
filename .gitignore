@@ -151,6 +151,9 @@ env-atom/
 /assets/
 /staticfiles/
 
+# node.js
+node_modules/
+
 # code runner
 tempCodeRunnerFile.py
 
