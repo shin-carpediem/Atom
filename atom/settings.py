@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+q4gt4jw7r9+c29+a0@-lt&-4yh-xt*awy+ku$1%2(e&ug(b$g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'immense-falls-08135.herokuapp.com']
 
