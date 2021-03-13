@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+q4gt4jw7r9+c29+a0@-lt&-4yh-xt*awy+ku$1%2(e&ug(b$g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'immense-falls-08135.herokuapp.com']
 
@@ -54,8 +54,7 @@ EMAIL_HOST_PASSWORD = 'gngemuzxfpkpegsa'
 EMAIL_POST = '587'
 EMAIL_USE_TLS = True
 
-# django-allauthで利用するdjango.contrib.sitesを使うためにサイト識別用IDを設定
-SITE_ID = 1
+SITE_ID = 2
 
 
 DEFAULT_FROM_EMAIL = 'buru.aoshin@gmail.com'
