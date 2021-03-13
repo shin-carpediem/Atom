@@ -1,3 +1,69 @@
+// default
+$light-grey: #f8f8f8;
+$white: #ffffff;
+$dark-blue: #023465;
+$blue: #42778f;
+$light-blue: #609bb6;
+$yellow: #f5dd5d;
+$light-yellow: #feffcb;
+$green: #71bf2b;
+$orange: #efb80b;
+$red: #dd4546;
+
+ul {
+  list-style: none;
+}
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+/* Make images easier to work with */
+img,
+picture,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+video {
+  border-radius: 10px;
+}
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+// Compensate some browser cannot read Social_Buttons_for_Bootstrap properly
+.btn.btn-block.btn-social {
+  color: #fff;
+}
+// end of default
+
+html {
+  &:focus-within {
+    scroll-behavior: smooth;
+  }
+  body {
+    text-rendering: optimizeSpeed;
+    background-color: $light-grey;
+    @media screen and (max-width: 600px) {
+      font-size: 0.7rem;
+    }
+    a {
+      &:hover {
+        color: $dark-blue;
+      }
+    }
+    li {
+      list-style: none;
+    }
+    // header
+    header {
+    }
+  }
+}
+
 .hoge {
   background-color: pink;
   color: red;
