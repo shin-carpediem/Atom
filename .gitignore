@@ -151,8 +151,12 @@ env-atom/
 /assets/
 /staticfiles/
 
-# node.js
+# node_modules
 node_modules/
+public/
+.gitignore
+README.md
+yarn.lock
 
 # environment variables
 .env

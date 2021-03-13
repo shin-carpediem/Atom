@@ -12,6 +12,7 @@ local
 - pip==20.2.1
 - django==2.2.13
 - node==12.16.2
+- yarn==1.22.4
 - react
 - bootstrap(cdn)==4.5.0
 - scss
