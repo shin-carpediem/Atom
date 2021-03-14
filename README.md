@@ -101,6 +101,7 @@ https://hodalog.com/tutorial-django-rest-framework-and-react/
 ```
 $ docker-compose run --rm react sh -c "npm i -g create-react-app && create-react-app hogehoge"
 ```
+- [ ] Change inner files/directories' path from app/* to BASE_DIR.
 
 - [ ] Install npm.
 
@@ -108,11 +109,12 @@ $ docker-compose run --rm react sh -c "npm i -g create-react-app && create-react
 $ docker-compose run --rm react npm install
 ```
 
-- [ ] Run server.
+- [ ] Run node.js server.
 
 ```
 $ docker-compose run --rm --service-ports react npm start
 ```
+- [ ] Then, type "localhost:3000" at search screen, you can see the content of /src/App.js !
 
 ## How to deploy to Heroku?
 
