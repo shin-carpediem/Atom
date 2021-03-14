@@ -101,7 +101,7 @@ https://hodalog.com/tutorial-django-rest-framework-and-react/
 ```
 $ docker-compose run --rm react sh -c "npm i -g create-react-app && create-react-app hogehoge"
 ```
-- [ ] Change inner files/directories' path from app/* to BASE_DIR.
+- [ ] Change inner files/directories' path from app/* to BASE_DIR/*.
 
 - [ ] Install npm.
 

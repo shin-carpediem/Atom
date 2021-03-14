@@ -185,8 +185,3 @@ tempCodeRunnerFile.py
 
 # imagekit_cache
 .imagekit_cache/
-
-# Elastic Beanstalk Files
-# .elasticbeanstalk/*
-# !.elasticbeanstalk/*.cfg.yml
-# !.elasticbeanstalk/*.global.yml
