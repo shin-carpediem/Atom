@@ -169,3 +169,14 @@ $ heroku ps:scale web=0
 ```
 $ heroku ps:scale web=1
 ```
+- ### How to set environment variables at Heroku?
+https://developer.yukimonkey.com/article/20200423/
+
+- [ ] To register environment variables,
+```
+$ heroku config:set hoge=hogehoge
+```
+- [ ] If you want to confirm,
+```
+$ heroku config
+```
