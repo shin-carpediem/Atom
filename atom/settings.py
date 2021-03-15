@@ -12,6 +12,16 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import django_heroku
 import os
+import environ
+
+
+env = environ.Env()
+# herokuの環境かどうか
+HEROKU_ENV = env.bool('DJANGO_HEROKU_ENV', default=False)
+
+# herokuの環境でない時は.envファイルを読む
+if not HEROKU_ENV:
+    env.read_env('.env')
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -22,14 +32,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.getenv("SECRET_KEY")
-SECRET_KEY = '+q4gt4jw7r9+c29+a0@-lt&-4yh-xt*awy+ku$1%2(e&ug(b$g'
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.getenv("DEBUG") = "True"
-DEBUG = True
+# DEBUG = True
+DEBUG=env.bool('DEBUG', False)
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS")
+ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 # Application definition
 
@@ -52,16 +62,16 @@ INSTALLED_APPS = [
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # メールサーバーへの接続設定
 # Gmailサーバーを経由
-EMAIL_HOST = os.getenv("GMAIL_HOST")
-EMAIL_HOST_USER = os.getenv("GMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("GMAIL_HOST_PASSWORD")
-EMAIL_POST = os.getenv("GMAIL_POST")
+EMAIL_HOST = env("GMAIL_HOST")
+EMAIL_HOST_USER = env("GMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("GMAIL_HOST_PASSWORD")
+EMAIL_POST = env("GMAIL_POST")
 EMAIL_USE_TLS = True
 
 # SITE_ID = 2
 
 
-DEFAULT_FROM_EMAIL = os.getenv("GMAIL_HOST_USER")
+DEFAULT_FROM_EMAIL = env("GMAIL_HOST_USER")
 
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:index'
@@ -110,11 +120,11 @@ WSGI_APPLICATION = 'atom.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DB_NAME"),
-        'USER': os.getenv("DB_USER"),
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': os.getenv("DB_HOST"),
-        'PORT': os.getenv("DB_POST"),
+        'NAME': env("DB_NAME"),
+        'USER': env("DB_USER"),
+        'PASSWORD': env("DB_PASSWORD"),
+        'HOST': env("DB_HOST"),
+        'PORT': env("DB_POST"),
     }
 }
 
