@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import django_heroku
 import os
+import logging
 import environ
 
 
@@ -35,8 +36,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv("DEBUG") = "True"
-# DEBUG = True
 DEBUG = env.bool('DEBUG', False)
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
@@ -50,8 +49,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django.contrib.sites',
-    # 'django.contrib.sitemaps',
     'users',
     'api',
     'rest_framework',
@@ -68,8 +65,6 @@ EMAIL_HOST_USER = env("GMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("GMAIL_HOST_PASSWORD")
 EMAIL_POST = env("GMAIL_POST")
 EMAIL_USE_TLS = True
-
-# SITE_ID = 1
 
 
 DEFAULT_FROM_EMAIL = env("GMAIL_HOST_USER")
@@ -202,6 +197,40 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     )
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+        '': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+    }
 }
 
 # TODO: 末尾に設置する

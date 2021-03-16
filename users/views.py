@@ -80,3 +80,7 @@ def withdraw(request):
     user = request.user
     user.delete()
     return render(request, 'users/withdraw.html')
+
+
+def policy(request):
+    return render(request, 'users/policy.html')
