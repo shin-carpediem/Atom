@@ -174,7 +174,7 @@ https://developer.yukimonkey.com/article/20200423/
 
 - [ ] To register environment variables,
 ```
-$ heroku config:set hoge=hogehoge
+$ heroku config:set hoge="hogehoge"
 ```
 - [ ] If you want to confirm,
 ```

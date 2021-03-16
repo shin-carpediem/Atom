@@ -16,7 +16,7 @@ import environ
 
 
 env = environ.Env()
-# herokuの環境かどうか
+# herokuの環境かどうか。第一引数に値が入っていなければ、false。
 HEROKU_ENV = env.bool('DJANGO_HEROKU_ENV', default=False)
 
 # herokuの環境でない時は.envファイルを読む
