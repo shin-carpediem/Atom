@@ -6,3 +6,7 @@ RUN mkdir /code
 
 # ワークディレクトリの設定
 WORKDIR /code
+
+# package.jsonを/code/にコピーする
+ADD package.json /code/
+

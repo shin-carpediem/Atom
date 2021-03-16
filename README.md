@@ -12,7 +12,7 @@ local
 - pip==20.2.1
 - django==2.2.13
 - node==12.16.2
-- npm==
+- npm
 - yarn==1.22.4
 - react
 - bootstrap(cdn)==4.5.0
@@ -169,6 +169,12 @@ $ heroku ps:scale web=0
 ```
 $ heroku ps:scale web=1
 ```
+- [ ] To check log,
+
+```
+$ heroku logs --tail
+```
+
 - ### How to set environment variables at Heroku?
 https://developer.yukimonkey.com/article/20200423/
 
