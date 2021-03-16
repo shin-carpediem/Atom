@@ -14,3 +14,5 @@ djangorestframework==3.9.2
 django-cors-headers==2.5.2
 # シークレット環境変数の設定に必要
 django-environ
+# social loginに必要
+social-auth-app-django

@@ -14,6 +14,7 @@
     <input name="username" class="w-100 py-1"><!-- email ではない --><br>
     <label class="pt-3">パスワード:</label><br>
     <input type="password" name="password" class="w-100 py-1"><br>
+    <div class="my-4 g-recaptcha" data-sitekey="6LdbF4EaAAAAAH4V9k15J9fWPE2q2RsYXbUHTSd-"></div>
     <div class="text-center mt-4 mb-3">
       <input type="submit" value="ログイン" class="btn">
     </div>
@@ -23,6 +24,11 @@
   </div>
   <div class="pt-3">
     <a href="{% url 'users:signup' %}">新規登録はこちらから</a>
+  </div>
+  <div class="my-4">
+    <a class="btn btn-block btn-social btn-google" href="{% url 'social:begin' 'google-oauth2' %}">
+      <span class="fa fa-google"></span>Googleでログイン
+    </a>
   </div>
 </div>
 {% endblock %}

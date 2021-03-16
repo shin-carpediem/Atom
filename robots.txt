@@ -1,3 +1,3 @@
 User-Agent:*
-Disallow:
+Disallow:*
 Sitemap:https://immense-falls-08135.herokuapp.com/sitemap.xml

@@ -185,3 +185,6 @@ tempCodeRunnerFile.py
 
 # imagekit_cache
 .imagekit_cache/
+
+# GCP
+GOOGLE_APPLICATION_CREDENTIALS.json

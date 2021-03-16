@@ -21,6 +21,7 @@ local
 - sass compiler(vscode plugin)
 - minifer(vscode plugin)
 - postgresql
+- gcp
 - circleci==0.2.1
 
 unique to production
@@ -190,7 +191,16 @@ $ heroku config
 ## How to deploy Django × React at Heroku?
 https://dev.to/mdrhmn/deploying-react-django-app-using-heroku-2gfa
 
-- [ ] Install axios.
+- [ ] Install Axios.
 ```
 $ docker-compose run --rm react sh -c "npm i -g axios"
 ```
+- [ ] add proxy at package.json like, "proxy": "http://localhost:8000".
+- [ ] add some code at /src/App.js in order to get CSRF token by Axios.
+```
+import axios from 'axios';
+
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+```
+- [ ] Then, enable Procfile at Heroku GUI.
