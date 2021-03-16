@@ -16,5 +16,5 @@ django-cors-headers==2.5.2
 django-environ
 # social loginに必要
 social-auth-app-django
-# recapcthaでユーザーのIPアドレスを取得するのに必要
-django-ipware
+# recapcthaの認証機能をdjangoに全て任せる
+django-recaptcha2

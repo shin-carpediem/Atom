@@ -8,17 +8,15 @@
 <div class="px-2 mt-4">
   <form method="post">{% csrf_token %}
     {% if form.errors %}
-    <p>メールアドレスかパスワードが間違っています。</p>
+    <p>Emailかパスワードが間違っています。</p>
     {% endif %}
     <label>Email:</label><br>
     <input name="username" class="w-100 py-1"><!-- email ではない --><br>
     <label class="pt-3">パスワード:</label><br>
     <input type="password" name="password" class="w-100 py-1"><br>
-    <div class="my-4 g-recaptcha" data-callback="clearcall" data-sitekey="6LdbF4EaAAAAAH4V9k15J9fWPE2q2RsYXbUHTSd-"></div>
     <div class="text-center mt-4 mb-3">
-      <input type="submit" value="ログイン" class="btn" id="loginBtn" disabled>
+      <input type="submit" value="ログイン" class="btn px-3">
     </div>
-    <input type="hidden" id="reCaptcha">
   </form>
   <div class="pt-3">
     <a href="{% url 'users:password_reset' %}" target="_blank" rel="noopener noreferrer">パスワードを忘れましたか？</a>

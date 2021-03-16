@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'social_django',
+    'snowpenguin.django.recaptcha2',
 ]
 
 
@@ -73,7 +74,9 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:index'
 LOGOUT_REDIRECT_URL = 'users:login'
 
-RECAPTCHA_SECRET = env("RECAPTCHA_SECRET")
+# http://yuki-yamashita.site/blog/post/django-recaptchaV2-how-to/
+RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
 
 # usersアプリケーション内で設定するUserというモデル(カスタムユーザーモデル)を、
 # このプロジェクトのUserモデルとして利用。
