@@ -4,51 +4,67 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from email.mime.text import MIMEText
 import smtplib
+import json
+from ipware import get_client_ip
 from .forms import CustomUserCreationForm
-from atom.settings import DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
+from atom.settings import RECAPTCHA_SECRET, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
-        print("hoge")
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            new_user = form.save()
-            input_email = form.cleaned_data['email']
-            input_password = form.cleaned_data['password1']
-            new_user = authenticate(email=input_email, password=input_password)
-            if new_user is not None:
-                login(request, new_user)
+            # recaptchaの実装
+            # サインアップするユーザーのIPアドレスを取得。
+            sender_ip_address = get_client_ip(request)
+            # https://www.google.com/recaptcha/api/siteverify にトークン検証をしてもらう。
+            res = request.post(
+                'https://www.google.com/recaptcha/api/siteverify',
+                data={
+                    'secret': RECAPTCHA_SECRET,
+                    # クライアントで発行しサーバーに送ってもらったトークンで置き換える
+                    'response': request.POST.get('recaptcha_token'),
+                    'remoteip': sender_ip_address,
+                }
+            )
+            # レスポンスJSONのsuccessフィールドを読む
+            if res.json()['success']:
+                new_user = form.save()
+                input_email = form.cleaned_data['email']
+                input_password = form.cleaned_data['password1']
+                new_user = authenticate(email=input_email, password=input_password)
+                if new_user is not None:
+                    login(request, new_user)
 
-                # send mail for is_active false to true
-                EMAIL = DEFAULT_FROM_EMAIL
-                PASSWORD = EMAIL_HOST_PASSWORD
-                TO = input_email
+                    # send mail for is_active false to true
+                    EMAIL = DEFAULT_FROM_EMAIL
+                    PASSWORD = EMAIL_HOST_PASSWORD
+                    TO = input_email
 
-                msg = MIMEText(
-                    'Atomをご利用いただきありがとうございます。\n'
-                    'あなたのアカウントは現在、仮登録の状態です。\n'
-                    '以下のURLをクリックして、アカウントの本登録を行なってください。\n'
-                    '\n'
-                    'https://immense-falls-08135.herokuapp.com/signup/done/\n'
-                    '\n'
-                )
-                msg['Subject'] = '【Atom】本登録をしてください'
-                msg['From'] = DEFAULT_FROM_EMAIL
-                msg['To'] = TO
+                    msg = MIMEText(
+                        'Atomをご利用いただきありがとうございます。\n'
+                        'あなたのアカウントは現在、仮登録の状態です。\n'
+                        '以下のURLをクリックして、アカウントの本登録を行なってください。\n'
+                        '\n'
+                        'https://immense-falls-08135.herokuapp.com/signup/done/\n'
+                        '\n'
+                    )
+                    msg['Subject'] = '【Atom】本登録をしてください'
+                    msg['From'] = DEFAULT_FROM_EMAIL
+                    msg['To'] = TO
 
-                # access to the socket
-                s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-                s.starttls()
-                s.login(EMAIL, PASSWORD)
-                s.sendmail(EMAIL, TO, msg.as_string())
-                s.quit()
-                # スーバーユーザーが誤って退会してしまった時に再度ログインできるようにする
-                if new_user.email == DEFAULT_FROM_EMAIL:
+                    # access to the socket
+                    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+                    s.starttls()
+                    s.login(EMAIL, PASSWORD)
+                    s.sendmail(EMAIL, TO, msg.as_string())
+                    s.quit()
+                    # スーバーユーザーが誤って退会してしまった時に再度ログインできるようにする
+                    if new_user.email == DEFAULT_FROM_EMAIL:
+                        return render(request, 'users/pls_activate.html')
+                    new_user.is_active = False
                     return render(request, 'users/pls_activate.html')
-                new_user.is_active = False
-                return render(request, 'users/pls_activate.html')
     else:
         form = CustomUserCreationForm()
     return render(request, 'users/signup.html', {'form': form})

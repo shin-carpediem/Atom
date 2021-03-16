@@ -2,8 +2,8 @@ import axios from "axios";
 import logo from "./logo.svg";
 import "./App.css";
 
-axios.defaults.xsrfCookieName = "csrftoken";
-axios.defaults.xsrfHeaderName = "X-CSRFToken";
+// axios.defaults.xsrfCookieName = "csrftoken";
+// axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 function App() {
   return (

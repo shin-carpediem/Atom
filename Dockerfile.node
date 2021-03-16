@@ -10,3 +10,7 @@ WORKDIR /code
 # package.jsonを/code/にコピーする
 ADD package.json /code/
 
+# create-react-appとaxiosをinstallする
+RUN npm install create-react-app
+RUN npm install axios
+ADD . /code/

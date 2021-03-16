@@ -73,6 +73,7 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:index'
 LOGOUT_REDIRECT_URL = 'users:login'
 
+RECAPTCHA_SECRET = env("RECAPTCHA_SECRET")
 
 # usersアプリケーション内で設定するUserというモデル(カスタムユーザーモデル)を、
 # このプロジェクトのUserモデルとして利用。
