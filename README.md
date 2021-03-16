@@ -12,9 +12,10 @@ local
 - pip==20.2.1
 - django==2.2.13
 - node==12.16.2
-- npm
+- npm==6.14.4
 - yarn==1.22.4
-- react
+- react==17.0.1
+- axios==0.21.1
 - bootstrap(cdn)==4.5.0
 - scss
 - sass compiler(vscode plugin)
@@ -175,7 +176,7 @@ $ heroku ps:scale web=1
 $ heroku logs --tail
 ```
 
-- ### How to set environment variables at Heroku?
+### How to set environment variables at Heroku?
 https://developer.yukimonkey.com/article/20200423/
 
 - [ ] To register environment variables,
@@ -185,4 +186,11 @@ $ heroku config:set hoge="hogehoge"
 - [ ] If you want to confirm,
 ```
 $ heroku config
+```
+## How to deploy Django × React at Heroku?
+https://dev.to/mdrhmn/deploying-react-django-app-using-heroku-2gfa
+
+- [ ] Install axios.
+```
+$ docker-compose run --rm react sh -c "npm i -g axios"
 ```
