@@ -84,3 +84,7 @@ def withdraw(request):
 
 def policy(request):
     return render(request, 'users/policy.html')
+
+
+def terms(request):
+    return render(request, 'users/terms.html')

@@ -15,4 +15,5 @@ urlpatterns = [
     path('logout/', auth_views.LoginView.as_view(), name='logout'),
     path('withdraw/', views.withdraw, name='withdraw'),
     path('policy/', views.policy, name='policy'),
+    path('terms/', views.terms, name='terms'),
 ]

@@ -30,8 +30,9 @@
   <div class="pt-3">
     <a href="{% url 'users:signup' %}">新規登録はこちらから</a>
   </div>
-  <div class="pb-3">
-    <a href="{% url 'users:policy' %}" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>
+  <div class="py-3">
+    <a class="pr-2" href="{% url 'users:policy' %}" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>
+    <a href="{% url 'users:terms' %}" target="_blank" rel="noopener noreferrer">利用規約</a>
   </div>
 </div>
 {% endblock %}
