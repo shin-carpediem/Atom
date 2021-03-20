@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+import random
 from .models import HouseChore
-from users.models import User
+from users.models import House, User
 
 
 # Create your views here.
@@ -14,19 +15,28 @@ def room(request):
 @login_required
 def assign_chore(request):
     if request.method == 'POST':
-        housechore_list = HouseChore.objects.all().values_list('title', flat=True)
-        print(housechore_list)
-        print(housechore_list[0])
-        # housemate_title = housechore_list.title
-        # print(housemate_title)
-        housemate_list = User.objects.all().values_list('housechore_title', flat=True)
-        print(housemate_list)
-        print(housemate_list[0])
-        housemate_desc_list = User.objects.all().values_list('housechore_desc', flat=True)
-        print(housemate_desc_list)
-        print(housemate_desc_list[0])
-        # housechore_list[0] = housemate_list[0]
-        # User.housechore = housechore_list
-        # User.objects.save()
+        # 家事の並び順をシャッフルする
+        random_housechore_list = HouseChore.objects.all(
+        ).values_list('title', 'description').order_by('?')
+        # titleのクエリセットからリストにする
+        list_item = list(random_housechore_list)
+
+        # ハウスメイトの人数を算出
+        UserNum = User.objects.all().count()
+
+        for i in range(UserNum):
+            # i+1 番目のモデルの家事インスタンスを取得
+            housemate = User.objects.get(id=i+1)
+            # i+1 番目のモデルの家事インスタンスを一旦削除
+            housemate.housechore_title = ''
+            # i 番目のモデルの家事インスタンスに、Aを代入
+            housemate.housechore_title = list_item[i][0]
+
+            # 家事モデルのdescフィールドも
+            # Userモデルhousechore_descフィールドに連動させる
+            housemate.housechore_desc = ''
+            housemate.housechore_desc = list_item[i][1]
+            housemate.save()
+
         messages.success(request, f"割り振りに成功しました。")
         return redirect('app:room')

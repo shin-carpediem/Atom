@@ -32,19 +32,19 @@ services:
     # depends_on:
     #   - db
 
-  react:
-    build:
-      context: .
-      dockerfile: Dockerfile.node
-    command: npm start
-    volumes:
-      - .:/code
-    ports:
-      - 3000:3000
-    env_file:
-      - .env
-    depends_on:
-      - django
+  # react:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.node
+  #   command: npm start
+  #   volumes:
+  #     - .:/code
+  #   ports:
+  #     - 3000:3000
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - django
 
-volumes:
-  postgres_data:
+# volumes:
+#   postgres_data:

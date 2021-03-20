@@ -39,11 +39,11 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     # カスタムユーザーモデル
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField("email", unique=True)
     name = models.CharField(max_length=20, default="ユーザー")
     house = models.CharField(max_length=100, default="not selected")
     housechore_title = models.CharField(max_length=100, default="not assigned")
+    # 分割してonetooneにした方がいい
     housechore_desc = models.CharField(max_length=100, blank=True)
     is_staff = models.BooleanField("is_staff", default=False)
     # 仮登録状態→本登録でTrueにする。
