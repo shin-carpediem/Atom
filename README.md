@@ -20,13 +20,13 @@ local
 - scss
 - sass compiler(vscode plugin)
 - minifer(vscode plugin)
-- postgresql
 - gcp
 - circleci==0.2.1
 
 unique to production
 
 - heroku==7.50.0
+- postgresql
 - gunicorn
 - node==12.16.2
 

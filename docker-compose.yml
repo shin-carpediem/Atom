@@ -1,16 +1,16 @@
 version: "3"
 
 services:
-  db:
-    image: postgres
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    env_file:
-      - .env
+  # db:
+  #   image: postgres
+  #   environment:
+  #     - POSTGRES_DB=${DB_NAME}
+  #     - POSTGRES_USER=${DB_USER}
+  #     - POSTGRES_PASSWORD=${DB_PASSWORD}
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   env_file:
+  #     - .env
 
   django:
     build:
@@ -29,8 +29,8 @@ services:
     env_file:
       - .env
     # 接続するサービス
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
 
   react:
     build:

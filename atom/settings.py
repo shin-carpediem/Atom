@@ -128,17 +128,24 @@ WSGI_APPLICATION = 'atom.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_POST"),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env("DB_NAME"),
+            'USER': env("DB_USER"),
+            'PASSWORD': env("DB_PASSWORD"),
+            'HOST': env("DB_HOST"),
+            'PORT': env("DB_POST"),
+        }
+    }
 
 
 # Heroku
@@ -238,7 +245,7 @@ LOGGING = {
     }
 }
 
-# TODO: 末尾に設置する
+# NOTE: 末尾に設置する
 # クロスドメイン（異なるドメイン間）でのRequestを許可し、
 # 同一ドメインでのRequestのように処理できるようになるライブラリ。
 # React（localhost:3000）からDjango（localhost:8000）のAPIを叩く際に必要。
