@@ -5,7 +5,6 @@ from django.utils.translation import ugettext_lazy as _
 from .models import User, House
 
 
-# Register your models here.
 class MyUserChangeForm(UserChangeForm):
     class Meta:
         model = User

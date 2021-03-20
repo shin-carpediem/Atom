@@ -1,16 +1,7 @@
-# Node12.16.2のイメージを基にする
 FROM node:12.16.2
-
-# ビルド時に/codeというディレクトリを作成する
 RUN mkdir /code
-
-# ワークディレクトリの設定
 WORKDIR /code
-
-# package.jsonを/code/にコピーする
 ADD package.json /code/
-
-# create-react-appとaxiosをinstallする
 RUN npm install create-react-app
 RUN npm install axios
 ADD . /code/

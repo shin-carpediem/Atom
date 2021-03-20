@@ -1,6 +1,5 @@
 {% extends 'users/base.html' %}
 {% load static %}
-
 {% block content %}
 <div class="header">
   <h5>ログイン</h5>
@@ -11,7 +10,7 @@
     <p>Emailかパスワードが間違っています。</p>
     {% endif %}
     <label>Email:</label><br>
-    <input name="username" class="w-100 py-1"><!-- email ではない --><br>
+    <input name="username" class="w-100 py-1"><br>
     <label class="pt-3">パスワード:</label><br>
     <input type="password" name="password" class="w-100 py-1"><br>
     <div class="text-center mt-4 mb-3">

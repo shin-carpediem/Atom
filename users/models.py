@@ -6,16 +6,12 @@ from django.core.mail import send_mail
 from django.utils import timezone
 
 
-# Create your models here.
 class UserManager(BaseUserManager):
-    # カスタムユーザーマネージャー
-    use_in_migrations = True  # このクラスもマイグレーションで管理できるようになる
+    use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):
-        # emailを必須にする
         if not email:
             raise ValueError('The given email must be set.')
-        # emailでUserモデルを作成
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -38,15 +34,12 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    # カスタムユーザーモデル
     email = models.EmailField("email", unique=True)
     name = models.CharField(max_length=20, default="ユーザー")
     house = models.CharField(max_length=100, default="not selected")
     housechore_title = models.CharField(max_length=100, default="not assigned")
-    # 分割してonetooneにした方がいい
     housechore_desc = models.CharField(max_length=100, blank=True)
     is_staff = models.BooleanField("is_staff", default=False)
-    # 仮登録状態→本登録でTrueにする。
     is_active = models.BooleanField("is_active", default=True)
     date_joined = models.DateTimeField("date_joined", default=timezone.now)
 

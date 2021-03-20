@@ -9,7 +9,6 @@ from .models import House
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
-# Create your views here.
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -20,12 +19,9 @@ def signup(request):
             new_user = authenticate(email=input_email, password=input_password)
             if new_user is not None:
                 login(request, new_user)
-
-                # send mail for is_active false to true
                 EMAIL = DEFAULT_FROM_EMAIL
                 PASSWORD = EMAIL_HOST_PASSWORD
                 TO = input_email
-
                 if DEBUG:
                     msg = MIMEText(
                         'Atomをご利用いただきありがとうございます。\n'
@@ -47,14 +43,11 @@ def signup(request):
                 msg['Subject'] = '【Atom】本登録をしてください'
                 msg['From'] = DEFAULT_FROM_EMAIL
                 msg['To'] = TO
-
-                # access to the socket
                 s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
                 s.starttls()
                 s.login(EMAIL, PASSWORD)
                 s.sendmail(EMAIL, TO, msg.as_string())
                 s.quit()
-                # スーバーユーザーが誤って退会してしまった時に再度ログインできるようにする
                 if new_user.email == DEFAULT_FROM_EMAIL:
                     return render(request, 'users/pls_activate.html')
                 new_user.is_active = False
@@ -85,7 +78,6 @@ def password_reset(request):
 
 @login_required
 def index(request):
-    # ハウス名を選択させるためのリストを作成する
     house = House.objects.all()
     return render(request, 'users/index.html', {'house': house})
 
@@ -94,7 +86,6 @@ def index(request):
 def select_house(request):
     if request.method == 'POST':
         user = request.user
-        # TODO: 要改善
         user.house = request.POST.get
         user.save()
         return render(request, 'app/room.html')
