@@ -1,0 +1,21 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block content %}
+{% for message in messages %}
+  <p class="message-success">{{ message }}</p>
+{% endfor %}
+
+{% if user.is_superuser %}
+<form action="{% url 'app:assign_chore' %}" method="POST">{% csrf_token %}
+  <input type="submit" value="今週の仕事を割り振る">
+</form>
+{% endif %}
+<div class="hoge">
+  <p>今週の{{ user.name }}の家事</p>
+  <p></p>
+</div>
+<div class="pt-3">
+  <a href="{% url 'users:index' %}">ログイン後の画面に戻る</a>
+</div>
+{% endblock %}

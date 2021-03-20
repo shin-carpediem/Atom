@@ -4,5 +4,6 @@ from . import views
 
 app_name = 'app'
 urlpatterns = [
-    path('index', views.index, name='index'),
+    path('room', views.room, name='room'),
+    path('assign_chore', views.assign_chore, name='assign_chore'),
 ]

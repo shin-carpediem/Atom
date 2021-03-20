@@ -76,8 +76,7 @@ def index(request):
 
 @login_required
 def select_house(request):
-    # 要修正
-    return render(request, 'users/index.html')
+    return render(request, 'app/room.html')
 
 
 @login_required
