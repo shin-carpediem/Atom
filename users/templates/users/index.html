@@ -2,13 +2,15 @@
 {% load static %}
 
 {% block content %}
-<form action="{% url 'users:select_house' %}" method="POST">{% csrf_token %}
+<form name="select_house" action="{% url 'users:select_house' %}" method="POST">{% csrf_token %}
   <select>
-    <option value="大山池袋">大山池袋</option>
-    <option value="ハウスB">ハウスB</option>
-    <option value="ハウスC">ハウスC</option>
+    {% for house_name in house %}
+    <option name="house_name">
+      {{ house_name.name }}
+    </option>
+    {% endfor %}
   </select>
-  <input type="submit">
+  <input type="submit" value="このハウスメンバーとして登録">
 </form>
 <div class="pt-3">
   <a href="{% url 'users:withdraw' %}">退会</a>

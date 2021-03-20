@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from users.models import User, House, UserAndHouse
+from users.models import User, House
+from app.models import HouseChore
 
 
 # Create your models here.
@@ -17,7 +18,7 @@ class HouseSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'created_at')
 
 
-class UserAndHouseSerializer(serializers.ModelSerializer):
+class HouseChoreSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserAndHouse
-        fields = ('id', 'user', 'house', 'created_at')
+        model = HouseChore
+        fields = ('title', 'description')

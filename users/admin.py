@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.utils.translation import ugettext_lazy as _
-from .models import User, House, UserAndHouse
+from .models import User, House
 
 
 # Register your models here.
@@ -20,18 +20,19 @@ class MyUserCreationForm(UserCreationForm):
 
 class MyUserAdmin(UserAdmin):
     fieldsets = (
-        (None, {'fields': ('email', 'password', 'name')}),
+        (None, {'fields': ('email', 'password', 'name', 'house')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff',
                                        'is_superuser', 'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
         (None, {'classes': ('wide', ), 'fields': (
-            'email', 'name', 'password1', 'password2'), }),
+            'email', 'name', 'house', 'password1', 'password2'), }),
     )
     form = MyUserChangeForm
     add_form = MyUserCreationForm
-    list_display = ('email', 'name', 'is_staff', 'is_superuser', 'is_active')
+    list_display = ('email', 'name', 'house', 'is_staff',
+                    'is_superuser', 'is_active')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
     search_fields = ('email', )
     ordering = ('email', )
@@ -39,4 +40,3 @@ class MyUserAdmin(UserAdmin):
 
 admin.site.register(User, MyUserAdmin)
 admin.site.register(House)
-admin.site.register(UserAndHouse)

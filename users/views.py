@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from email.mime.text import MIMEText
 import smtplib
 from .forms import CustomUserCreationForm
-from atom.settings import DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
+from .models import House
+from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
 # Create your views here.
@@ -25,14 +26,24 @@ def signup(request):
                 PASSWORD = EMAIL_HOST_PASSWORD
                 TO = input_email
 
-                msg = MIMEText(
-                    'Atomをご利用いただきありがとうございます。\n'
-                    'あなたのアカウントは現在、仮登録の状態です。\n'
-                    '以下のURLをクリックして、アカウントの本登録を行なってください。\n'
-                    '\n'
-                    'https://immense-falls-08135.herokuapp.com/signup/done/\n'
-                    '\n'
-                )
+                if DEBUG:
+                    msg = MIMEText(
+                        'Atomをご利用いただきありがとうございます。\n'
+                        'あなたのアカウントは現在、仮登録の状態です。\n'
+                        '以下のURLをクリックして、アカウントの本登録を行なってください。\n'
+                        '\n'
+                        'http://127.0.0.1/signup/done/\n'
+                        '\n'
+                    )
+                else:
+                    msg = MIMEText(
+                        'Atomをご利用いただきありがとうございます。\n'
+                        'あなたのアカウントは現在、仮登録の状態です。\n'
+                        '以下のURLをクリックして、アカウントの本登録を行なってください。\n'
+                        '\n'
+                        'https://immense-falls-08135.herokuapp.com/signup/done/\n'
+                        '\n'
+                    )
                 msg['Subject'] = '【Atom】本登録をしてください'
                 msg['From'] = DEFAULT_FROM_EMAIL
                 msg['To'] = TO
@@ -66,17 +77,27 @@ def signup_done(request):
 
 
 def password_reset(request):
-    return redirect('https://immense-falls-08135.herokuapp.com/admin/password_reset/')
+    if DEBUG:
+        return redirect('http://127.0.0.1/admin/password_reset/')
+    else:
+        return redirect('https://immense-falls-08135.herokuapp.com/admin/password_reset/')
 
 
 @login_required
 def index(request):
-    return render(request, 'users/index.html')
+    # ハウス名を選択させるためのリストを作成する
+    house = House.objects.all()
+    return render(request, 'users/index.html', {'house': house})
 
 
 @login_required
 def select_house(request):
-    return render(request, 'app/room.html')
+    if request.method == 'POST':
+        user = request.user
+        # TODO: 要改善
+        user.house = request.POST.get
+        user.save()
+        return render(request, 'app/room.html')
 
 
 @login_required

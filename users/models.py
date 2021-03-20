@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.core.mail import send_mail
-from django.db.models.deletion import PROTECT
 from django.utils import timezone
 
 
@@ -42,7 +41,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     # カスタムユーザーモデル
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField("email", unique=True)
-    name = models.CharField(max_length=20, default="User")
+    name = models.CharField(max_length=20, default="ユーザー")
+    house = models.CharField(max_length=100, default="not selected")
+    housechore = models.CharField(max_length=100, default="not assigned")
     is_staff = models.BooleanField("is_staff", default=False)
     # 仮登録状態→本登録でTrueにする。
     is_active = models.BooleanField("is_active", default=True)
@@ -64,9 +65,5 @@ class House(models.Model):
     name = models.CharField(max_length=20, default="House")
     created_at = models.DateTimeField(auto_now=True)
 
-
-class UserAndHouse(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    house = models.ForeignKey(House, on_delete=models.CASCADE, default=1)
-    created_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.name
