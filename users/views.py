@@ -41,7 +41,7 @@ def signup(request):
                         'あなたのアカウントは現在、仮登録の状態です。\n'
                         '以下のURLをクリックして、アカウントの本登録を行なってください。\n'
                         '\n'
-                        'https://young-tundra-83431.herokuapp.com/signup/done/\n'
+                        'https://glacial-shore-75579.herokuapp.com/signup/done/\n'
                         '\n'
                     )
                 msg['Subject'] = '【Atom】本登録をしてください'
@@ -80,7 +80,7 @@ def password_reset(request):
     if DEBUG:
         return redirect('http://127.0.0.1/admin/password_reset/')
     else:
-        return redirect('https://young-tundra-83431.herokuapp.com/admin/password_reset/')
+        return redirect('https://glacial-shore-75579.herokuapp.com/admin/password_reset/')
 
 
 @login_required
