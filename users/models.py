@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.core.mail import send_mail
+from django.db.models.deletion import PROTECT
 from django.utils import timezone
 
 
@@ -42,12 +43,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField("email", unique=True)
     name = models.CharField(max_length=20, default="User")
-    # foriegnキーにする。
-    # house = [
-    #     ("eifukutyo", "Eifukutyo"),
-    #     ("akasaka", "Akasaka"),
-    #     ("oyama-ikebukuro", "Oyama-Ikebukuro"),
-    # ]
     is_staff = models.BooleanField("is_staff", default=False)
     # 仮登録状態→本登録でTrueにする。
     is_active = models.BooleanField("is_active", default=True)
@@ -62,3 +57,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = "user"
         verbose_name_plural = "users"
+
+
+class House(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=20, default="House")
+    created_at = models.DateTimeField(auto_now=True)
+
+
+class UserAndHouse(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    house = models.ForeignKey(House, on_delete=models.CASCADE, default=1)

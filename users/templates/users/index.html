@@ -2,9 +2,13 @@
 {% load static %}
 
 {% block content %}
-<div class="hoge">
-  hoge
-</div>
+<form action="{% url 'users:select_house' %}" method="POST">{% csrf_token %}
+  <select name="" id="">
+    <option value="大山池袋">大山池袋</option>
+    <option value="ハウスB">ハウスB</option>
+    <option value="ハウスC">ハウスC</option>
+  </select>
+</form>
 <div class="pt-3">
   <a href="{% url 'users:withdraw' %}">退会</a>
 </div>

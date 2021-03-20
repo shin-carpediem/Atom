@@ -75,6 +75,12 @@ def index(request):
 
 
 @login_required
+def select_house(request):
+    # 要修正
+    return render(request, 'users/index.html')
+
+
+@login_required
 def withdraw(request):
     user = request.user
     user.delete()
