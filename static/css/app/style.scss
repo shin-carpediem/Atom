@@ -100,12 +100,17 @@ html {
         .btn {
           @include button;
         }
+        p {
+          b {
+            color: $dark-blue;
+          }
+        }
       }
     }
   }
 }
 
 .message-success {
-  background-color: $green;
+  background-color: $blue;
   color: $white;
 }

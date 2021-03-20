@@ -43,7 +43,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField("email", unique=True)
     name = models.CharField(max_length=20, default="ユーザー")
     house = models.CharField(max_length=100, default="not selected")
-    housechore = models.CharField(max_length=100, default="not assigned")
+    housechore_title = models.CharField(max_length=100, default="not assigned")
+    housechore_desc = models.CharField(max_length=100, blank=True)
     is_staff = models.BooleanField("is_staff", default=False)
     # 仮登録状態→本登録でTrueにする。
     is_active = models.BooleanField("is_active", default=True)

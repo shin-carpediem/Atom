@@ -4,16 +4,28 @@
 {% block content %}
 
 {% if user.is_superuser %}
-<form action="{% url 'app:assign_chore' %}" method="POST" id="assignChore">{% csrf_token %}
-  <input type="submit" value="今週の仕事を割り振る">
-</form>
-{% endif %}
-<div class="hoge">
-  <p>今週の{{ user.name }}の家事</p>
-  <p>{{ user.housechore }}</p>
-  <p>公共費 500円/月</p>
+<div class="text-center mt-5 mb-3">
+  <p>このボタンは各ハウスの管理者にのみ見えています</p>
 </div>
-<div class="pt-3">
-  <a href="{% url 'users:index' %}">ログイン後の画面に戻る</a>
+<form action="{% url 'app:assign_chore' %}" method="POST">{% csrf_token %}
+  <input type="submit" value="今週の仕事を割り振る" class="btn w-100 mb-2">
+</form>
+<hr>
+{% endif %}
+<div class="row mt-3">
+  <div class="col-11 mx-auto">
+    <p><b>今週{{ user.name }}さんが担当する家事</b></p><br>
+    <h5 class="pl-1">{{ user.housechore_title }}</h5>
+    <p class="pl-3 pt-1">{{ user.housechore_desc }}</p>
+    <br>
+    <p class="pl-1">公共費 500円/月</p>
+  </div>
+</div>
+<hr>
+<div class="pt-1">
+  <a href="{% url 'users:index' %}">ハウス選択に戻る</a>
+</div>
+<div class="py-3">
+  <a href="{% url 'users:logout' %}">ログアウト</a>
 </div>
 {% endblock %}

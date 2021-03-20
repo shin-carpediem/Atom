@@ -8,7 +8,7 @@ from app.models import HouseChore
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'name', 'is_staff',
+        fields = ('id', 'email', 'name', 'house_title', 'house_desc', 'is_staff',
                   'is_active', 'date_joined')
 
 

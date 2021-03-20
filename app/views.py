@@ -19,11 +19,14 @@ def assign_chore(request):
         print(housechore_list[0])
         # housemate_title = housechore_list.title
         # print(housemate_title)
-        housemate_list = User.objects.all().values_list('housechore', flat=True)
+        housemate_list = User.objects.all().values_list('housechore_title', flat=True)
         print(housemate_list)
         print(housemate_list[0])
+        housemate_desc_list = User.objects.all().values_list('housechore_desc', flat=True)
+        print(housemate_desc_list)
+        print(housemate_desc_list[0])
         # housechore_list[0] = housemate_list[0]
         # User.housechore = housechore_list
-        # User.save()
+        # User.objects.save()
         messages.success(request, f"割り振りに成功しました。")
         return redirect('app:room')
