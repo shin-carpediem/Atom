@@ -51,7 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=20, default="ユーザー")
     house = models.ForeignKey(House, on_delete=PROTECT, null=True)
     housechore_title = models.CharField(max_length=100, default="not assigned")
-    housechore_desc = models.CharField(max_length=100, blank=True, null=True)
+    housechore_desc = models.CharField(max_length=100, default="no description")
     is_staff = models.BooleanField("is_staff", default=False)
     # 仮登録状態→本登録でTrueにする。
     is_active = models.BooleanField("is_active", default=True)

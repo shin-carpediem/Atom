@@ -32,7 +32,7 @@ def signup(request):
                         'あなたのアカウントは現在、仮登録の状態です。\n'
                         '以下のURLをクリックして、アカウントの本登録を行なってください。\n'
                         '\n'
-                        'http://127.0.0.1/signup/done/\n'
+                        'http://127.0.0.1:8000/signup/done/\n'
                         '\n'
                     )
                 else:
@@ -57,28 +57,24 @@ def signup(request):
                 # スーバーユーザーが誤って退会してしまった時に再度ログインできるようにする
                 if new_user.email == DEFAULT_FROM_EMAIL:
                     return render(request, 'users/pls_activate.html')
-                new_user.is_active = False
+                else:
+                    new_user.is_active = False
                 return render(request, 'users/pls_activate.html')
     else:
         form = CustomUserCreationForm()
     return render(request, 'users/signup.html', {'form': form})
 
 
-def pls_activate(request):
-    return render(request, 'users/pls_activate.html')
-
-
 def signup_done(request):
     user = request.user
     user.is_active = True
     user.save()
-    login(request, user)
     return render(request, 'users/signup_done.html')
 
 
 def password_reset(request):
     if DEBUG:
-        return redirect('http://127.0.0.1/admin/password_reset/')
+        return redirect('http://127.0.0.1:8000/admin/password_reset/')
     else:
         return redirect('https://glacial-shore-75579.herokuapp.com/admin/password_reset/')
 
