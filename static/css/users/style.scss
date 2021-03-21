@@ -101,7 +101,8 @@ html {
         .btn {
           @include button;
         }
-        .logout {
+        .logout,
+        .withdraw {
           color: $light-blue;
           cursor: pointer;
           &:hover {

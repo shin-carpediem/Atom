@@ -91,12 +91,14 @@ html body section .container .btn:hover {
   background-color: #609bb6;
 }
 
-html body section .container .logout {
+html body section .container .logout,
+html body section .container .withdraw {
   color: #8ebbcf;
   cursor: pointer;
 }
 
-html body section .container .logout:hover {
+html body section .container .logout:hover,
+html body section .container .withdraw:hover {
   color: #023465;
   text-decoration: underline;
 }
