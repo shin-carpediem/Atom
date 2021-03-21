@@ -1,0 +1,105 @@
+ul {
+  list-style: none;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  color: #8ebbcf;
+}
+
+a:hover {
+  color: #023465;
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+p,
+a,
+label,
+form,
+input {
+  font-size: 14px;
+}
+
+input {
+  border-color: #f8f8f8;
+  border-radius: 4px;
+}
+
+/* Make images easier to work with */
+img,
+picture,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+html body {
+  text-rendering: optimizeSpeed;
+  background-color: #f8f8f8;
+}
+
+@media screen and (max-width: 600px) {
+  html body {
+    font-size: 0.7rem;
+  }
+}
+
+html body section {
+  background-color: #f8f8f8;
+}
+
+html body section .container {
+  background-color: #ffffff;
+  border-radius: 4px;
+  border-color: #c3c2c2;
+}
+
+html body section .container .header {
+  text-align: center;
+  background-color: #609bb6;
+  color: #ffffff;
+  padding: 10px;
+  width: 100%;
+}
+
+html body section .container .btn {
+  padding: 6px;
+  text-align: center;
+  background-color: #8ebbcf;
+  color: #ffffff;
+}
+
+html body section .container .btn:hover {
+  background-color: #609bb6;
+}
+
+html body section .container .logout,
+html body section .container .withdraw {
+  color: #8ebbcf;
+  cursor: pointer;
+}
+
+html body section .container .logout:hover,
+html body section .container .withdraw:hover {
+  color: #023465;
+  text-decoration: underline;
+}
+/*# sourceMappingURL=style.css.map */

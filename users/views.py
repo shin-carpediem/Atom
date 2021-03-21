@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from email.mime.text import MIMEText
 import smtplib
-from .forms import CustomUserCreationForm
-from .models import House
+from .forms import CustomUserCreationForm, HouseChooseForm
+from .models import User, House
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
@@ -78,17 +78,17 @@ def password_reset(request):
 
 @login_required
 def index(request):
-    house = House.objects.all()
-    return render(request, 'users/index.html', {'house': house})
-
-
-@login_required
-def select_house(request):
-    if request.method == 'POST':
+    house_choose_form = HouseChooseForm(request.POST or None)
+    if house_choose_form.is_valid():
+        name = house_choose_form.cleaned_data['name']
         user = request.user
-        user.house = request.POST.get
+        user.house = name
         user.save()
         return render(request, 'app/room.html')
+    ctx = {
+        'house_choose_form': house_choose_form,
+    }
+    return render(request, 'users/index.html', ctx)
 
 
 @login_required
