@@ -29,7 +29,7 @@ def assign_chore(request):
 
             for i in range(UserNum):
                 # i+1 番目のモデルの家事インスタンスを取得
-                housemate = User.objects.get(id=i+1)
+                housemate = User.objects.get(id=1)
                 # i+1 番目のモデルの家事インスタンスを一旦削除
                 housemate.housechore_title = ''
                 # i 番目のモデルの家事インスタンスに、Aを代入
@@ -40,8 +40,9 @@ def assign_chore(request):
                 housemate.housechore_desc = ''
                 housemate.housechore_desc = list_item[i][1]
                 housemate.save()
-
-            messages.success(request, f"割り振りに成功しました。")
+            # forルーブが終わりまで実行された後に行われる処理
+            else:
+                messages.success(request, f"割り振りに成功しました。")
 
         elif UserNum > HouseChoreNum:
             messages.success(
