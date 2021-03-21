@@ -44,7 +44,7 @@ class House(models.Model):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField("email", unique=True)
     name = models.CharField(max_length=20, default="ユーザー")
-    house = models.ForeignKey(House, on_delete=PROTECT, null=True)
+    house = models.ForeignKey(House, on_delete=PROTECT, blank=True, null=True)
     housechore_title = models.CharField(max_length=100, default="not assigned")
     housechore_desc = models.CharField(max_length=100, default="no description")
     is_staff = models.BooleanField("is_staff", default=False)
