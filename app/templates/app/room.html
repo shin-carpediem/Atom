@@ -8,7 +8,7 @@
   <p>このボタンは各ハウスの管理者にのみ見えています</p>
 </div>
 <form action="{% url 'app:assign_chore' %}" method="POST">{% csrf_token %}
-  <input type="submit" value="今週の仕事を割り振る" class="btn w-100 mb-2">
+  <input type="submit" value="今週の家事を割り振る" class="btn w-100 mb-2">
 </form>
 <hr>
 {% endif %}
