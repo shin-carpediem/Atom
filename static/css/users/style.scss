@@ -101,6 +101,14 @@ html {
         .btn {
           @include button;
         }
+        .logout {
+          color: $light-blue;
+          cursor: pointer;
+          &:hover {
+            color: $dark-blue;
+            text-decoration: underline;
+          }
+        }
       }
     }
   }

@@ -90,4 +90,14 @@ html body section .container .btn {
 html body section .container .btn:hover {
   background-color: #609bb6;
 }
+
+html body section .container .logout {
+  color: #8ebbcf;
+  cursor: pointer;
+}
+
+html body section .container .logout:hover {
+  color: #023465;
+  text-decoration: underline;
+}
 /*# sourceMappingURL=style.css.map */

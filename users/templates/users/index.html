@@ -16,13 +16,15 @@
     </select>
     <input type="submit" class="btn w-100" value="このハウスメンバーとして登録">
   </form>
-  <div class="pt-3">
-    <a class="pr-1" href="{% url 'users:logout' %}">ログアウト</a>
+  <div class="pt-3 row">
+    <div class="col-4">
+      <p class="pr-1 logout" id="logout">ログアウト</p>
+    </div>
     {% if user.is_superuser %}
     <a href="/admin/" target="_blank" rel="noopener noreferrer">ハウス管理者</a>
     {% endif %}
   </div>
-  <div class="py-3">
+  <div class="pt-2 pb-3">
     <a href="{% url 'users:withdraw' %}">退会</a>
   </div>
 </div>
