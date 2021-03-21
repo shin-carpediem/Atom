@@ -1,9 +1,8 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-import random
 from .models import HouseChore
-from users.models import House, User
+from users.models import User
 
 
 # Create your views here.

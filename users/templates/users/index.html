@@ -6,16 +6,11 @@
   <p>住んでいるハウスを選択してください</p>
 </div>
 <div class="px-2 mt-4">
-  <form name="select_house" class="mb-4" action="{% url 'users:select_house' %}" method="POST">{% csrf_token %}
-    <select class="w-100 mb-4">
-      {% for house_name in house %}
-      <option name="house_name">
-        {{ house_name.name }}
-      </option>
-      {% endfor %}
-    </select>
-    <input type="submit" class="btn w-100" value="このハウスメンバーとして登録">
+  <form name="select_house" class="mb-4" action="{% url 'users:index' %}" method="POST">{% csrf_token %}
+    {{ house_choose_form.as_p }}
+    <input type="submit" class="mt-2 btn w-100" value="このハウスメンバーとして登録">
   </form>
+
   <div class="pt-3 row">
     <div class="col-4">
       <p class="pr-1 logout" id="logout">ログアウト</p>
