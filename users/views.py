@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from email.mime.text import MIMEText
 import smtplib
 from .forms import CustomUserCreationForm, HouseChooseForm
-from .models import User, House
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
