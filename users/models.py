@@ -4,6 +4,7 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.core.mail import send_mail
 from django.db.models.deletion import PROTECT
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here.
@@ -14,7 +15,7 @@ class UserManager(BaseUserManager):
     def _create_user(self, email, password, **extra_fields):
         # emailを必須にする
         if not email:
-            raise ValueError('The given email must be set.')
+            raise ValueError(_('メールアドレスは必須です'))
         # emailでUserモデルを作成
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
@@ -51,7 +52,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=20, default="ユーザー")
     house = models.ForeignKey(House, on_delete=PROTECT, null=True)
     housechore_title = models.CharField(max_length=100, default="not assigned")
-    housechore_desc = models.CharField(max_length=100, default="no description")
+    housechore_desc = models.CharField(
+        max_length=100, default="no description")
     is_staff = models.BooleanField("is_staff", default=False)
     # 仮登録状態→本登録でTrueにする。
     is_active = models.BooleanField("is_active", default=True)

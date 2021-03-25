@@ -18,8 +18,10 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.conf.urls import url
 from api.urls import router as api_router
+from django.conf.urls.i18n import i18n_patterns
 
-urlpatterns = [
+
+urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path(
         'admin/password_reset/',
@@ -45,4 +47,5 @@ urlpatterns = [
     path('', include('app.urls')),
     path('oauth/', include('social_django.urls', namespace='social')),
     url(r'^api/', include(api_router.urls)),
-]
+    prefix_default_language=False
+)

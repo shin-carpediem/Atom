@@ -1,9 +1,14 @@
 {% extends 'users/base.html' %}
+{% load i18n %}
 {% load static %}
 
 {% block content %}
 <div class="pt-4 pb-3">
-  <p>本登録が完了しました。</p>
-  <a href="{% url 'users:login' %}">ログインページへ</a>
+  <p>
+    {% trans "本登録が完了しました。" %}
+  </p>
+  <a href="{% url 'users:login' %}">
+    {% trans "ログインページへ" %}
+  </a>
 </div>
 {% endblock content %}
