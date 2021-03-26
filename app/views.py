@@ -9,7 +9,6 @@ from users.models import User
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
-# Create your views here.
 @login_required
 def room(request):
     return render(request, 'app/room.html')
@@ -18,7 +17,6 @@ def room(request):
 @login_required
 def assign_chore(request):
     if request.method == 'POST':
-        # ハウスメイトの人数を算出
         UserNum = User.objects.all().count()
         # 家事の個数を算出
         HouseChoreNum = HouseChore.objects.all().count()
