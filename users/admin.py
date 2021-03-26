@@ -20,7 +20,8 @@ class MyUserCreationForm(UserCreationForm):
 
 class MyUserAdmin(UserAdmin):
     fieldsets = (
-        (None, {'fields': ('email', 'password', 'name', 'house')}),
+        (None, {'fields': ('email', 'password', 'name',
+                           'house', 'housechore_title', 'housechore_desc')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff',
                                        'is_superuser', 'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
@@ -31,7 +32,7 @@ class MyUserAdmin(UserAdmin):
     )
     form = MyUserChangeForm
     add_form = MyUserCreationForm
-    list_display = ('email', 'name', 'house', 'is_staff',
+    list_display = ('email', 'name', 'house', 'housechore_title', 'housechore_desc', 'is_staff',
                     'is_superuser', 'is_active')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
     search_fields = ('email', )

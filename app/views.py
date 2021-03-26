@@ -56,26 +56,26 @@ def assign_chore(request):
                         msg = MIMEText(
                             '今週の自分が担当する家事をご確認ください。\n'
                             '\n'
-                            'http://127.0.0.1:8000/room/\n'
+                            'http://127.0.0.1:8000/room\n'
                             '\n'
                             '\n'
                             '\n'
                             'Please check the housework you are in charge of this week. \n'
                             '\n'
-                            'http://127.0.0.1:8000/room/\n'
+                            'http://127.0.0.1:8000/room\n'
                             '\n'
                         )
                     else:
                         msg = MIMEText(
                             '今週の自分が担当する家事をご確認ください。\n'
                             '\n'
-                            'https://glacial-shore-75579.herokuapp.com/room/\n'
+                            'https://glacial-shore-75579.herokuapp.com/room\n'
                             '\n'
                             '\n'
                             '\n'
                             'Please check the housework you are in charge of this week. \n'
                             '\n'
-                            'https://glacial-shore-75579.herokuapp.com/room/\n'
+                            'https://glacial-shore-75579.herokuapp.com/room\n'
                             '\n'
                         )
                     msg['Subject'] = '【Atom】今週の家事が割り振られました / This week’s housework has been allocated'
