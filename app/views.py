@@ -32,7 +32,7 @@ def assign_chore(request):
 
             for i in range(UserNum):
                 # i+1 番目のモデルの家事インスタンスを取得
-                housemate = User.objects.get(email='buru.aoshin@gmail.com')
+                housemate = User.objects.order_by('id')[i]
                 print(housemate)
                 # i+1 番目のモデルの家事インスタンスを一旦削除
                 housemate.housechore_title = ''
@@ -45,65 +45,51 @@ def assign_chore(request):
                 housemate.housechore_desc = list_item[i][1]
                 housemate.save()
 
-            for i in range(UserNum):
-                # i+1 番目のモデルの家事インスタンスを取得
-                housemate = User.objects.get(email='fke129@icloud.com')
-                print(housemate)
-                # i+1 番目のモデルの家事インスタンスを一旦削除
-                housemate.housechore_title = ''
-                # i 番目のモデルの家事インスタンスに、Aを代入
-                housemate.housechore_title = list_item[i][0]
-
-                # 家事モデルのdescフィールドも
-                # Userモデルhousechore_descフィールドに連動させる
-                housemate.housechore_desc = ''
-                housemate.housechore_desc = list_item[i][1]
-                housemate.save()
             # forルーブが終わりまで実行された後に行われる処理
-            # else:
-            #     EMAIL = DEFAULT_FROM_EMAIL
-            #     PASSWORD = EMAIL_HOST_PASSWORD
+            else:
+                EMAIL = DEFAULT_FROM_EMAIL
+                PASSWORD = EMAIL_HOST_PASSWORD
 
-                # # TODO:ここ処理めちゃ長くなっちゃうから、一列で表現できるようにする
-                # for i in range(UserNum):
-                #     TO = (User.objects.all().values_list('email')[i][0])
+                # TODO:ここ処理めちゃ長くなっちゃうから、一列で表現できるようにする
+                for i in range(UserNum):
+                    TO = (User.objects.all().values_list('email')[i][0])
 
-                #     if DEBUG:
-                #         msg = MIMEText(
-                #             '今週の自分が担当する家事をご確認ください。\n'
-                #             '\n'
-                #             'http://127.0.0.1:8000/room\n'
-                #             '\n'
-                #             '\n'
-                #             '\n'
-                #             'Please check the housework you are in charge of this week. \n'
-                #             '\n'
-                #             'http://127.0.0.1:8000/room\n'
-                #             '\n'
-                #         )
-                #     else:
-                #         msg = MIMEText(
-                #             '今週の自分が担当する家事をご確認ください。\n'
-                #             '\n'
-                #             'https://glacial-shore-75579.herokuapp.com/room\n'
-                #             '\n'
-                #             '\n'
-                #             '\n'
-                #             'Please check the housework you are in charge of this week. \n'
-                #             '\n'
-                #             'https://glacial-shore-75579.herokuapp.com/room\n'
-                #             '\n'
-                #         )
-                #     msg['Subject'] = '【Atom】今週の家事が割り振られました / This week’s housework has been allocated'
-                #     msg['From'] = DEFAULT_FROM_EMAIL
-                #     msg['To'] = TO
+                    if DEBUG:
+                        msg = MIMEText(
+                            '今週の自分が担当する家事をご確認ください。\n'
+                            '\n'
+                            'http://127.0.0.1:8000/room\n'
+                            '\n'
+                            '\n'
+                            '\n'
+                            'Please check the housework you are in charge of this week. \n'
+                            '\n'
+                            'http://127.0.0.1:8000/room\n'
+                            '\n'
+                        )
+                    else:
+                        msg = MIMEText(
+                            '今週の自分が担当する家事をご確認ください。\n'
+                            '\n'
+                            'https://glacial-shore-75579.herokuapp.com/room\n'
+                            '\n'
+                            '\n'
+                            '\n'
+                            'Please check the housework you are in charge of this week. \n'
+                            '\n'
+                            'https://glacial-shore-75579.herokuapp.com/room\n'
+                            '\n'
+                        )
+                    msg['Subject'] = '【Atom】今週の家事が割り振られました / This week’s housework has been allocated'
+                    msg['From'] = DEFAULT_FROM_EMAIL
+                    msg['To'] = TO
 
-                #     # access to the socket
-                #     s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-                #     s.starttls()
-                #     s.login(EMAIL, PASSWORD)
-                #     s.sendmail(EMAIL, TO, msg.as_string())
-                #     s.quit()
+                    # access to the socket
+                    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+                    s.starttls()
+                    s.login(EMAIL, PASSWORD)
+                    s.sendmail(EMAIL, TO, msg.as_string())
+                    s.quit()
                 messages.success(
                     request, f"割り振りに成功しました。 / The allocation was successful.")
 
