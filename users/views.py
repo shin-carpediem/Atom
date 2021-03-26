@@ -33,6 +33,14 @@ def signup(request):
                         '\n'
                         'http://127.0.0.1:8000/signup/done/\n'
                         '\n'
+                        '\n'
+                        '\n'
+                        'Thank you for using Atom. \n'
+                        'Your account is currently in a temporary registration status. \n'
+                        'Click the URL below to register your account. \n'
+                        '\n'
+                        'http://127.0.0.1:8000/signup/done/\n'
+                        '\n'
                     )
                 else:
                     msg = MIMEText(
@@ -42,8 +50,16 @@ def signup(request):
                         '\n'
                         'https://glacial-shore-75579.herokuapp.com/signup/done/\n'
                         '\n'
+                        '\n'
+                        '\n'
+                        'Thank you for using Atom. \n'
+                        'Your account is currently in a temporary registration status. \n'
+                        'Click the URL below to register your account. \n'
+                        '\n'
+                        'https://glacial-shore-75579.herokuapp.com/signup/done/\n'
+                        '\n'
                     )
-                msg['Subject'] = '【Atom】本登録をしてください'
+                msg['Subject'] = '【Atom】本登録をしてください / Please make a formal registration'
                 msg['From'] = DEFAULT_FROM_EMAIL
                 msg['To'] = TO
 

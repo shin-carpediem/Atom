@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import gettext as _
 from email.mime.text import MIMEText
 import smtplib
 from .models import HouseChore
@@ -57,6 +58,12 @@ def assign_chore(request):
                             '\n'
                             'http://127.0.0.1:8000/room/\n'
                             '\n'
+                            '\n'
+                            '\n'
+                            'Please check the housework you are in charge of this week. \n'
+                            '\n'
+                            'http://127.0.0.1:8000/room/\n'
+                            '\n'
                         )
                     else:
                         msg = MIMEText(
@@ -64,8 +71,14 @@ def assign_chore(request):
                             '\n'
                             'https://glacial-shore-75579.herokuapp.com/room/\n'
                             '\n'
+                            '\n'
+                            '\n'
+                            'Please check the housework you are in charge of this week. \n'
+                            '\n'
+                            'https://glacial-shore-75579.herokuapp.com/room/\n'
+                            '\n'
                         )
-                    msg['Subject'] = '【Atom】今週の家事が割り振られました'
+                    msg['Subject'] = '【Atom】今週の家事が割り振られました / This week’s housework has been allocated'
                     msg['From'] = DEFAULT_FROM_EMAIL
                     msg['To'] = TO
 
@@ -75,11 +88,11 @@ def assign_chore(request):
                     s.login(EMAIL, PASSWORD)
                     s.sendmail(EMAIL, TO, msg.as_string())
                     s.quit()
-                messages.success(request, f"割り振りに成功しました。")
+                messages.success(request, f"割り振りに成功しました。 / The allocation was successful.")
 
         elif UserNum > HouseChoreNum:
             messages.success(
-                request, f"家事の数が足りません。家事をしなくてもいい人数分、「今週はなし」という家事を作成してください")
+                request, f"家事の数が足りません。家事をしなくてもいい人数分、「今週はなし」という家事を作成してください。/ There are not enough housework. Create a housework called ”Nothing this week” for the number of people who do not have to do the housework.")
             if DEBUG:
                 return redirect('http://127.0.0.1:8000/admin/')
             else:
@@ -87,7 +100,7 @@ def assign_chore(request):
 
         else:
             messages.success(
-                request, f"家事の数がオーバーしています。ハウスメイトの人数分まで家事を削除してください。")
+                request, f"家事の数がオーバーしています。ハウスメイトの人数分まで家事を削除してください。/ The number of household chores is over. Delete up to the number of housemates.")
             if DEBUG:
                 return redirect('http://127.0.0.1:8000/admin/')
             else:

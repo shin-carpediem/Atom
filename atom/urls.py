@@ -46,6 +46,7 @@ urlpatterns = i18n_patterns(
     path('', include('users.urls')),
     path('', include('app.urls')),
     path('oauth/', include('social_django.urls', namespace='social')),
+    path('i18n/', include('django.conf.urls.i18n')),
     url(r'^api/', include(api_router.urls)),
     prefix_default_language=False
 )
