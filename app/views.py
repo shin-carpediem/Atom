@@ -18,75 +18,60 @@ def room(request):
 def assign_chore(request):
     if request.method == 'POST':
         UserNum = User.objects.all().count()
-        # 家事の個数を算出
         HouseChoreNum = HouseChore.objects.all().count()
-        # ハウスメイトの人数と家事の個数が一致するなら家事を割り振る
         if UserNum == HouseChoreNum:
-            # 家事の並び順をシャッフルする
             random_housechore_list = HouseChore.objects.all(
             ).values_list('title', 'description').order_by('?')
-            # titleのクエリセットからリストにする
             list_item = list(random_housechore_list)
-
             for i in range(UserNum):
-                # i+1 番目のモデルの家事インスタンスを取得
-                housemate = User.objects.get(id=1)
-                # i+1 番目のモデルの家事インスタンスを一旦削除
+                housemate = User.objects.order_by('id')[i]
+                print(housemate)
                 housemate.housechore_title = ''
-                # i 番目のモデルの家事インスタンスに、Aを代入
                 housemate.housechore_title = list_item[i][0]
-
-                # 家事モデルのdescフィールドも
-                # Userモデルhousechore_descフィールドに連動させる
                 housemate.housechore_desc = ''
                 housemate.housechore_desc = list_item[i][1]
                 housemate.save()
-            # forルーブが終わりまで実行された後に行われる処理
             else:
                 EMAIL = DEFAULT_FROM_EMAIL
                 PASSWORD = EMAIL_HOST_PASSWORD
-
-                # TODO:ここ処理めちゃ長くなっちゃうから、一列で表現できるようにする
                 for i in range(UserNum):
                     TO = (User.objects.all().values_list('email')[i][0])
-
                     if DEBUG:
                         msg = MIMEText(
                             '今週の自分が担当する家事をご確認ください。\n'
                             '\n'
-                            'http://127.0.0.1:8000/room/\n'
+                            'http://127.0.0.1:8000/room\n'
                             '\n'
                             '\n'
                             '\n'
                             'Please check the housework you are in charge of this week. \n'
                             '\n'
-                            'http://127.0.0.1:8000/room/\n'
+                            'http://127.0.0.1:8000/room\n'
                             '\n'
                         )
                     else:
                         msg = MIMEText(
                             '今週の自分が担当する家事をご確認ください。\n'
                             '\n'
-                            'https://glacial-shore-75579.herokuapp.com/room/\n'
+                            'https://glacial-shore-75579.herokuapp.com/room\n'
                             '\n'
                             '\n'
                             '\n'
                             'Please check the housework you are in charge of this week. \n'
                             '\n'
-                            'https://glacial-shore-75579.herokuapp.com/room/\n'
+                            'https://glacial-shore-75579.herokuapp.com/room\n'
                             '\n'
                         )
                     msg['Subject'] = '【Atom】今週の家事が割り振られました / This week’s housework has been allocated'
                     msg['From'] = DEFAULT_FROM_EMAIL
                     msg['To'] = TO
-
-                    # access to the socket
                     s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
                     s.starttls()
                     s.login(EMAIL, PASSWORD)
                     s.sendmail(EMAIL, TO, msg.as_string())
                     s.quit()
-                messages.success(request, f"割り振りに成功しました。 / The allocation was successful.")
+                messages.success(
+                    request, f"割り振りに成功しました。 / The allocation was successful.")
 
         elif UserNum > HouseChoreNum:
             messages.success(
