@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-26 09:00+0900\n"
+"POT-Creation-Date: 2021-03-26 12:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,31 +23,35 @@ msgid "このボタンは各ハウスの管理者にのみ見えています"
 msgstr "This button is only visible to the manager of each house."
 
 #: app/templates/app/room.html:21
-msgid "今週{{ user.name }}さんが担当する家事"
-msgstr "Housework that {{user.name}} is in charge of this week"
+msgid "今週"
+msgstr "Housework that"
 
-#: app/templates/app/room.html:27
+#: app/templates/app/room.html:23
+msgid "さんが担当する家事"
+msgstr "is in charge of this week"
+
+#: app/templates/app/room.html:29
 msgid "公共費 300円/月"
 msgstr "Public expenses 300 yen / month"
 
-#: app/templates/app/room.html:34
+#: app/templates/app/room.html:36
 msgid "ハウス選択に戻る"
 msgstr "Return to house selection"
 
-#: app/templates/app/room.html:39 users/templates/users/index.html:20
+#: app/templates/app/room.html:41 users/templates/users/index.html:20
 msgid "ログアウト"
 msgstr "Logout"
 
-#: app/templates/app/room.html:43 users/templates/users/index.html:25
+#: app/templates/app/room.html:45 users/templates/users/index.html:25
 #: users/templates/users/login.html:53 users/templates/users/signup.html:52
 msgid "ハウス管理者"
 msgstr "House manager"
 
-#: users/admin.py:24
+#: users/admin.py:25
 msgid "Permissions"
 msgstr ""
 
-#: users/admin.py:26
+#: users/admin.py:27
 msgid "Important dates"
 msgstr ""
 
