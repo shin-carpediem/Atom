@@ -4,6 +4,7 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.core.mail import send_mail
 from django.db.models.deletion import PROTECT
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class UserManager(BaseUserManager):
@@ -11,7 +12,7 @@ class UserManager(BaseUserManager):
 
     def _create_user(self, email, password, **extra_fields):
         if not email:
-            raise ValueError('The given email must be set.')
+            raise ValueError(_('メールアドレスは必須です'))
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -43,10 +44,11 @@ class House(models.Model):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField("email", unique=True)
-    name = models.CharField(max_length=20, default="ユーザー")
-    house = models.ForeignKey(House, on_delete=PROTECT, blank=True, null=True)
-    housechore_title = models.CharField(max_length=100, default="not assigned")
-    housechore_desc = models.CharField(max_length=100, default="no description")
+    name = models.CharField(max_length=20, default=_("ユーザー"))
+    house = models.ForeignKey(House, on_delete=PROTECT, null=True)
+    housechore_title = models.CharField(max_length=100, default=_("割り当てられていません"))
+    housechore_desc = models.CharField(
+        max_length=100, default=_("詳細なし"))
     is_staff = models.BooleanField("is_staff", default=False)
     is_active = models.BooleanField("is_active", default=True)
     date_joined = models.DateTimeField("date_joined", default=timezone.now)

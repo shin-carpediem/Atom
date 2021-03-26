@@ -1,8 +1,11 @@
 {% extends 'users/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block content %}
 <div class="text-center my-5">
-  <p>住んでいるハウスを選択してください</p>
+  <p>
+    {% trans "住んでいるハウスを選択してください" %}
+  </p>
 </div>
 <div class="px-2 mt-4">
   <form name="select_house" class="mb-4" action="{% url 'users:index' %}" method="POST">{% csrf_token %}
@@ -12,14 +15,20 @@
 
   <div class="pt-3 row">
     <div class="col-4">
-      <p class="logout" id="logout">ログアウト</p>
+      <p class="logout" id="logout">
+        {% trans "ログアウト" %}
+      </p>
     </div>
     {% if user.is_superuser %}
-    <a href="/admin/" target="_blank" rel="noopener noreferrer">ハウス管理者</a>
+    <a href="/admin/" target="_blank" rel="noopener noreferrer">
+      {% trans "ハウス管理者" %}
+    </a>
     {% endif %}
   </div>
   <div class="py-2 row">
-    <p class="withdraw col-4" id="withdraw">退会</p>
+    <p class="withdraw col-4" id="withdraw">
+      {% trans "退会" %}
+    </p>
   </div>
 </div>
 {% endblock %}

@@ -1,38 +1,56 @@
 {% extends 'users/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block content %}
 <div class="header">
-  <h5>ログイン</h5>
+  <h5>
+    {% trans "ログイン" %}
+  </h5>
 </div>
 <div class="px-2 mt-4">
   <form method="post">{% csrf_token %}
     {% if form.errors %}
-    <p>Emailかパスワードが間違っています。</p>
+    <p>
+      {% trans "Emailかパスワードが間違っています。" %}
+    </p>
     {% endif %}
     <label>Email:</label><br>
     <input name="username" class="w-100 py-1"><br>
-    <label class="pt-3">パスワード:</label><br>
+    <label class="pt-3">
+      {% trans "パスワード:" %}
+    </label><br>
     <input type="password" name="password" class="w-100 py-1"><br>
     <div class="text-center mt-4 mb-3">
       <input type="submit" value="ログイン" class="btn px-3">
     </div>
   </form>
   <div class="pt-3">
-    <a href="{% url 'users:password_reset' %}" target="_blank" rel="noopener noreferrer">パスワードを忘れましたか？</a>
+    <a href="{% url 'users:password_reset' %}" target="_blank" rel="noopener noreferrer">
+      {% trans "パスワードを忘れましたか？" %}
+    </a>
   </div>
   <div class="my-4">
     <a class="btn btn-block btn-social btn-google" href="{% url 'social:begin' 'google-oauth2' %}">
-      <span class="fa fa-google"></span>Googleでログイン
+      <span class="fa fa-google"></span>
+      {% trans "Googleでログイン" %}
     </a>
   </div>
   <div class="pt-3">
-    <a href="{% url 'users:signup' %}">新規登録はこちらから</a>
+    <a href="{% url 'users:signup' %}">
+      {% trans "新規登録はこちらから" %}
+    </a>
   </div>
   <div class="py-3">
-    <a class="pr-2" href="{% url 'users:policy' %}" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>
-    <a class="pr-2" href="{% url 'users:terms' %}" target="_blank" rel="noopener noreferrer">利用規約</a>
+    <a class="pr-2" href="{% url 'users:policy' %}" target="_blank" rel="noopener noreferrer">
+      {% trans "プライバシーポリシー" %}
+    </a>
+    <a class="pr-2" href="{% url 'users:terms' %}" target="_blank" rel="noopener noreferrer">
+      {% trans "利用規約" %}
+    </a>
     {% if user.is_superuser %}
-    <a href="/admin/" target="_blank" rel="noopener noreferrer">ハウス管理者</a>
+    <a href="/admin/" target="_blank" rel="noopener noreferrer">
+      {% trans "ハウス管理者" %}
+    </a>
     {% endif %}
   </div>
 </div>

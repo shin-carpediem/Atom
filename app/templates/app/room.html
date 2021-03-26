@@ -1,9 +1,12 @@
 {% extends 'app/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block content %}
 {% if user.is_superuser %}
 <div class="text-center mt-5 mb-3">
-  <p>このボタンは各ハウスの管理者にのみ見えています</p>
+  <p>
+    {% trans "このボタンは各ハウスの管理者にのみ見えています" %}
+  </p>
 </div>
 <form action="{% url 'app:assign_chore' %}" method="POST">{% csrf_token %}
   <input type="submit" value="今週の家事を割り振る" class="btn w-100 mb-2">
@@ -12,21 +15,31 @@
 {% endif %}
 <div class="row mt-3">
   <div class="col-11 mx-auto">
-    <p><b>今週{{ user.name }}さんが担当する家事</b></p><br>
+    <p><b>
+      {% trans "今週{{ user.name }}さんが担当する家事" %}
+    </b></p><br>
     <h5 class="pl-1">{{ user.housechore_title }}</h5>
     <p class="pl-3 pt-1">{{ user.housechore_desc }}</p>
     <br>
-    <p class="pl-1">公共費 500円/月</p>
+    <p class="pl-1">
+      {% trans "公共費 300円/月" %}
+    </p>
   </div>
 </div>
 <hr>
 <div class="pt-1">
-  <a href="{% url 'users:index' %}">ハウス選択に戻る</a>
+  <a href="{% url 'users:index' %}">
+    {% trans "ハウス選択に戻る" %}
+  </a>
 </div>
 <div class="py-3">
-  <a class="pr-1" href="{% url 'users:logout' %}">ログアウト</a>
+  <a class="pr-1" href="{% url 'users:logout' %}">
+    {% trans "ログアウト" %}
+  </a>
   {% if user.is_superuser %}
-  <a href="/admin/" target="_blank" rel="noopener noreferrer">ハウス管理者</a>
+  <a href="/admin/" target="_blank" rel="noopener noreferrer">
+    {% trans "ハウス管理者" %}
+  </a>
   {% endif %}
 </div>
 {% endblock %}

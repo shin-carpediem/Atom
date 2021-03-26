@@ -1,0 +1,145 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-26 09:00+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: app/templates/app/room.html:10
+msgid "このボタンは各ハウスの管理者にのみ見えています"
+msgstr "This button is only visible to the manager of each house."
+
+#: app/templates/app/room.html:21
+msgid "今週{{ user.name }}さんが担当する家事"
+msgstr "Housework that {{user.name}} is in charge of this week"
+
+#: app/templates/app/room.html:27
+msgid "公共費 300円/月"
+msgstr "Public expenses 300 yen / month"
+
+#: app/templates/app/room.html:34
+msgid "ハウス選択に戻る"
+msgstr "Return to house selection"
+
+#: app/templates/app/room.html:39 users/templates/users/index.html:20
+msgid "ログアウト"
+msgstr "Logout"
+
+#: app/templates/app/room.html:43 users/templates/users/index.html:25
+#: users/templates/users/login.html:53 users/templates/users/signup.html:52
+msgid "ハウス管理者"
+msgstr "House manager"
+
+#: users/admin.py:24
+msgid "Permissions"
+msgstr ""
+
+#: users/admin.py:26
+msgid "Important dates"
+msgstr ""
+
+#: users/models.py:18
+msgid "メールアドレスは必須です"
+msgstr "Email address is required"
+
+#: users/models.py:52
+msgid "ユーザー"
+msgstr "User"
+
+#: users/models.py:54
+msgid "割り当てられていません"
+msgstr "not assigned"
+
+#: users/models.py:56
+msgid "詳細なし"
+msgstr "no description"
+
+#: users/templates/users/index.html:8
+msgid "住んでいるハウスを選択してください"
+msgstr "Please select the house you live in."
+
+#: users/templates/users/index.html:31
+msgid "退会"
+msgstr "Withdraw"
+
+#: users/templates/users/login.html:8 users/templates/users/signup.html:40
+msgid "ログイン"
+msgstr "Login"
+
+#: users/templates/users/login.html:15
+msgid "Emailかパスワードが間違っています。"
+msgstr "The email or password is incorrect."
+
+#: users/templates/users/login.html:21 users/templates/users/signup.html:16
+msgid "パスワード:"
+msgstr "Password:"
+
+#: users/templates/users/login.html:30
+msgid "パスワードを忘れましたか？"
+msgstr "Did you forget your password?"
+
+#: users/templates/users/login.html:36
+msgid "Googleでログイン"
+msgstr "Login with google"
+
+#: users/templates/users/login.html:41
+msgid "新規登録はこちらから"
+msgstr "New registration is here"
+
+#: users/templates/users/login.html:46 users/templates/users/signup.html:45
+msgid "プライバシーポリシー"
+msgstr "privacy policy"
+
+#: users/templates/users/login.html:49 users/templates/users/signup.html:48
+msgid "利用規約"
+msgstr "Terms of service"
+
+#: users/templates/users/pls_activate.html:8
+msgid "あなたのメールアドレス宛てに本登録用のメールを送りました。"
+msgstr ""
+"We have sent an e-mail for official registration to your e-mail address."
+
+#: users/templates/users/pls_activate.html:11
+msgid "メールのURLをクリックして、本登録を完了させてください。"
+msgstr "Click the URL in the email to complete the main registration."
+
+#: users/templates/users/signup.html:8
+msgid "新規登録"
+msgstr "Sign up"
+
+#: users/templates/users/signup.html:21
+msgid "パスワード(確認):"
+msgstr "Password (confirmation):"
+
+#: users/templates/users/signup.html:35
+msgid "Googleで新規登録"
+msgstr "New registration on Google"
+
+#: users/templates/users/signup_done.html:8
+msgid "本登録が完了しました。"
+msgstr "This registration is complete."
+
+#: users/templates/users/signup_done.html:11
+msgid "ログインページへ"
+msgstr "Go to login page"
+
+#: users/templates/users/withdraw.html:8
+msgid "アカウントが削除され、退会処理が完了しました。"
+msgstr "Your account has been deleted and the withdrawal process is complete."
+
+#: users/templates/users/withdraw.html:11
+msgid "ご利用ありがとうございました。"
+msgstr "Thank you for using."

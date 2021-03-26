@@ -1,8 +1,13 @@
 {% extends 'users/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block content %}
 <div class="pt-4 pb-3">
-  <p>アカウントが削除され、退会処理が完了しました。</p>
-  <p>ご利用ありがとうございました。</p>
+  <p>
+    {% trans "アカウントが削除され、退会処理が完了しました。" %}
+  </p>
+  <p>
+    {% trans "ご利用ありがとうございました。" %}
+  </p>
 </div>
 {% endblock content %}
