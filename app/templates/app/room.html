@@ -40,9 +40,13 @@
   <a class="pr-1" href="{% url 'users:logout' %}">
     {% trans "ログアウト" %}
   </a>
-  {% if user.is_superuser %}
+  {% if user.is_staff %}
   <a href="/admin/" target="_blank" rel="noopener noreferrer">
-    {% trans "ハウス管理者" %}
+    {% trans "ハウス管理" %}
+  </a>
+  {% else %}
+  <a href="{% url 'app:request_house_owner' %}">
+    {% trans "ハウス管理者権限の申請" %}
   </a>
   {% endif %}
 </div>

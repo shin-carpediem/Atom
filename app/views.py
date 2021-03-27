@@ -110,3 +110,43 @@ def assign_chore(request):
                 return redirect('https://glacial-shore-75579.herokuapp.com/admin/')
 
         return redirect('app:room')
+
+
+@login_required
+def request_house_owner(request):
+    EMAIL = request.user.email
+    PASSWORD = EMAIL_HOST_PASSWORD
+    TO = DEFAULT_FROM_EMAIL
+
+    if DEBUG:
+        msg = MIMEText(
+            'ユーザーからハウス管理者権限の申請が届きました。\n'
+            '\n'
+            'is_staffをTrueにしてください。\n'
+            '\n'
+            'http://127.0.0.1:8000/admin/\n'
+            '\n'
+        )
+    else:
+        msg = MIMEText(
+            'ユーザーからハウス管理者権限の申請が届きました。\n'
+            '\n'
+            'is_staffをTrueにしてください。\n'
+            '\n'
+            'https://glacial-shore-75579.herokuapp.com/admin/\n'
+            '\n'
+        )
+    msg['Subject'] = '【Atom】ユーザーからハウス管理者権限の申請が届きました'
+    msg['From'] = EMAIL
+    msg['To'] = TO
+
+    # access to the socket
+    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+    s.starttls()
+    s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+    s.sendmail(EMAIL, TO, msg.as_string())
+    s.quit()
+    messages.success(
+        request, f"ハウス管理者権限の申請が完了しました / Application for house administrator authority has been completed.")
+
+    return render(request, 'app/room.html')
