@@ -17,18 +17,18 @@ def room(request):
 @login_required
 def assign_chore(request):
     if request.method == 'POST':
-        UserNum = User.objects.filter(house=request.user.house).count()
+        UserNum = User.objects.filter(
+            house=request.user.house, is_active='True').count()
         HouseChoreNum = HouseChore.objects.filter(
             house=request.user.house).count()
         if UserNum == HouseChoreNum:
-            # 家事の並び順をシャッフルする
             random_housechore_list = HouseChore.objects.filter(
                 house=request.user.house).values_list('title', 'description').order_by('?')
-            # titleのクエリセットからリストにする
             list_item = list(random_housechore_list)
             for i in range(UserNum):
                 housemate = User.objects.filter(
-                    house=request.user.house).order_by('id')[i]
+                    house=request.user.house, is_active='True').order_by('id')[i]
+                # i+1 番目のモデルの家事インスタンスを一旦削除
                 housemate.housechore_title = ''
                 housemate.housechore_title = list_item[i][0]
                 housemate.housechore_desc = ''
@@ -39,7 +39,7 @@ def assign_chore(request):
                 PASSWORD = EMAIL_HOST_PASSWORD
                 for i in range(UserNum):
                     TO = (User.objects.filter(
-                        house=request.user.house).values_list('email')[i][0])
+                        house=request.user.house, is_active='True').values_list('email')[i][0])
                     if DEBUG:
                         msg = MIMEText(
                             '今週の自分が担当する家事をご確認ください。\n'
@@ -85,7 +85,7 @@ def assign_chore(request):
                 return redirect('https://glacial-shore-75579.herokuapp.com/admin/')
         else:
             messages.success(
-                request, f"家事の数がオーバーしています。ハウスメイトの人数分まで家事を削除してください。/ The number of household chores is over. Delete up to the number of housemates.")
+                request, f"家事の数がオーバーしています。(メール認証が完了している)ハウスメイトの人数分まで家事を削除してください。/ The number of household chores is over. Delete up to the number of housemates (whose email verification has been completed).")
             if DEBUG:
                 return redirect('http://127.0.0.1:8000/admin/')
             else:
@@ -126,5 +126,5 @@ def request_house_owner(request):
     s.sendmail(EMAIL, TO, msg.as_string())
     s.quit()
     messages.success(
-        request, f"ハウス管理者権限の申請が完了しました / Application for house administrator authority has been completed.")
+        request, f"ハウス管理者権限の申請が完了しました。 / Application for house administrator authority has been completed.")
     return render(request, 'app/room.html')
