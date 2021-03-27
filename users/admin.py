@@ -33,7 +33,8 @@ class MyUserAdmin(UserAdmin):
     add_form = MyUserCreationForm
     list_display = ('email', 'name', 'house', 'housechore_title', 'housechore_desc', 'is_staff',
                     'is_superuser', 'is_active')
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
+    list_editable = ('house', 'is_staff', 'is_active')
+    list_filter = ('house', 'is_staff', 'is_active', 'groups')
     search_fields = ('email', )
     ordering = ('email', )
 

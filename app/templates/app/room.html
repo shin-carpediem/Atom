@@ -2,7 +2,8 @@
 {% load i18n %}
 {% load static %}
 {% block content %}
-{% if user.is_superuser %}
+
+{% if user.is_staff %}
 <div class="text-center mt-5 mb-3">
   <p>
     {% trans "このボタンは各ハウスの管理者にのみ見えています" %}
@@ -30,17 +31,21 @@
 </div>
 <hr>
 <div class="pt-1">
-  <a href="{% url 'users:index' %}">
-    {% trans "ハウス選択に戻る" %}
+  <a href="{% url 'users:request_ch_house' %}">
+    {% trans "ハウスを間違えましたか？" %}
   </a>
 </div>
 <div class="py-3">
   <a class="pr-1" href="{% url 'users:logout' %}">
     {% trans "ログアウト" %}
   </a>
-  {% if user.is_superuser %}
+  {% if user.is_staff %}
   <a href="/admin/" target="_blank" rel="noopener noreferrer">
-    {% trans "ハウス管理者" %}
+    {% trans "ハウス管理" %}
+  </a>
+  {% else %}
+  <a href="{% url 'app:request_house_owner' %}">
+    {% trans "ハウス管理者権限の申請" %}
   </a>
   {% endif %}
 </div>

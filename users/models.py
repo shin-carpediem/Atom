@@ -49,6 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     housechore_title = models.CharField(max_length=100, default=_("割り当てられていません"))
     housechore_desc = models.CharField(
         max_length=100, default=_("詳細なし"))
+    # ハウス管理者権限を付与する場合、Trueにする。
     is_staff = models.BooleanField("is_staff", default=False)
     is_active = models.BooleanField("is_active", default=True)
     date_joined = models.DateTimeField("date_joined", default=timezone.now)
