@@ -18,21 +18,25 @@ def room(request):
 @login_required
 def assign_chore(request):
     if request.method == 'POST':
-        # ハウスメイトの人数を算出
-        UserNum = User.objects.all().count()
-        # 家事の個数を算出
-        HouseChoreNum = HouseChore.objects.all().count()
+        # is_staff権限のユーザーのハウスと同じハウスメイトの人数を算出
+        UserNum = User.objects.filter(house=request.user.house).count()
+        print(UserNum)
+        # is_staff権限のユーザーのハウスの家事の個数を算出
+        HouseChoreNum = HouseChore.objects.filter(
+            house=request.user.house).count()
+        print(HouseChoreNum)
         # ハウスメイトの人数と家事の個数が一致するなら家事を割り振る
         if UserNum == HouseChoreNum:
             # 家事の並び順をシャッフルする
-            random_housechore_list = HouseChore.objects.all(
-            ).values_list('title', 'description').order_by('?')
+            random_housechore_list = HouseChore.objects.filter(
+                house=request.user.house).values_list('title', 'description').order_by('?')
             # titleのクエリセットからリストにする
             list_item = list(random_housechore_list)
 
             for i in range(UserNum):
                 # i+1 番目のモデルの家事インスタンスを取得
-                housemate = User.objects.order_by('id')[i]
+                housemate = User.objects.filter(
+                    house=request.user.house).order_by('id')[i]
                 print(housemate)
                 # i+1 番目のモデルの家事インスタンスを一旦削除
                 housemate.housechore_title = ''
@@ -52,7 +56,8 @@ def assign_chore(request):
 
                 # TODO:ここ処理めちゃ長くなっちゃうから、一列で表現できるようにする
                 for i in range(UserNum):
-                    TO = (User.objects.all().values_list('email')[i][0])
+                    TO = (User.objects.filter(
+                        house=request.user.house).values_list('email')[i][0])
 
                     if DEBUG:
                         msg = MIMEText(
