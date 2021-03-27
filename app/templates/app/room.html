@@ -4,7 +4,7 @@
 
 {% block content %}
 
-{% if user.is_superuser %}
+{% if user.is_staff %}
 <div class="text-center mt-5 mb-3">
   <p>
     {% trans "このボタンは各ハウスの管理者にのみ見えています" %}

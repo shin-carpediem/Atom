@@ -124,16 +124,12 @@ def request_ch_house(request):
         msg = MIMEText(
             'ユーザーからハウス変更の申請が届きました。\n'
             '\n'
-            'is_staffをTrueにしてください。\n'
-            '\n'
             'http://127.0.0.1:8000/admin/\n'
             '\n'
         )
     else:
         msg = MIMEText(
             'ユーザーからハウス変更の申請が届きました。\n'
-            '\n'
-            'is_staffをTrueにしてください。\n'
             '\n'
             'https://glacial-shore-75579.herokuapp.com/admin/\n'
             '\n'
@@ -164,12 +160,16 @@ def request_house_owner(request):
         msg = MIMEText(
             'ユーザーからハウス管理者権限の申請が届きました。\n'
             '\n'
+            'is_staffをTrueにしてください。\n'
+            '\n'
             'http://127.0.0.1:8000/admin/\n'
             '\n'
         )
     else:
         msg = MIMEText(
             'ユーザーからハウス管理者権限の申請が届きました。\n'
+            '\n'
+            'is_staffをTrueにしてください。\n'
             '\n'
             'https://glacial-shore-75579.herokuapp.com/admin/\n'
             '\n'

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-26 12:10+0900\n"
+"POT-Creation-Date: 2021-03-27 15:34+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,17 +35,20 @@ msgid "公共費 300円/月"
 msgstr "Public expenses 300 yen / month"
 
 #: app/templates/app/room.html:36
-msgid "ハウス選択に戻る"
-msgstr "Return to house selection"
+msgid "ハウスを間違えましたか？"
+msgstr "Did you make a mistake in the house?"
 
-#: app/templates/app/room.html:41 users/templates/users/index.html:20
+#: app/templates/app/room.html:41 users/templates/users/index.html:31
 msgid "ログアウト"
 msgstr "Logout"
 
-#: app/templates/app/room.html:45 users/templates/users/index.html:25
-#: users/templates/users/login.html:53 users/templates/users/signup.html:52
-msgid "ハウス管理者"
-msgstr "House manager"
+#: app/templates/app/room.html:45 users/templates/users/index.html:36
+msgid "ハウス管理"
+msgstr "House manage"
+
+#: app/templates/app/room.html:49 users/templates/users/index.html:40
+msgid "ハウス管理者権限の申請"
+msgstr "Application for house administrator authority"
 
 #: users/admin.py:25
 msgid "Permissions"
@@ -71,11 +74,19 @@ msgstr "not assigned"
 msgid "詳細なし"
 msgstr "no description"
 
-#: users/templates/users/index.html:8
+#: users/templates/users/index.html:9
 msgid "住んでいるハウスを選択してください"
 msgstr "Please select the house you live in."
 
-#: users/templates/users/index.html:31
+#: users/templates/users/index.html:19
+msgid "あなたは"
+msgstr "You are registered as"
+
+#: users/templates/users/index.html:21
+msgid "ハウスメイトとして登録しています"
+msgstr "housemate"
+
+#: users/templates/users/index.html:46
 msgid "退会"
 msgstr "Withdraw"
 
@@ -110,6 +121,10 @@ msgstr "privacy policy"
 #: users/templates/users/login.html:49 users/templates/users/signup.html:48
 msgid "利用規約"
 msgstr "Terms of service"
+
+#: users/templates/users/login.html:53 users/templates/users/signup.html:52
+msgid "ハウス管理者"
+msgstr "House manager"
 
 #: users/templates/users/pls_activate.html:8
 msgid "あなたのメールアドレス宛てに本登録用のメールを送りました。"
