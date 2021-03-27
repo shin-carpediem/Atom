@@ -18,13 +18,12 @@ def room(request):
 @login_required
 def assign_chore(request):
     if request.method == 'POST':
-        # is_staff権限のユーザーのハウスと同じハウスメイトの人数を算出
-        UserNum = User.objects.filter(house=request.user.house).count()
-        print(UserNum)
+        # is_staff権限のユーザーのハウスと同じハウスメイト(is_active=true)の人数を算出
+        UserNum = User.objects.filter(
+            house=request.user.house, is_active='True').count()
         # is_staff権限のユーザーのハウスの家事の個数を算出
         HouseChoreNum = HouseChore.objects.filter(
             house=request.user.house).count()
-        print(HouseChoreNum)
         # ハウスメイトの人数と家事の個数が一致するなら家事を割り振る
         if UserNum == HouseChoreNum:
             # 家事の並び順をシャッフルする
@@ -36,7 +35,7 @@ def assign_chore(request):
             for i in range(UserNum):
                 # i+1 番目のモデルの家事インスタンスを取得
                 housemate = User.objects.filter(
-                    house=request.user.house).order_by('id')[i]
+                    house=request.user.house, is_active='True').order_by('id')[i]
                 print(housemate)
                 # i+1 番目のモデルの家事インスタンスを一旦削除
                 housemate.housechore_title = ''
@@ -57,7 +56,7 @@ def assign_chore(request):
                 # TODO:ここ処理めちゃ長くなっちゃうから、一列で表現できるようにする
                 for i in range(UserNum):
                     TO = (User.objects.filter(
-                        house=request.user.house).values_list('email')[i][0])
+                        house=request.user.house, is_active='True').values_list('email')[i][0])
 
                     if DEBUG:
                         msg = MIMEText(
@@ -108,7 +107,7 @@ def assign_chore(request):
 
         else:
             messages.success(
-                request, f"家事の数がオーバーしています。ハウスメイトの人数分まで家事を削除してください。/ The number of household chores is over. Delete up to the number of housemates.")
+                request, f"家事の数がオーバーしています。(メール認証が完了している)ハウスメイトの人数分まで家事を削除してください。/ The number of household chores is over. Delete up to the number of housemates (whose email verification has been completed).")
             if DEBUG:
                 return redirect('http://127.0.0.1:8000/admin/')
             else:

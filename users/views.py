@@ -145,7 +145,7 @@ def request_ch_house(request):
     s.sendmail(EMAIL, TO, msg.as_string())
     s.quit()
     messages.success(
-        request, f"ハウス名変更の申請が完了しました / The application for changing the house name has been completed.")
+        request, f"ハウス名変更の申請が完了しました。 / The application for changing the house name has been completed.")
 
     return render(request, 'users/index.html')
 
@@ -185,7 +185,7 @@ def request_house_owner(request):
     s.sendmail(EMAIL, TO, msg.as_string())
     s.quit()
     messages.success(
-        request, f"ハウス管理者権限の申請が完了しました / Application for house administrator authority has been completed.")
+        request, f"ハウス管理者権限の申請が完了しました。 / Application for house administrator authority has been completed.")
 
     return render(request, 'users/index.html')
 
