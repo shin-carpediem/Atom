@@ -1,5 +1,6 @@
 from django.http import request
 from django.shortcuts import redirect, render
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from email.mime.text import MIMEText
@@ -111,6 +112,43 @@ def index(request):
     }
 
     return render(request, 'users/index.html', ctx)
+
+
+@login_required
+def request_ch_house(request):
+    EMAIL = request.user.email
+    print(EMAIL)
+    PASSWORD = EMAIL_HOST_PASSWORD
+    TO = DEFAULT_FROM_EMAIL
+
+    if DEBUG:
+        msg = MIMEText(
+            'ユーザーからハウス変更の申請が届きました。\n'
+            '\n'
+            'http://127.0.0.1:8000/admin/\n'
+            '\n'
+        )
+    else:
+        msg = MIMEText(
+            'ユーザーからハウス変更の申請が届きました。\n'
+            '\n'
+            'https://glacial-shore-75579.herokuapp.com/admin/\n'
+            '\n'
+        )
+    msg['Subject'] = '【Atom】ユーザーからハウス変更の申請が届きました'
+    msg['From'] = EMAIL
+    msg['To'] = TO
+
+    # access to the socket
+    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+    s.starttls()
+    s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+    s.sendmail(EMAIL, TO, msg.as_string())
+    s.quit()
+    messages.success(
+        request, f"ハウス名変更の申請が完了しました / The application for changing the house name has been completed.")
+
+    return render(request, 'users/index.html')
 
 
 @login_required

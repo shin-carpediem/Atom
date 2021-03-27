@@ -4,8 +4,9 @@
 
 {% block content %}
 <div class="text-center my-5">
+  {% if request.user.house == '' %}
   <p>
-    {% trans "住んでいるハウスを選択してください" %}
+      {% trans "住んでいるハウスを選択してください" %}
   </p>
 </div>
 <div class="px-2 mt-4">
@@ -13,6 +14,16 @@
     {{ house_choose_form.as_p }}
     <input type="submit" class="mt-2 btn w-100" value="このハウスメンバーとして登録">
   </form>
+  {% else %}
+  <p class="px-2 mt-4">
+    {% trans "あなたは" %}
+    {{ request.user.house }}
+    {% trans "ハウスメイトとして登録しています" %}
+  </p>
+  <form action="{% url 'app:room' %}" method="POST">{% csrf_token %}
+    <input type="submit" class="mt-2 mb-5 btn w-100" value="割り振られた家事を見る">
+  </form>
+  {% endif %}
 
   <div class="pt-3 row">
     <div class="col-4">

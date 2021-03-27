@@ -102,4 +102,9 @@ html body section .container .withdraw:hover {
   color: #023465;
   text-decoration: underline;
 }
+
+.message-success {
+  background-color: #609bb6;
+  color: #ffffff;
+}
 /*# sourceMappingURL=style.css.map */
