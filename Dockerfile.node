@@ -1,7 +1,0 @@
-FROM node:12.16.2
-RUN mkdir /code
-WORKDIR /code
-ADD package.json /code/
-RUN npm install create-react-app
-RUN npm install axios
-ADD . /code/
