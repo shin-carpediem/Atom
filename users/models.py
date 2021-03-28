@@ -50,7 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # カスタムユーザーモデル
     email = models.EmailField("email", unique=True)
     name = models.CharField(max_length=20, default=_("ユーザー"))
-    house = models.ForeignKey(House, on_delete=PROTECT, null=True)
+    house = models.ForeignKey(House, on_delete=PROTECT, blank=True, null=True)
     housechore_title = models.CharField(max_length=100, default=_("割り当てられていません"))
     housechore_desc = models.CharField(
         max_length=100, default=_("詳細なし"))

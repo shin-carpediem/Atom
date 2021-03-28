@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-27 15:34+0900\n"
+"POT-Creation-Date: 2021-03-28 10:07+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: app/models.py:9
+msgid "家事"
+msgstr "House chore"
 
 #: app/templates/app/room.html:10
 msgid "このボタンは各ハウスの管理者にのみ見えています"
@@ -128,8 +132,7 @@ msgstr "House manager"
 
 #: users/templates/users/pls_activate.html:8
 msgid "あなたのメールアドレス宛てに本登録用のメールを送りました。"
-msgstr ""
-"We have sent an e-mail for official registration to your e-mail address."
+msgstr "We have sent an e-mail for official registration to your e-mail address."
 
 #: users/templates/users/pls_activate.html:11
 msgid "メールのURLをクリックして、本登録を完了させてください。"
