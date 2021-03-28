@@ -3,7 +3,6 @@ from users.models import House
 from django.db.models.deletion import CASCADE
 
 
-# Create your models here.
 class HouseChore(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)

@@ -26,7 +26,7 @@ local
 unique to production
 
 - heroku==7.50.0
-- postgresql
+- postgresql==13.2
 - gunicorn
 - node==12.16.2
 
