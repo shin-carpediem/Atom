@@ -18,3 +18,5 @@ django-environ
 social-auth-app-django
 # recapcthaの認証機能をdjangoに全て任せる
 django-recaptcha2
+# モデルのインスタンス毎に権限設定をするのに必要
+django-guardian

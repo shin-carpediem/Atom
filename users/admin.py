@@ -34,11 +34,18 @@ class MyUserAdmin(UserAdmin):
     add_form = MyUserCreationForm
     list_display = ('email', 'name', 'house', 'housechore_title', 'housechore_desc', 'is_staff',
                     'is_superuser', 'is_active')
-    list_editable = ('house', 'is_staff', 'is_active')
+    list_editable = ('house', 'is_staff')
     list_filter = ('house', 'is_staff', 'is_active', 'groups')
     search_fields = ('email', )
     ordering = ('email', )
 
 
+class HouseAdmin(admin.ModelAdmin):
+    fields = ['name', 'created_at']
+    list_display = ('name', 'created_at')
+    search_fields = ('name', )
+    ordering = ('name', )
+
+
 admin.site.register(User, MyUserAdmin)
-admin.site.register(House)
+admin.site.register(House, HouseAdmin)
