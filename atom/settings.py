@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'social_django',
     'snowpenguin.django.recaptcha2',
     'guardian',
+    'rules.apps.AutodiscoverRulesConfig',
 ]
 
 
@@ -119,6 +120,7 @@ TEMPLATES = [
 ]
 
 AUTHENTICATION_BACKENDS = (
+    'rules.permissions.ObjectPermissionBackend',
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'guardian.backends.ObjectPermissionBackend',
