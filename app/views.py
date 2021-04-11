@@ -117,6 +117,24 @@ def assign_chore(request):
 
 
 @login_required
+def finish_task(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.user.id)
+        values = request.POST.getlist('task')
+        print(values)
+        if 'weekly' in values:
+            print('weekly')
+            user.done_weekly = True
+            print(user.done_weekly)
+        if 'monthly' in values:
+            print('monthly')
+            user.done_monthly = True
+    user.save()
+    return redirect('app:room')
+    # return render(request, 'app/room.html')
+
+
+@login_required
 def request_house_owner(request):
     EMAIL = request.user.email
     PASSWORD = EMAIL_HOST_PASSWORD
