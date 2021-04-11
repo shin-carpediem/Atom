@@ -46,7 +46,7 @@
   <a class="pr-1" href="{% url 'users:terms' %}" target="_blank" rel="noopener noreferrer">
     {% trans "利用規約" %}
   </a>
-  {% if user.is_superuser %}
+  {% if user.is_staff %}
   <a href="/admin/" target="_blank" rel="noopener noreferrer">
     {% trans "ハウス管理者" %}
   </a>

@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.db.models.deletion import PROTECT
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from guardian.shortcuts import assign_perm
 
 
 class UserManager(BaseUserManager):
@@ -35,8 +36,8 @@ class UserManager(BaseUserManager):
 
 
 class House(models.Model):
-    name = models.CharField(max_length=20, default="House")
-    created_at = models.DateTimeField(auto_now=True)
+    name = models.CharField("ハウス名", max_length=20, default="House")
+    created_at = models.DateTimeField("作成日", auto_now=True)
 
     def __str__(self):
         return self.name
@@ -44,15 +45,14 @@ class House(models.Model):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField("email", unique=True)
-    name = models.CharField(max_length=20, default=_("ユーザー"))
+    name = models.CharField("ユーザー名", max_length=20, default=_("ユーザー"))
     house = models.ForeignKey(House, on_delete=PROTECT, blank=True, null=True)
-    housechore_title = models.CharField(max_length=100, default=_("割り当てられていません"))
-    housechore_desc = models.CharField(
-        max_length=100, default=_("詳細なし"))
-    # ハウス管理者権限を付与する場合、Trueにする。
-    is_staff = models.BooleanField("is_staff", default=False)
-    is_active = models.BooleanField("is_active", default=True)
-    date_joined = models.DateTimeField("date_joined", default=timezone.now)
+    housechore_title = models.CharField(
+        "家事", max_length=100, default=_("割り当てられていません"))
+    housechore_desc = models.CharField("詳細", max_length=100, default=_("詳細なし"))
+    is_staff = models.BooleanField("ハウス管理者権限", default=False)
+    is_active = models.BooleanField("本登録完了", default=True)
+    date_joined = models.DateTimeField("仮登録日", default=timezone.now)
 
     objects = UserManager()
 

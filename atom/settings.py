@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'social_django',
     'snowpenguin.django.recaptcha2',
+    'guardian',
+    'rules.apps.AutodiscoverRulesConfig',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -99,8 +101,10 @@ TEMPLATES = [
 ]
 
 AUTHENTICATION_BACKENDS = (
+    'rules.permissions.ObjectPermissionBackend',
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
 )
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")

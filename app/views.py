@@ -91,7 +91,7 @@ def assign_chore(request):
             else:
                 return redirect('https://glacial-shore-75579.herokuapp.com/admin/')
 
-        return redirect('app:room')
+    return redirect('app:room')
 
 
 @login_required
