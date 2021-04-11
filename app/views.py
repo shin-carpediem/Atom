@@ -37,6 +37,9 @@ def assign_chore(request):
                 housemate = User.objects.filter(
                     house=request.user.house, is_active='True').order_by('id')[i]
                 print(housemate)
+                # ハウスメイトの家事実施状況をyetにする
+                housemate.done_weekly = False
+                print(housemate)
                 # i+1 番目のモデルの家事インスタンスを一旦削除
                 housemate.housechore_title = ''
                 # i 番目のモデルの家事インスタンスに、Aを代入
@@ -121,17 +124,41 @@ def finish_task(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
         values = request.POST.getlist('task')
-        print(values)
         if 'weekly' in values:
-            print('weekly')
             user.done_weekly = True
-            print(user.done_weekly)
         if 'monthly' in values:
-            print('monthly')
             user.done_monthly = True
     user.save()
+
+    EMAIL = request.user.email
+    PASSWORD = EMAIL_HOST_PASSWORD
+    TO = DEFAULT_FROM_EMAIL
+
+    if DEBUG:
+        msg = MIMEText(
+            'ハウスメイトから家事完了の連絡を受けました。\n'
+            '\n'
+        )
+    else:
+        msg = MIMEText(
+            'You received a notification from your housemate that he/she finised the housework.\n'
+            '\n'
+        )
+    msg['Subject'] = '【Atom】ハウスメイトから家事完了の連絡を受けました'
+    msg['From'] = EMAIL
+    msg['To'] = TO
+
+    # access to the socket
+    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+    s.starttls()
+    s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+    s.sendmail(EMAIL, TO, msg.as_string())
+    s.quit()
+    messages.success(request, f"報告できました。 / The a report was successful.")
     return redirect('app:room')
-    # return render(request, 'app/room.html')
+
+
+
 
 
 @login_required

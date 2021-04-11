@@ -39,7 +39,11 @@
     <div class="d-flex">
       <input type="checkbox" class="mt-1" name="task" value="monthly">
       <p class="pl-1" style="font-size:smaller;">
-      {% trans "公共費 300円/毎月25日" %}
+      {% trans "公共費" %}
+      {{ user.house_common_fee }}
+      {% trans "円 / 毎月" %}
+      {{ user.house_common_fee_date }}
+      {% trans "日" %}
       </p>
     </div>
     {% endif %}
