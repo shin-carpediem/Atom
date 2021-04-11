@@ -12,22 +12,45 @@
 <form action="{% url 'app:assign_chore' %}" method="POST">{% csrf_token %}
   <input type="submit" value="今週の家事を割り振る" class="btn w-100 mb-2">
 </form>
+<form action="{% url 'app:reset_common_fee' %}" method="POST">{% csrf_token %}
+  <input type="submit" value="共益費を再度表示する" class="btn w-100 mb-2">
+</form>
 <hr>
 {% endif %}
 <div class="row mt-3">
-  <div class="col-11 mx-auto">
+  <form class="col-11 mx-auto" action="{% url 'app:finish_task' %}" method="POST">{% csrf_token %}
     <p><b>
       {% trans "今週" %}
       {{ user.name }}
       {% trans "さんが担当する家事" %}
     </b></p><br>
-    <h5 class="pl-1">{{ user.housechore_title }}</h5>
-    <p class="pl-3 pt-1">{{ user.housechore_desc }}</p>
-    <br>
-    <p class="pl-1">
-      {% trans "公共費 300円/月" %}
+    <p style="font-size:smaller;">
+      終わったらチェックを入れて
+      <br>
+      送信ボタンを押してください
     </p>
-  </div>
+    {% if user.done_weekly == False %}
+    <div class="d-flex">
+      <input type="checkbox" class="mt-1" name="task" value="weekly">
+      <h5 class="pl-1">{{ user.housechore_title }}</h5>
+    </div>
+      <p class="pl-3 pt-1">{{ user.housechore_desc }}</p>
+    {% endif %}
+    <br>
+    {% if user.done_monthly == False %}
+    <div class="d-flex">
+      <input type="checkbox" class="mt-1" name="task" value="monthly">
+      <p class="pl-1" style="font-size:smaller;">
+      {% trans "公共費" %}
+      {{ user.house_common_fee }}
+      {% trans "円 / 毎月" %}
+      {{ user.house_common_fee_date }}
+      {% trans "日" %}
+      </p>
+    </div>
+    {% endif %}
+    <button type="submit" class="btn w-100 mb-2">送信</button>
+  </form>
 </div>
 <hr>
 <div class="pt-1">

@@ -28,7 +28,9 @@ def assign_chore(request):
             for i in range(UserNum):
                 housemate = User.objects.filter(
                     house=request.user.house, is_active='True').order_by('id')[i]
-                # i+1 番目のモデルの家事インスタンスを一旦削除
+                print(housemate)
+                housemate.done_weekly = False
+                print(housemate)
                 housemate.housechore_title = ''
                 housemate.housechore_title = list_item[i][0]
                 housemate.housechore_desc = ''
@@ -91,6 +93,56 @@ def assign_chore(request):
             else:
                 return redirect('https://glacial-shore-75579.herokuapp.com/admin/')
 
+    return redirect('app:room')
+
+
+@login_required
+def reset_common_fee(request):
+    if request.method == 'POST':
+        UserNum = User.objects.filter(
+            house=request.user.house, is_active='True').count()
+        for i in range(UserNum):
+            housemate = User.objects.filter(
+                house=request.user.house, is_active='True').order_by('id')[i]
+            housemate.done_monthly = False
+            housemate.save()
+        messages.success(
+            request, f"ハウスメイト全員分の共益費支払いをリセットしました。/ It was successful in resetting common fee for all housemates.")
+    return redirect('app:room')
+
+
+@login_required
+def finish_task(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.user.id)
+        values = request.POST.getlist('task')
+        if 'weekly' in values:
+            user.done_weekly = True
+        if 'monthly' in values:
+            user.done_monthly = True
+    user.save()
+    EMAIL = request.user.email
+    PASSWORD = EMAIL_HOST_PASSWORD
+    TO = DEFAULT_FROM_EMAIL
+    if DEBUG:
+        msg = MIMEText(
+            'ハウスメイトから家事完了の連絡を受けました。\n'
+            '\n'
+        )
+    else:
+        msg = MIMEText(
+            'You received a notification from your housemate that he/she finised the housework.\n'
+            '\n'
+        )
+    msg['Subject'] = '【Atom】ハウスメイトから家事完了の連絡を受けました'
+    msg['From'] = EMAIL
+    msg['To'] = TO
+    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+    s.starttls()
+    s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+    s.sendmail(EMAIL, TO, msg.as_string())
+    s.quit()
+    messages.success(request, f"報告できました。 / The a report was successful.")
     return redirect('app:room')
 
 
