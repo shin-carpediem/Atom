@@ -1,4 +1,4 @@
-Django==2.2.13
+Django==2.2.20
 # postgreSQLドライバ
 psycopg2==2.7.6
 psycopg2-binary==2.7.7
@@ -9,7 +9,7 @@ whitenoise
 # DRFに必要
 markdown
 django-filter
-djangorestframework==3.9.2
+djangorestframework==3.11.2
 # React（localhost:3000）からDjango（localhost:8000）のAPIを叩く際に必要
 django-cors-headers==2.5.2
 # シークレット環境変数の設定に必要
