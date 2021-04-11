@@ -3,7 +3,7 @@
 {% load static %}
 {% block content %}
 <div class="text-center my-5">
-  {% if request.user.house == '' %}
+  {% if request.user.house == None %}
   <p>
       {% trans "住んでいるハウスを選択してください" %}
   </p>
