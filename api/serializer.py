@@ -8,17 +8,17 @@ from app.models import HouseChore
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'name', 'house_title', 'house_desc', 'is_staff',
+        fields = ('id', 'email', 'name', 'house', 'house_common_fee', 'house_common_fee_date', 'housechore_title', 'housechore_desc', 'done_weekly', 'done_monthly', 'is_staff',
                   'is_active', 'date_joined')
 
 
 class HouseSerializer(serializers.ModelSerializer):
     class Meta:
         model = House
-        fields = ('id', 'name', 'created_at')
+        fields = ('id', 'name', 'common_fee', 'common_fee_date', 'created_at')
 
 
 class HouseChoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = HouseChore
-        fields = ('title', 'description')
+        fields = ('title', 'description', 'house')

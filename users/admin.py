@@ -21,7 +21,7 @@ class MyUserCreationForm(UserCreationForm):
 class MyUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password', 'name',
-                           'house', 'housechore_title', 'housechore_desc', 'done_weekly', 'done_monthly')}),
+                           'house', 'house_common_fee', 'house_common_fee_date', 'housechore_title', 'housechore_desc', 'done_weekly', 'done_monthly')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff',
                                        'is_superuser', 'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
@@ -36,7 +36,7 @@ class MyUserAdmin(UserAdmin):
                     'is_superuser', 'is_active')
     list_editable = ('house', 'house_common_fee',
                      'house_common_fee_date', 'done_weekly', 'done_monthly')
-    list_filter = ('house', 'done_weekly', 'done_monthly',
+    list_filter = ('house', 'house_common_fee', 'house_common_fee_date', 'done_weekly', 'done_monthly',
                    'is_staff', 'is_active', 'groups')
     search_fields = ('email', )
     ordering = ('email', )
