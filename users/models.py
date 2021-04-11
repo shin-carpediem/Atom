@@ -39,8 +39,8 @@ class UserManager(BaseUserManager):
 
 class House(models.Model):
     name = models.CharField("ハウス名", max_length=20, default="House")
-    common_fee = models.PositiveIntegerField("共益費", blank=True, null=True, default=500)
-    common_fee_date = models.PositiveIntegerField("共益費の支払い期日", blank=True, null=True, default=25)
+    common_fee = models.PositiveIntegerField("共益費", blank=True, null=True)
+    common_fee_date = models.PositiveIntegerField("共益費の支払い期日", blank=True, null=True)
     created_at = models.DateTimeField("作成日", auto_now=True)
 
     def __str__(self):
@@ -51,8 +51,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField("email", unique=True)
     name = models.CharField("ユーザー名", max_length=20, default=_("ユーザー"))
     house = models.ForeignKey(House, on_delete=PROTECT, blank=True, null=True)
-    house_common_fee = models.PositiveIntegerField("共益費", blank=True, null=True, default=500)
-    house_common_fee_date = models.PositiveIntegerField("共益費の支払い期日", blank=True, null=True, default=25)
+    house_common_fee = models.PositiveIntegerField("共益費", blank=True, null=True)
+    house_common_fee_date = models.PositiveIntegerField("共益費の支払い期日", blank=True, null=True)
     housechore_title = models.CharField("家事", max_length=100, default=_("割り当てられていません"))
     housechore_desc = models.CharField("詳細", max_length=100, default=_("詳細なし"))
     done_weekly = models.BooleanField("毎週の家事完了", blank=True, null=True, default=False)
