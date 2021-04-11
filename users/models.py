@@ -56,8 +56,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     housechore_title = models.CharField(
         "家事", max_length=100, default=_("割り当てられていません"))
     housechore_desc = models.CharField("詳細", max_length=100, default=_("詳細なし"))
-    done_weekly = models.BooleanField("毎週の家事完了", default=False)
-    done_monthly = models.BooleanField("公益費の支払い完了", default=False)
+    done_weekly = models.BooleanField(
+        "毎週の家事完了", blank=True, null=True, default=False)
+    done_monthly = models.BooleanField(
+        "公益費の支払い完了", blank=True, null=True, default=False)
     is_staff = models.BooleanField("ハウス管理者権限", default=False)
     is_active = models.BooleanField("本登録完了", default=True)
     date_joined = models.DateTimeField("仮登録日", default=timezone.now)
