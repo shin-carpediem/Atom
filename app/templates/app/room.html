@@ -10,10 +10,14 @@
   </p>
 </div>
 <form action="{% url 'app:assign_chore' %}" method="POST">{% csrf_token %}
-  <input type="submit" value="今週の家事を割り振る" class="btn w-100 mb-2">
+  <button type="submit" class="btn w-100 mb-2">
+    {% trans "今週の家事を割り振る" %}
+  </button>
 </form>
 <form action="{% url 'app:reset_common_fee' %}" method="POST">{% csrf_token %}
-  <input type="submit" value="共益費を再度表示する" class="btn w-100 mb-2">
+  <button type="submit" class="btn w-100 mb-2">
+    {% trans "共益費を再度表示する" %}
+  </button>
 </form>
 <hr>
 {% endif %}
@@ -25,9 +29,9 @@
       {% trans "さんが担当する家事" %}
     </b></p><br>
     <p style="font-size:smaller;">
-      終わったらチェックを入れて
+      {% trans "終わったらチェックを入れて" %}
       <br>
-      送信ボタンを押してください
+      {% trans "送信ボタンを押してください" %}
     </p>
     {% if user.done_weekly == False %}
     <div class="d-flex">
@@ -49,7 +53,9 @@
       </p>
     </div>
     {% endif %}
-    <button type="submit" class="btn w-100 mb-2">送信</button>
+    <button type="submit" class="btn w-100 mb-2">
+      {% trans "送信" %}
+    </button>
   </form>
 </div>
 <hr>

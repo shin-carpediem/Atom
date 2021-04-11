@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-28 10:07+0900\n"
+"POT-Creation-Date: 2021-04-11 15:40+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,55 +26,83 @@ msgstr "House chore"
 msgid "このボタンは各ハウスの管理者にのみ見えています"
 msgstr "This button is only visible to the manager of each house."
 
-#: app/templates/app/room.html:21
+#: app/templates/app/room.html:15
+msgid "今週の家事を割り振る"
+msgstr "Allocate this week's housechore"
+
+#: app/templates/app/room.html:20
+msgid "共益費を再度表示する"
+msgstr "Show common fee again"
+
+#: app/templates/app/room.html:28
 msgid "今週"
 msgstr "Housework that"
 
-#: app/templates/app/room.html:23
+#: app/templates/app/room.html:30
 msgid "さんが担当する家事"
 msgstr "is in charge of this week"
 
-#: app/templates/app/room.html:29
-msgid "公共費 300円/月"
-msgstr "Public expenses 300 yen / month"
+#: app/templates/app/room.html:33
+msgid "終わったらチェックを入れて"
+msgstr "Check it when you have done and"
 
-#: app/templates/app/room.html:36
+#: app/templates/app/room.html:35
+msgid "送信ボタンを押してください"
+msgstr "press the submit button."
+
+#: app/templates/app/room.html:49
+msgid "公共費"
+msgstr "Public expenses"
+
+#: app/templates/app/room.html:51
+msgid "円 / 毎月"
+msgstr "yen / month"
+
+#: app/templates/app/room.html:53
+msgid "日"
+msgstr "date"
+
+#: app/templates/app/room.html:58
+msgid "送信"
+msgstr "Submit"
+
+#: app/templates/app/room.html:65
 msgid "ハウスを間違えましたか？"
 msgstr "Did you make a mistake in the house?"
 
-#: app/templates/app/room.html:41 users/templates/users/index.html:31
+#: app/templates/app/room.html:70 users/templates/users/index.html:35
 msgid "ログアウト"
 msgstr "Logout"
 
-#: app/templates/app/room.html:45 users/templates/users/index.html:36
+#: app/templates/app/room.html:74 users/templates/users/index.html:40
 msgid "ハウス管理"
 msgstr "House manage"
 
-#: app/templates/app/room.html:49 users/templates/users/index.html:40
+#: app/templates/app/room.html:78 users/templates/users/index.html:44
 msgid "ハウス管理者権限の申請"
 msgstr "Application for house administrator authority"
 
-#: users/admin.py:25
+#: users/admin.py:26
 msgid "Permissions"
-msgstr ""
+msgstr "権限"
 
-#: users/admin.py:27
+#: users/admin.py:28
 msgid "Important dates"
-msgstr ""
+msgstr "重要な日付"
 
-#: users/models.py:18
+#: users/models.py:19
 msgid "メールアドレスは必須です"
 msgstr "Email address is required"
 
-#: users/models.py:52
+#: users/models.py:55
 msgid "ユーザー"
 msgstr "User"
 
-#: users/models.py:54
+#: users/models.py:62
 msgid "割り当てられていません"
 msgstr "not assigned"
 
-#: users/models.py:56
+#: users/models.py:63
 msgid "詳細なし"
 msgstr "no description"
 
@@ -82,19 +110,28 @@ msgstr "no description"
 msgid "住んでいるハウスを選択してください"
 msgstr "Please select the house you live in."
 
-#: users/templates/users/index.html:19
+#: users/templates/users/index.html:16
+msgid "このハウスメンバーとして登録"
+msgstr "a member of this house"
+
+#: users/templates/users/index.html:21
 msgid "あなたは"
 msgstr "You are registered as"
 
-#: users/templates/users/index.html:21
+#: users/templates/users/index.html:23
 msgid "ハウスメイトとして登録しています"
 msgstr "housemate"
 
-#: users/templates/users/index.html:46
+#: users/templates/users/index.html:27
+msgid "割り振られた家事を見る"
+msgstr "View assigned housechore"
+
+#: users/templates/users/index.html:50
 msgid "退会"
 msgstr "Withdraw"
 
-#: users/templates/users/login.html:8 users/templates/users/signup.html:40
+#: users/templates/users/login.html:8 users/templates/users/login.html:26
+#: users/templates/users/signup.html:42
 msgid "ログイン"
 msgstr "Login"
 
@@ -106,39 +143,40 @@ msgstr "The email or password is incorrect."
 msgid "パスワード:"
 msgstr "Password:"
 
-#: users/templates/users/login.html:30
+#: users/templates/users/login.html:32
 msgid "パスワードを忘れましたか？"
 msgstr "Did you forget your password?"
 
-#: users/templates/users/login.html:36
+#: users/templates/users/login.html:38
 msgid "Googleでログイン"
 msgstr "Login with google"
 
-#: users/templates/users/login.html:41
+#: users/templates/users/login.html:43
 msgid "新規登録はこちらから"
 msgstr "New registration is here"
 
-#: users/templates/users/login.html:46 users/templates/users/signup.html:45
+#: users/templates/users/login.html:48 users/templates/users/signup.html:47
 msgid "プライバシーポリシー"
 msgstr "privacy policy"
 
-#: users/templates/users/login.html:49 users/templates/users/signup.html:48
+#: users/templates/users/login.html:51 users/templates/users/signup.html:50
 msgid "利用規約"
 msgstr "Terms of service"
 
-#: users/templates/users/login.html:53 users/templates/users/signup.html:52
+#: users/templates/users/login.html:55 users/templates/users/signup.html:54
 msgid "ハウス管理者"
 msgstr "House manager"
 
 #: users/templates/users/pls_activate.html:8
 msgid "あなたのメールアドレス宛てに本登録用のメールを送りました。"
-msgstr "We have sent an e-mail for official registration to your e-mail address."
+msgstr ""
+"We have sent an e-mail for official registration to your e-mail address."
 
 #: users/templates/users/pls_activate.html:11
 msgid "メールのURLをクリックして、本登録を完了させてください。"
 msgstr "Click the URL in the email to complete the main registration."
 
-#: users/templates/users/signup.html:8
+#: users/templates/users/signup.html:8 users/templates/users/signup.html:30
 msgid "新規登録"
 msgstr "Sign up"
 
@@ -146,7 +184,7 @@ msgstr "Sign up"
 msgid "パスワード(確認):"
 msgstr "Password (confirmation):"
 
-#: users/templates/users/signup.html:35
+#: users/templates/users/signup.html:37
 msgid "Googleで新規登録"
 msgstr "New registration on Google"
 
