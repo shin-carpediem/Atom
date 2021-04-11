@@ -37,8 +37,8 @@ class UserManager(BaseUserManager):
 
 class House(models.Model):
     name = models.CharField("ハウス名", max_length=20, default="House")
-    common_fee = models.PositiveIntegerField(default=500)
-    common_fee_date = models.PositiveIntegerField(default=25)
+    common_fee = models.PositiveIntegerField(blank=True, null=True, default=500)
+    common_fee_date = models.PositiveIntegerField(blank=True, null=True, default=25)
     created_at = models.DateTimeField("作成日", auto_now=True)
 
     def __str__(self):
@@ -57,9 +57,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         "家事", max_length=100, default=_("割り当てられていません"))
     housechore_desc = models.CharField("詳細", max_length=100, default=_("詳細なし"))
     done_weekly = models.BooleanField(
-        "毎週の家事完了", blank=True, null=True, default=False)
+        "毎週の家事完了", default=False, blank=True, null=True)
     done_monthly = models.BooleanField(
-        "公益費の支払い完了", blank=True, null=True, default=False)
+        "公益費の支払い完了", default=False, blank=True, null=True)
     is_staff = models.BooleanField("ハウス管理者権限", default=False)
     is_active = models.BooleanField("本登録完了", default=True)
     date_joined = models.DateTimeField("仮登録日", default=timezone.now)
