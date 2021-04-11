@@ -120,6 +120,21 @@ def assign_chore(request):
 
 
 @login_required
+def reset_common_fee(request):
+    if request.method == 'POST':
+        UserNum = User.objects.filter(
+            house=request.user.house, is_active='True').count()
+        for i in range(UserNum):
+            housemate = User.objects.filter(
+                house=request.user.house, is_active='True').order_by('id')[i]
+            housemate.done_monthly = False
+            housemate.save()
+        messages.success(
+            request, f"ハウスメイト全員分の共益費支払いをリセットしました。/ It was successful in resetting common fee for all housemates.")
+    return redirect('app:room')
+
+
+@login_required
 def finish_task(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
@@ -156,9 +171,6 @@ def finish_task(request):
     s.quit()
     messages.success(request, f"報告できました。 / The a report was successful.")
     return redirect('app:room')
-
-
-
 
 
 @login_required

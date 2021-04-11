@@ -46,7 +46,7 @@ class House(models.Model):
     created_at = models.DateTimeField("作成日", auto_now=True)
 
     def __str__(self):
-        return self.name + self.common_fee
+        return self.name + str(self.common_fee) + str(self.common_fee_date)
 
 
 class User(AbstractBaseUser, PermissionsMixin):

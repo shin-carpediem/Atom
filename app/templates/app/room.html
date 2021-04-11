@@ -13,6 +13,9 @@
 <form action="{% url 'app:assign_chore' %}" method="POST">{% csrf_token %}
   <input type="submit" value="今週の家事を割り振る" class="btn w-100 mb-2">
 </form>
+<form action="{% url 'app:reset_common_fee' %}" method="POST">{% csrf_token %}
+  <input type="submit" value="共益費を再度表示する" class="btn w-100 mb-2">
+</form>
 <hr>
 {% endif %}
 <div class="row mt-3">
@@ -47,7 +50,7 @@
       </p>
     </div>
     {% endif %}
-    <button type="submit" class="btn px-3">送信</button>
+    <button type="submit" class="btn w-100 mb-2">送信</button>
   </form>
 </div>
 <hr>
