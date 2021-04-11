@@ -149,16 +149,13 @@ def finish_task(request):
     PASSWORD = EMAIL_HOST_PASSWORD
     TO = DEFAULT_FROM_EMAIL
 
-    if DEBUG:
-        msg = MIMEText(
-            'ハウスメイトから家事完了の連絡を受けました。\n'
-            '\n'
-        )
-    else:
-        msg = MIMEText(
-            'You received a notification from your housemate that he/she finised the housework.\n'
-            '\n'
-        )
+    msg = MIMEText(
+        'ハウスメイトから家事完了の連絡を受けました。\n'
+        '\n'
+        '\n'
+        'You received a notification from your housemate that he/she finised the housework.\n'
+        '\n'
+    )
     msg['Subject'] = '【Atom】ハウスメイトから家事完了の連絡を受けました'
     msg['From'] = EMAIL
     msg['To'] = TO
@@ -187,12 +184,26 @@ def request_house_owner(request):
             '\n'
             'http://127.0.0.1:8000/admin/\n'
             '\n'
+            '\n'
+            'You received an application for house administrator privileges from a user.\n'
+            '\n'
+            'Please set is_staff of this user to True.\n'
+            '\n'
+            'http://127.0.0.1:8000/admin/\n'
+            '\n'
         )
     else:
         msg = MIMEText(
             'ユーザーからハウス管理者権限の申請が届きました。\n'
             '\n'
             'is_staffをTrueにしてください。\n'
+            '\n'
+            'https://glacial-shore-75579.herokuapp.com/admin/\n'
+            '\n'
+            '\n'
+            'You received an application for house administrator privileges from a user.\n'
+            '\n'
+            'Please set is_staff of this user to True.\n'
             '\n'
             'https://glacial-shore-75579.herokuapp.com/admin/\n'
             '\n'
