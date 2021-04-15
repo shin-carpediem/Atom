@@ -10,7 +10,7 @@ local
 - docker-compose==1.25.5
 - python==3.7.10
 - pip==20.2.1
-- django==3.0.10
+- django==3.0.14
 - node==12.16.2
 - npm==6.14.4
 - yarn==1.22.4
