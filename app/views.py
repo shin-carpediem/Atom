@@ -59,13 +59,13 @@ def assign_chore(request):
                         msg = MIMEText(
                             '今週の自分が担当する家事をご確認ください。\n'
                             '\n'
-                            'https://glacial-shore-75579.herokuapp.com/room\n'
+                            'https://atom-production.herokuapp.com/room\n'
                             '\n'
                             '\n'
                             '\n'
                             'Please check the housework you are in charge of this week. \n'
                             '\n'
-                            'https://glacial-shore-75579.herokuapp.com/room\n'
+                            'https://atom-production.herokuapp.com/room\n'
                             '\n'
                         )
                     msg['Subject'] = '【Atom】今週の家事が割り振られました / This week’s housework has been allocated'
@@ -84,14 +84,15 @@ def assign_chore(request):
             if DEBUG:
                 return redirect('http://127.0.0.1:8000/admin/')
             else:
-                return redirect('https://glacial-shore-75579.herokuapp.com/admin/')
+                return redirect('https://atom-production.herokuapp.com/admin/')
+
         else:
             messages.success(
                 request, f"家事の数がオーバーしています。(メール認証が完了している)ハウスメイトの人数分まで家事を削除してください。/ The number of household chores is over. Delete up to the number of housemates (whose email verification has been completed).")
             if DEBUG:
                 return redirect('http://127.0.0.1:8000/admin/')
             else:
-                return redirect('https://glacial-shore-75579.herokuapp.com/admin/')
+                return redirect('https://atom-production.herokuapp.com/admin/')
 
     return redirect('app:room')
 
@@ -170,14 +171,14 @@ def request_house_owner(request):
             '\n'
             'is_staffをTrueにしてください。\n'
             '\n'
-            'https://glacial-shore-75579.herokuapp.com/admin/\n'
+            'https://atom-production.herokuapp.com/admin/\n'
             '\n'
             '\n'
             'You received an application for house administrator privileges from a user.\n'
             '\n'
             'Please set is_staff of this user to True.\n'
             '\n'
-            'https://glacial-shore-75579.herokuapp.com/admin/\n'
+            'https://atom-production.herokuapp.com/admin/\n'
             '\n'
         )
     msg['Subject'] = '【Atom】ユーザーからハウス管理者権限の申請が届きました'
