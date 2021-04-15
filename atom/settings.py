@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'app',
     'api',
     'rest_framework',
-    'corsheaders',
+    # 'corsheaders',
     'social_django',
     'snowpenguin.django.recaptcha2',
     'guardian',
@@ -216,11 +216,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # https://www.valentinog.com/blog/drf/#Django_REST_with_React_setting_up_React_and_webpack
 # disable the browseable API in production with this configuration
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    )
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_RENDERER_CLASSES': (
+#         'rest_framework.renderers.JSONRenderer',
+#     )
+# }
 
 LOGGING = {
     'version': 1,
@@ -260,7 +260,7 @@ LOGGING = {
 # クロスドメイン（異なるドメイン間）でのRequestを許可し、
 # 同一ドメインでのRequestのように処理できるようになるライブラリ。
 # React（localhost:3000）からDjango（localhost:8000）のAPIを叩く際に必要。
-CORS_ORIGIN_WHITELIST = (
-    'localhost:3000/',
-    'localhost:3000',
-)
+# CORS_ORIGIN_WHITELIST = (
+#     'localhost:3000/',
+#     'localhost:3000',
+# )
