@@ -103,7 +103,8 @@ https://hodalog.com/tutorial-django-rest-framework-and-react/
 ```
 $ docker-compose run --rm react sh -c "npm i -g create-react-app && create-react-app hogehoge"
 ```
-- [ ] Change inner files/directories' path from app/* to BASE_DIR/*.
+
+- [ ] Change inner files/directories' path from app/_ to BASE_DIR/_.
 
 - [ ] Install npm.
 
@@ -116,6 +117,7 @@ $ docker-compose run --rm react npm install
 ```
 $ docker-compose run --rm --service-ports react npm start
 ```
+
 - [ ] Then, type "localhost:3000" at search screen, you can see the content of /src/App.js !
 
 ## How to deploy to Heroku?
@@ -171,36 +173,53 @@ $ heroku ps:scale web=0
 ```
 $ heroku ps:scale web=1
 ```
+
 - [ ] To check log,
 
 ```
 $ heroku logs --tail
 ```
 
+- [ ] To enter files at heroku,
+
+```
+$ heroku run bash
+```
+
 ### How to set environment variables at Heroku?
+
 https://developer.yukimonkey.com/article/20200423/
 
 - [ ] To register environment variables,
+
 ```
 $ heroku config:set hoge="hogehoge"
 ```
+
 - [ ] If you want to confirm,
+
 ```
 $ heroku config
 ```
+
 ## How to deploy Django × React at Heroku?
+
 https://dev.to/mdrhmn/deploying-react-django-app-using-heroku-2gfa
 
 - [ ] Install Axios.
+
 ```
 $ docker-compose run --rm react sh -c "npm i -g axios"
 ```
+
 - [ ] add proxy at package.json like, "proxy": "http://localhost:8000".
 - [ ] add some code at /src/App.js in order to get CSRF token by Axios.
+
 ```
 import axios from 'axios';
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 ```
+
 - [ ] Then, enable Procfile at Heroku GUI.
