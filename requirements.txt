@@ -1,4 +1,4 @@
-Django==2.2.20
+Django==3.0.10
 psycopg2==2.7.6
 psycopg2-binary==2.7.7
 gunicorn
@@ -7,7 +7,6 @@ whitenoise
 markdown
 django-filter
 djangorestframework==3.11.2
-django-cors-headers==2.5.2
 django-environ
 social-auth-app-django
 django-recaptcha2

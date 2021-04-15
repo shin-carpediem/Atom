@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'app',
     'api',
     'rest_framework',
-    'corsheaders',
     'social_django',
     'snowpenguin.django.recaptcha2',
     'guardian',
@@ -173,12 +172,6 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    )
-}
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -212,8 +205,3 @@ LOGGING = {
         },
     }
 }
-
-CORS_ORIGIN_WHITELIST = (
-    'localhost:3000/',
-    'localhost:3000',
-)
