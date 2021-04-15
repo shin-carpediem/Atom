@@ -49,7 +49,7 @@ def signup(request):
                         'あなたのアカウントは現在、仮登録の状態です。\n'
                         '以下のURLをクリックして、アカウントの本登録を行なってください。\n'
                         '\n'
-                        'https://glacial-shore-75579.herokuapp.com/signup/done/\n'
+                        'https://atom-production.herokuapp.com/signup/done/\n'
                         '\n'
                         '\n'
                         '\n'
@@ -57,7 +57,7 @@ def signup(request):
                         'Your account is currently in a temporary registration status. \n'
                         'Click the URL below to register your account. \n'
                         '\n'
-                        'https://glacial-shore-75579.herokuapp.com/signup/done/\n'
+                        'https://atom-production.herokuapp.com/signup/done/\n'
                         '\n'
                     )
                 msg['Subject'] = '【Atom】本登録をしてください / Please make a formal registration'
@@ -92,7 +92,7 @@ def password_reset(request):
     if DEBUG:
         return redirect('http://127.0.0.1:8000/admin/password_reset/')
     else:
-        return redirect('https://glacial-shore-75579.herokuapp.com/admin/password_reset/')
+        return redirect('https://atom-production.herokuapp.com/admin/password_reset/')
 
 
 @login_required
@@ -131,7 +131,7 @@ def request_ch_house(request):
         msg = MIMEText(
             'ユーザーからハウス変更の申請が届きました。\n'
             '\n'
-            'https://glacial-shore-75579.herokuapp.com/admin/\n'
+            'https://atom-production.herokuapp.com/admin/\n'
             '\n'
         )
     msg['Subject'] = '【Atom】ユーザーからハウス変更の申請が届きました'
@@ -171,7 +171,7 @@ def request_house_owner(request):
             '\n'
             'is_staffをTrueにしてください。\n'
             '\n'
-            'https://glacial-shore-75579.herokuapp.com/admin/\n'
+            'https://atom-production.herokuapp.com/admin/\n'
             '\n'
         )
     msg['Subject'] = '【Atom】ユーザーからハウス管理者権限の申請が届きました'
