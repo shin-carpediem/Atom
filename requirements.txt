@@ -4,6 +4,7 @@ psycopg2-binary==2.7.7
 gunicorn
 django-heroku
 whitenoise
+dj-database-url
 markdown
 django-filter
 djangorestframework==3.11.2
