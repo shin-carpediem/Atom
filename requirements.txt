@@ -6,6 +6,8 @@ psycopg2-binary==2.7.7
 gunicorn
 django-heroku
 whitenoise
+# heroku postgreとdjangoとの接続に必要
+dj-database-url
 # DRFに必要
 markdown
 django-filter
