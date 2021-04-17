@@ -39,6 +39,7 @@ def assign_chore(request):
             else:
                 EMAIL = DEFAULT_FROM_EMAIL
                 PASSWORD = EMAIL_HOST_PASSWORD
+                house_owner_email = User.objects.filter(house=request.user.house, is_active='True', is_staff='True').values_list('email')[0][0]
                 for i in range(UserNum):
                     TO = (User.objects.filter(
                         house=request.user.house, is_active='True').values_list('email')[i][0])
@@ -69,7 +70,7 @@ def assign_chore(request):
                             '\n'
                         )
                     msg['Subject'] = '【Atom】今週の家事が割り振られました / This week’s housework has been allocated'
-                    msg['From'] = DEFAULT_FROM_EMAIL
+                    msg['From'] = house_owner_email
                     msg['To'] = TO
                     s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
                     s.starttls()
@@ -124,7 +125,7 @@ def finish_task(request):
     user.save()
     EMAIL = request.user.email
     PASSWORD = EMAIL_HOST_PASSWORD
-    TO = DEFAULT_FROM_EMAIL
+    TO = User.objects.filter(house=request.user.house, is_active='True', is_staff='True').values_list('email')[0][0]
     msg = MIMEText(
         'ハウスメイトから家事完了の連絡を受けました。\n'
         '\n'
@@ -148,7 +149,7 @@ def finish_task(request):
 def request_house_owner(request):
     EMAIL = request.user.email
     PASSWORD = EMAIL_HOST_PASSWORD
-    TO = DEFAULT_FROM_EMAIL
+    TO = User.objects.filter(house=request.user.house, is_active='True', is_staff='True').values_list('email')[0][0]
     if DEBUG:
         msg = MIMEText(
             'ユーザーからハウス管理者権限の申請が届きました。\n'
