@@ -179,6 +179,11 @@ $ heroku ps:scale web=1
 ```
 $ heroku logs --tail
 ```
+- [ ] To connect with database at heroku from local,
+
+```
+$ heroku pg:psql
+```
 
 - [ ] To enter files at heroku,
 
