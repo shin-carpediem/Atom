@@ -67,7 +67,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         "公益費の支払い完了", blank=True, null=True, default=0)
     # ハウス管理者権限を付与する場合、Trueにする。
     is_staff = models.BooleanField("ハウス管理者権限", default=False)
-    # 仮登録状態→本登録でTrueにする。
     is_active = models.BooleanField("本登録完了", default=True)
     date_joined = models.DateTimeField("仮登録日", default=timezone.now)
 
