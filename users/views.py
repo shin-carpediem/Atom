@@ -64,10 +64,6 @@ def signup(request):
                 s.login(EMAIL, PASSWORD)
                 s.sendmail(EMAIL, TO, msg.as_string())
                 s.quit()
-                if new_user.email == DEFAULT_FROM_EMAIL:
-                    return render(request, 'users/pls_activate.html')
-                else:
-                    new_user.is_active = False
                 return render(request, 'users/pls_activate.html')
     else:
         form = CustomUserCreationForm()
@@ -75,9 +71,6 @@ def signup(request):
 
 
 def signup_done(request):
-    user = request.user
-    user.is_active = True
-    user.save()
     return render(request, 'users/signup_done.html')
 
 
@@ -182,7 +175,7 @@ def request_house_owner(request):
 @login_required
 def withdraw(request):
     user = request.user
-    user.delete()
+    user.is_active = False
     return render(request, 'users/withdraw.html')
 
 

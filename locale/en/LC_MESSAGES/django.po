@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-11 15:40+0900\n"
+"POT-Creation-Date: 2021-04-18 19:36+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -197,8 +197,8 @@ msgid "ログインページへ"
 msgstr "Go to login page"
 
 #: users/templates/users/withdraw.html:8
-msgid "アカウントが削除され、退会処理が完了しました。"
-msgstr "Your account has been deleted and the withdrawal process is complete."
+msgid "アカウントがdeactivateされ、退会処理が完了しました。"
+msgstr "Your account has been deactivated and the withdrawal process is complete."
 
 #: users/templates/users/withdraw.html:11
 msgid "ご利用ありがとうございました。"
