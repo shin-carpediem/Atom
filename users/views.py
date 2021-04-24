@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
+from axes.backends import AxesBackend
 from email.mime.text import MIMEText
 import smtplib
 from .forms import CustomUserCreationForm, HouseChooseForm, TwoStepAuthForm
@@ -19,7 +19,7 @@ def signup(request):
             new_user = form.save()
             input_email = form.cleaned_data['email']
             input_password = form.cleaned_data['password1']
-            new_user = authenticate(email=input_email, password=input_password)
+            new_user = authenticate(request=request, email=input_email, password=input_password)
             if new_user is not None:
                 login(request, new_user)
 
@@ -34,7 +34,7 @@ def signup(request):
                         'あなたのアカウントは現在、仮登録の状態です。\n'
                         '以下のURLをクリックして、アカウントの本登録を行なってください。\n'
                         '\n'
-                        'http://127.0.0.1:8000/signup/done/\n'
+                        'http://127.0.0.1:8000/signup/doing/\n'
                         '\n'
                         '\n'
                         '\n'
@@ -42,7 +42,7 @@ def signup(request):
                         'Your account is currently in a temporary registration status. \n'
                         'Click the URL below to register your account. \n'
                         '\n'
-                        'http://127.0.0.1:8000/signup/done/\n'
+                        'http://127.0.0.1:8000/signup/doing/\n'
                         '\n'
                     )
                 else:
@@ -97,7 +97,6 @@ def signup_doing(request):
     return render(request, 'users/signup_doing.html', {'two_step_auth_form': two_step_auth_form})
 
 
-@require_POST
 def signup_done(request):
     user = request.user
     user.is_active = True
