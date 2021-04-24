@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load static %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {% trans "ヘルプセンター" %}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'users:inquire' %}" method="GET">
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">
+              {% trans "お問い合わせ内容" %}
+            </label>
+            <textarea class="form-control" id="message-text" name="content" required></textarea>
+          </div>
+          <div class="d-flex pt-2">
+            <button type="button" class="btn w-50 mr-1" data-dismiss="modal">
+              {% trans "キャンセル" %}
+            </button>
+            <button type="submit" class="btn w-50 ml-1">
+              {% trans "送信" %}
+            </button>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>
