@@ -35,7 +35,9 @@
     </p>
     {% if user.done_weekly == False %}
     <div class="d-flex">
-      <input type="checkbox" class="mt-1" name="task" value="weekly">
+      {% if user.housechore_title != '割り当てられていません' %}
+        <input type="checkbox" class="mt-1" name="task" value="weekly">
+      {% endif %}
       <h5 class="pl-1">{{ user.housechore_title }}</h5>
     </div>
       <p class="pl-3 pt-1">{{ user.housechore_desc }}</p>

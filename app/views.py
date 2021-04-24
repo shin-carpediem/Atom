@@ -93,7 +93,7 @@ def assign_chore(request):
                 messages.success(
                     request, f"割り振りに成功しました。 / The allocation was successful.")
         elif UserNum > HouseChoreNum:
-            messages.success(
+            messages.warning(
                 request, f"家事の数が足りません。家事をしなくてもいい人数分、「今週はなし」という家事を作成してください。/ There are not enough housework. Create a housework called ”Nothing this week” for the number of people who do not have to do the housework.")
             if DEBUG:
                 return redirect('http://127.0.0.1:8000/admin/')
@@ -101,7 +101,7 @@ def assign_chore(request):
                 return redirect('https://atom-production.herokuapp.com/admin/')
 
         else:
-            messages.success(
+            messages.warning(
                 request, f"家事の数がオーバーしています。(メール認証が完了している)ハウスメイトの人数分まで家事を削除してください。/ The number of household chores is over. Delete up to the number of housemates (whose email verification has been completed).")
             if DEBUG:
                 return redirect('http://127.0.0.1:8000/admin/')
@@ -137,24 +137,28 @@ def finish_task(request):
     user.save()
     EMAIL = request.user.email
     PASSWORD = EMAIL_HOST_PASSWORD
-    TO = User.objects.filter(house=request.user.house, is_active='True',
-                             is_staff='True').values_list('email')[0][0]
-    msg = MIMEText(
-        'ハウスメイトから家事完了の連絡を受けました。\n'
-        '\n'
-        '\n'
-        'You received a notification from your housemate that he/she finised the housework.\n'
-        '\n'
-    )
-    msg['Subject'] = '【Atom】ハウスメイトから家事完了の連絡を受けました'
-    msg['From'] = EMAIL
-    msg['To'] = TO
-    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-    s.starttls()
-    s.login(DEFAULT_FROM_EMAIL, PASSWORD)
-    s.sendmail(EMAIL, TO, msg.as_string())
-    s.quit()
-    messages.success(request, f"報告できました。 / The a report was successful.")
+    try:
+        TO = User.objects.filter(house=request.user.house, is_active='True',
+                                 is_staff='True').values_list('email')[0][0]
+        msg = MIMEText(
+            'ハウスメイトから家事完了の連絡を受けました。\n'
+            '\n'
+            '\n'
+            'You received a notification from your housemate that he/she finised the housework.\n'
+            '\n'
+        )
+        msg['Subject'] = '【Atom】ハウスメイトから家事完了の連絡を受けました'
+        msg['From'] = EMAIL
+        msg['To'] = TO
+        s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+        s.starttls()
+        s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+        s.sendmail(EMAIL, TO, msg.as_string())
+        s.quit()
+        messages.success(request, f"報告できました。/ The a report was successful.")
+    except:
+        messages.warning(
+            request, f"まだハウス管理者がいないようです。/ It seems that there is no house manager yet.")
     return redirect('app:room')
 
 
@@ -162,48 +166,52 @@ def finish_task(request):
 def request_house_owner(request):
     EMAIL = request.user.email
     PASSWORD = EMAIL_HOST_PASSWORD
-    TO = User.objects.filter(house=request.user.house, is_active='True',
-                             is_staff='True').values_list('email')[0][0]
-    if DEBUG:
-        msg = MIMEText(
-            'ユーザーからハウス管理者権限の申請が届きました。\n'
-            '\n'
-            '’is_staff’ を True にしてください。\n'
-            '\n'
-            'http://127.0.0.1:8000/admin/\n'
-            '\n'
-            '\n'
-            'You received an application for house administrator privileges from a user.\n'
-            '\n'
-            'Please set ’is_staff’ of this user to True.\n'
-            '\n'
-            'http://127.0.0.1:8000/admin/\n'
-            '\n'
-        )
-    else:
-        msg = MIMEText(
-            'ユーザーからハウス管理者権限の申請が届きました。\n'
-            '\n'
-            '’is_staff’ を True にしてください。\n'
-            '\n'
-            'https://atom-production.herokuapp.com/admin/\n'
-            '\n'
-            '\n'
-            'You received an application for house administrator privileges from a user.\n'
-            '\n'
-            'Please set ’is_staff’ of this user to True.\n'
-            '\n'
-            'https://atom-production.herokuapp.com/admin/\n'
-            '\n'
-        )
-    msg['Subject'] = '【Atom】ユーザーからハウス管理者権限の申請が届きました'
-    msg['From'] = EMAIL
-    msg['To'] = TO
-    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-    s.starttls()
-    s.login(DEFAULT_FROM_EMAIL, PASSWORD)
-    s.sendmail(EMAIL, TO, msg.as_string())
-    s.quit()
-    messages.success(
-        request, f"ハウス管理者権限の申請が完了しました。 / Application for house administrator authority has been completed.")
+    try:
+        TO = User.objects.filter(house=request.user.house, is_active='True',
+                                 is_staff='True').values_list('email')[0][0]
+        if DEBUG:
+            msg = MIMEText(
+                'ユーザーからハウス管理者権限の申請が届きました。\n'
+                '\n'
+                '’is_staff’ を True にしてください。\n'
+                '\n'
+                'http://127.0.0.1:8000/admin/\n'
+                '\n'
+                '\n'
+                'You received an application for house administrator privileges from a user.\n'
+                '\n'
+                'Please set ’is_staff’ of this user to True.\n'
+                '\n'
+                'http://127.0.0.1:8000/admin/\n'
+                '\n'
+            )
+        else:
+            msg = MIMEText(
+                'ユーザーからハウス管理者権限の申請が届きました。\n'
+                '\n'
+                '’is_staff’ を True にしてください。\n'
+                '\n'
+                'https://atom-production.herokuapp.com/admin/\n'
+                '\n'
+                '\n'
+                'You received an application for house administrator privileges from a user.\n'
+                '\n'
+                'Please set ’is_staff’ of this user to True.\n'
+                '\n'
+                'https://atom-production.herokuapp.com/admin/\n'
+                '\n'
+            )
+        msg['Subject'] = '【Atom】ユーザーからハウス管理者権限の申請が届きました'
+        msg['From'] = EMAIL
+        msg['To'] = TO
+        s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+        s.starttls()
+        s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+        s.sendmail(EMAIL, TO, msg.as_string())
+        s.quit()
+        messages.success(
+            request, f"ハウス管理者権限の申請が完了しました / Application for house administrator authority has been completed.")
+    except:
+        messages.warning(
+            request, f"まだハウス管理者がいないようです。/ It seems that there is no house manager yet.")
     return render(request, 'app/room.html')
