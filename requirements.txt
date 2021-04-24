@@ -24,3 +24,10 @@ django-recaptcha2
 django-guardian
 # オブジェクトをさらに行レベルで権限設定するのに必要
 rules
+# 画像処理
+Pillow
+# 2-step GoogleAuthenticator
+qrcode
+onetimepass
+# ブルートフォースアタック対策。指定回数以上パスワードを間違えるとロックがかかる。
+django-axes

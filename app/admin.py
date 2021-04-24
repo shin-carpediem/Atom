@@ -8,7 +8,6 @@ from .models import HouseChore
 class HouseChoreAdmin(GuardedModelAdmin):
     fields = ['title', 'description', 'house']
     list_display = ('title', 'description', 'house')
-    list_editable = ('description', )
     list_filter = ('house', )
     search_fields = ('house', )
     ordering = ('title', )
