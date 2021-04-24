@@ -1,3 +1,4 @@
+from users.models import Inquire
 from django.http import request
 from django.shortcuts import redirect, render
 from django.contrib import messages
@@ -6,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from axes.backends import AxesBackend
 from email.mime.text import MIMEText
 import smtplib
+from .models import Inquire
 from .forms import CustomUserCreationForm, HouseChooseForm, TwoStepAuthForm
 from . import utils
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
@@ -19,7 +21,8 @@ def signup(request):
             new_user = form.save()
             input_email = form.cleaned_data['email']
             input_password = form.cleaned_data['password1']
-            new_user = authenticate(request=request, email=input_email, password=input_password)
+            new_user = authenticate(
+                request=request, email=input_email, password=input_password)
             if new_user is not None:
                 login(request, new_user)
 
@@ -204,6 +207,41 @@ def request_house_owner(request):
         request, f"ハウス管理者権限の申請が完了しました。 / Application for house administrator authority has been completed.")
 
     return render(request, 'users/index.html')
+
+
+def inquire(request):
+    content = request.GET.get(key='content')
+    inquire = Inquire(content=content,)
+    inquire.save()
+
+    EMAIL = request.user.email
+    PASSWORD = EMAIL_HOST_PASSWORD
+    TO = DEFAULT_FROM_EMAIL
+
+    if DEBUG:
+        msg = MIMEText(
+            'ユーザーから問い合わせを受けました。\n'
+            '\n'
+        )
+    else:
+        msg = MIMEText(
+            'ユーザーから問い合わせが受けました。\n'
+            '\n'
+        )
+    msg['Subject'] = '【Atom】ユーザーから問い合わせを受けました'
+    msg['From'] = EMAIL
+    msg['To'] = TO
+
+    # access to the socket
+    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+    s.starttls()
+    s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+    s.sendmail(EMAIL, TO, msg.as_string())
+    s.quit()
+    messages.success(
+        request, f"サポートセンターに問い合わせを送信しました。 / You have sent an inquiry to the support center.")
+
+    return redirect('users:login')
 
 
 @login_required

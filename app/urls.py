@@ -10,4 +10,5 @@ urlpatterns = [
     path('finish_task', views.finish_task, name='finish_task'),
     path('request_house_owner', views.request_house_owner,
          name='request_house_owner'),
+    path('set_username', views.set_username, name='set_username'),
 ]

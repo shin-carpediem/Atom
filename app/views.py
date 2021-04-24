@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -13,6 +14,17 @@ from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASS
 @login_required
 def room(request):
     return render(request, 'app/room.html')
+
+
+@login_required
+def set_username(request):
+    user = User.objects.get(id=request.user.id)
+    name = request.GET.get(key='name')
+    user.name = name
+    user.save()
+    messages.success(
+        request, f"ユーザーネームを{name}に設定しました。 / You set your username to {name}.")
+    return redirect('app:room')
 
 
 @login_required
@@ -56,7 +68,8 @@ def assign_chore(request):
                 EMAIL = DEFAULT_FROM_EMAIL
                 PASSWORD = EMAIL_HOST_PASSWORD
 
-                house_owner_email = User.objects.filter(house=request.user.house, is_active='True', is_staff='True').values_list('email')[0][0]
+                house_owner_email = User.objects.filter(
+                    house=request.user.house, is_active='True', is_staff='True').values_list('email')[0][0]
 
                 # TODO:ここ処理めちゃ長くなっちゃうから、一列で表現できるようにする
                 for i in range(UserNum):
@@ -150,7 +163,8 @@ def finish_task(request):
     EMAIL = request.user.email
     PASSWORD = EMAIL_HOST_PASSWORD
 
-    TO = User.objects.filter(house=request.user.house, is_active='True', is_staff='True').values_list('email')[0][0]
+    TO = User.objects.filter(house=request.user.house, is_active='True',
+                             is_staff='True').values_list('email')[0][0]
 
     msg = MIMEText(
         'ハウスメイトから家事完了の連絡を受けました。\n'
@@ -177,7 +191,8 @@ def finish_task(request):
 def request_house_owner(request):
     EMAIL = request.user.email
     PASSWORD = EMAIL_HOST_PASSWORD
-    TO = User.objects.filter(house=request.user.house, is_active='True', is_staff='True').values_list('email')[0][0]
+    TO = User.objects.filter(house=request.user.house, is_active='True',
+                             is_staff='True').values_list('email')[0][0]
 
     if DEBUG:
         msg = MIMEText(

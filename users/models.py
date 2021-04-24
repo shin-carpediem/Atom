@@ -41,8 +41,10 @@ class UserManager(BaseUserManager):
 
 class House(models.Model):
     name = models.CharField("ハウス名", max_length=20, default="House")
-    common_fee = models.PositiveIntegerField("共益費", blank=True, null=True, default=500)
-    common_fee_date = models.PositiveIntegerField("共益費の支払い期日", blank=True, null=True, default=25)
+    common_fee = models.PositiveIntegerField(
+        "共益費", blank=True, null=True, default=500)
+    common_fee_date = models.PositiveIntegerField(
+        "共益費の支払い期日", blank=True, null=True, default=25)
     created_at = models.DateTimeField("作成日", auto_now=True)
 
     def __str__(self):
@@ -79,3 +81,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = "user"
         verbose_name_plural = "users"
+
+
+class Inquire(models.Model):
+    content = models.CharField("問い合わせ内容", max_length=256, blank=True, null=True)
+    created_at = models.DateTimeField("日付", auto_now=True)
+
+    def __str__(self):
+        return self.created_at

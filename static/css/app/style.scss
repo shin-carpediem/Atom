@@ -26,6 +26,16 @@ $red: #dd4546;
   color: $white;
   &:hover {
     background-color: $blue;
+    color: $white;
+  }
+}
+
+@mixin link {
+  cursor: pointer;
+  color: $light-blue;
+  &:hover {
+    text-decoration: underline;
+    color: $dark-blue
   }
 }
 
@@ -88,6 +98,12 @@ html {
     @media screen and (max-width: 600px) {
       font-size: 0.7rem;
     }
+    .link {
+      @include link;
+    }
+    .btn {
+      @include button;
+    }
     section {
       background-color: $light-grey;
       .container {
@@ -96,9 +112,6 @@ html {
         border-color: $grey;
         .header {
           @include header;
-        }
-        .btn {
-          @include button;
         }
         p {
           b {
