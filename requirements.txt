@@ -13,3 +13,8 @@ social-auth-app-django
 django-recaptcha2
 django-guardian
 rules
+Pillow
+qrcode
+onetimepass
+pyotp
+django-axes

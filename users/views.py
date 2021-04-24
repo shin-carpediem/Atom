@@ -3,9 +3,11 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from email.mime.text import MIMEText
 import smtplib
-from .forms import CustomUserCreationForm, HouseChooseForm
+from .forms import CustomUserCreationForm, HouseChooseForm, TwoStepAuthForm
+from . import utils
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
@@ -45,7 +47,7 @@ def signup(request):
                         'あなたのアカウントは現在、仮登録の状態です。\n'
                         '以下のURLをクリックして、アカウントの本登録を行なってください。\n'
                         '\n'
-                        'https://atom-production.herokuapp.com/signup/done/\n'
+                        'https://atom-production.herokuapp.com/signup/doing/\n'
                         '\n'
                         '\n'
                         '\n'
@@ -53,7 +55,7 @@ def signup(request):
                         'Your account is currently in a temporary registration status. \n'
                         'Click the URL below to register your account. \n'
                         '\n'
-                        'https://atom-production.herokuapp.com/signup/done/\n'
+                        'https://atom-production.herokuapp.com/signup/doing/\n'
                         '\n'
                     )
                 msg['Subject'] = '【Atom】本登録をしてください / Please make a formal registration'
@@ -64,13 +66,33 @@ def signup(request):
                 s.login(EMAIL, PASSWORD)
                 s.sendmail(EMAIL, TO, msg.as_string())
                 s.quit()
+                if new_user.email == DEFAULT_FROM_EMAIL:
+                    return render(request, 'users/pls_activate.html')
+                else:
+                    new_user.is_active = False
                 return render(request, 'users/pls_activate.html')
     else:
         form = CustomUserCreationForm()
     return render(request, 'users/signup.html', {'form': form})
 
 
+def pls_activate(request):
+    return render(request, 'users/pls_activate.html')
+
+
+def signup_doing(request):
+    user = request.user
+    request.session["img"] = utils.get_image_b64(
+        utils.get_auth_url(user.email, utils.get_secret(user)))
+    two_step_auth_form = TwoStepAuthForm(request.POST or None)
+    return render(request, 'users/signup_doing.html', {'two_step_auth_form': two_step_auth_form})
+
+
+@require_POST
 def signup_done(request):
+    user = request.user
+    user.is_active = True
+    user.save()
     return render(request, 'users/signup_done.html')
 
 
@@ -185,3 +207,7 @@ def policy(request):
 
 def terms(request):
     return render(request, 'users/terms.html')
+
+
+def axes_locked(request):
+    return render(request, 'users/axes_locked.html')

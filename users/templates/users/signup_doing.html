@@ -1,0 +1,26 @@
+{% extends 'users/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="pt-4 pb-3">
+  <p>
+    {% trans "2段階認証を実行します。" %}
+  </p>
+  <p>
+    {% trans "以下のQRコードを読み込んで、ワンタイムパスワードを下に入力して送信してください。" %}
+  </p>
+  <p style="font-size: small;">
+    {% trans "※ このページを閉じると<br>再度QRコードを表示出来ないためご注意ください。" %}
+  </p>
+  <p><img src="data:image/png;base64,{{ request.session.img }}" alt="qrcode" width="100"></p>
+  <form action="{% url 'users:signup_done' %}" method="POST">{% csrf_token %}
+    <table class="w-100">
+      {{ two_step_auth_form.as_table }}
+    </table>
+    <button type="submit" class="btn w-100 mt-3">
+      {% trans "送信" %}
+    </button>
+  </form>
+</div>
+{% endblock content %}

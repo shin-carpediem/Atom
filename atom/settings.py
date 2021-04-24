@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'snowpenguin.django.recaptcha2',
     'guardian',
     'rules.apps.AutodiscoverRulesConfig',
+    'axes',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -67,6 +68,14 @@ RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
 
 AUTH_USER_MODEL = 'users.User'
 
+AUTHENTICATION_BACKENDS = (
+    'axes.backends.AxesBackend',
+    'rules.permissions.ObjectPermissionBackend',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+)
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -78,6 +87,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'atom.urls'
@@ -100,12 +110,22 @@ TEMPLATES = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = (
-    'rules.permissions.ObjectPermissionBackend',
-    'social_core.backends.google.GoogleOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-    'guardian.backends.ObjectPermissionBackend',
-)
+# キャッシュの設定。django.core.cache.backends.locmem.LocMemCache を使っている場合は設定
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    'axes_cache': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+
+AXES_CACHE = 'axes'
+AXES_FAILURE_LIMIT = 7   # ログイン失敗7回まで
+AXES_LOCKOUT_TEMPLATE = 'users:axes_locked'   # 自作したテンプレートを指定
+AXES_COOLOFF_TIME = 1   # ログインを連続で失敗した場合は1時間アカウントがロック
+# デフォルトのロガーは'axes.watch_login'となっている。
+
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
