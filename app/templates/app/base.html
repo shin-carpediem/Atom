@@ -41,6 +41,10 @@
     </div>
   </section>
 
+  {% block modal %}
+    {% include 'app/modal.html' %}
+  {% endblock %}
+
   {% block bootstrap %}
     {% include 'users/bootstrap.html' %}
   {% endblock %}
