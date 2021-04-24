@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-18 19:36+0900\n"
+"POT-Creation-Date: 2021-04-24 17:43+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,7 +62,7 @@ msgstr "yen / month"
 msgid "日"
 msgstr "date"
 
-#: app/templates/app/room.html:58
+#: app/templates/app/room.html:58 users/templates/users/signup_doing.html:22
 msgid "送信"
 msgstr "Submit"
 
@@ -90,6 +90,18 @@ msgstr "権限"
 msgid "Important dates"
 msgstr "重要な日付"
 
+#: users/forms.py:21
+msgid "選択してください"
+msgstr "Please select"
+
+#: users/forms.py:25
+msgid "ワンタイムパスワード"
+msgstr "One-Time Password"
+
+#: users/forms.py:30
+msgid "Google Authenticatorの結果と合致しませんでした。"
+msgstr "It did not match the result of Google Authenticator."
+
 #: users/models.py:19
 msgid "メールアドレスは必須です"
 msgstr "Email address is required"
@@ -105,6 +117,14 @@ msgstr "not assigned"
 #: users/models.py:63
 msgid "詳細なし"
 msgstr "no description"
+
+#: users/templates/users/axes_locked.html:8
+msgid "ログインに7回以上失敗したため、"
+msgstr "Your account has been locked for 1 hour"
+
+#: users/templates/users/axes_locked.html:10
+msgid "アカウントが1時間ロックされました。"
+msgstr "because you failed to log in more than 7 times."
 
 #: users/templates/users/index.html:9
 msgid "住んでいるハウスを選択してください"
@@ -188,6 +208,24 @@ msgstr "Password (confirmation):"
 msgid "Googleで新規登録"
 msgstr "New registration on Google"
 
+#: users/templates/users/signup_doing.html:8
+msgid "2段階認証を実行します。"
+msgstr "We are going to do two-step authentication."
+
+#: users/templates/users/signup_doing.html:11
+msgid ""
+"以下のQRコードを読み込んで、ワンタイムパスワードを下に入力して送信してくださ"
+"い。"
+msgstr ""
+"Please read the QR code below and enter the one-time password below to send."
+
+#: users/templates/users/signup_doing.html:14
+msgid ""
+"※ このページを閉じると<br>再度QRコードを表示出来ないためご注意ください。"
+msgstr ""
+"※ Please note that if you close this page, you will not be able to display "
+"the QR code again."
+
 #: users/templates/users/signup_done.html:8
 msgid "本登録が完了しました。"
 msgstr "This registration is complete."
@@ -198,7 +236,8 @@ msgstr "Go to login page"
 
 #: users/templates/users/withdraw.html:8
 msgid "アカウントがdeactivateされ、退会処理が完了しました。"
-msgstr "Your account has been deactivated and the withdrawal process is complete."
+msgstr ""
+"Your account has been deactivated and the withdrawal process is complete."
 
 #: users/templates/users/withdraw.html:11
 msgid "ご利用ありがとうございました。"

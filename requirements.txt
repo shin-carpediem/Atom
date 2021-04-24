@@ -29,5 +29,6 @@ Pillow
 # 2-step GoogleAuthenticator
 qrcode
 onetimepass
+pyotp
 # ブルートフォースアタック対策。指定回数以上パスワードを間違えるとロックがかかる。
 django-axes
