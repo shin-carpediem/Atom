@@ -25,25 +25,61 @@
     <div class="col-lg-3 col-11 mx-auto container">
       {% block content %}
       {% endblock %}
-      <form class="ml-2 mb-3" action="{% url 'set_language' %}" method="POST">{% csrf_token %}
-        <input name="next" type="hidden" value="{{ redirect_to }}">
-        <select name="language" id="changeLangUsers">
-            {% get_current_language as LANGUAGE_CODE %}
-            {% get_available_languages as LANGUAGES %}
-            {% get_language_info_list for LANGUAGES as languages %}
-            {% for language in languages %}
-                <option value="{{ language.code }}"
-                {% if language.code == LANGUAGE_CODE %}
-                  selected
-                {% endif %}>
-                    {{ language.name_local }}
-                </option>
-            {% endfor %}
-        </select>
-        <input type="submit" id="langBtnUsers" style="display: none;">
-      </form>
+      <div class="d-flex justify-content-between mt-3">
+        <form class="ml-2 mb-3" action="{% url 'set_language' %}" method="POST">{% csrf_token %}
+          <input name="next" type="hidden" value="{{ redirect_to }}">
+          <select name="language" id="changeLangUsers">
+              {% get_current_language as LANGUAGE_CODE %}
+              {% get_available_languages as LANGUAGES %}
+              {% get_language_info_list for LANGUAGES as languages %}
+              {% for language in languages %}
+                  <option value="{{ language.code }}"
+                  {% if language.code == LANGUAGE_CODE %}
+                    selected
+                  {% endif %}>
+                      {{ language.name_local }}
+                  </option>
+              {% endfor %}
+          </select>
+          <input type="submit" id="langBtnUsers" style="display: none;">
+        </form>
+        <p class="ml-3" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+          {% trans "ヘルプセンター" %}
+        </p>
+      </div>
     </div>
   </section>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            {% trans "お問い合わせ" %}
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'users:inquire' %}" method="GET">
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">
+                {% trans "お問い合わせ内容" %}
+              </label>
+              <textarea class="form-control" id="message-text" name="content" required></textarea>
+            </div>
+            <div class="d-flex pt-2">
+              <button type="button" class="btn w-50 mr-1" data-dismiss="modal">
+                {% trans "キャンセル" %}
+              </button>
+              <button type="submit" class="btn w-50 ml-1">
+                {% trans "送信" %}
+              </button>
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>

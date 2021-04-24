@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -12,6 +13,17 @@ from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASS
 @login_required
 def room(request):
     return render(request, 'app/room.html')
+
+
+@login_required
+def set_username(request):
+    user = User.objects.get(id=request.user.id)
+    name = request.GET.get(key='name')
+    user.name = name
+    user.save()
+    messages.success(
+        request, f"ユーザーネームを{name}に設定しました。 / You set your username to {name}.")
+    return redirect('app:room')
 
 
 @login_required
@@ -39,7 +51,8 @@ def assign_chore(request):
             else:
                 EMAIL = DEFAULT_FROM_EMAIL
                 PASSWORD = EMAIL_HOST_PASSWORD
-                house_owner_email = User.objects.filter(house=request.user.house, is_active='True', is_staff='True').values_list('email')[0][0]
+                house_owner_email = User.objects.filter(
+                    house=request.user.house, is_active='True', is_staff='True').values_list('email')[0][0]
                 for i in range(UserNum):
                     TO = (User.objects.filter(
                         house=request.user.house, is_active='True').values_list('email')[i][0])
@@ -94,7 +107,6 @@ def assign_chore(request):
                 return redirect('http://127.0.0.1:8000/admin/')
             else:
                 return redirect('https://atom-production.herokuapp.com/admin/')
-
     return redirect('app:room')
 
 
@@ -125,7 +137,8 @@ def finish_task(request):
     user.save()
     EMAIL = request.user.email
     PASSWORD = EMAIL_HOST_PASSWORD
-    TO = User.objects.filter(house=request.user.house, is_active='True', is_staff='True').values_list('email')[0][0]
+    TO = User.objects.filter(house=request.user.house, is_active='True',
+                             is_staff='True').values_list('email')[0][0]
     msg = MIMEText(
         'ハウスメイトから家事完了の連絡を受けました。\n'
         '\n'
@@ -149,7 +162,8 @@ def finish_task(request):
 def request_house_owner(request):
     EMAIL = request.user.email
     PASSWORD = EMAIL_HOST_PASSWORD
-    TO = User.objects.filter(house=request.user.house, is_active='True', is_staff='True').values_list('email')[0][0]
+    TO = User.objects.filter(house=request.user.house, is_active='True',
+                             is_staff='True').values_list('email')[0][0]
     if DEBUG:
         msg = MIMEText(
             'ユーザーからハウス管理者権限の申請が届きました。\n'

@@ -2,6 +2,9 @@ from django import forms
 # settings.py の AUTH_USER_MODEL に設定したモデルを呼び出す
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
+from django.db.models import query
+from django.forms import fields
 from django.utils.translation import gettext as _
 from snowpenguin.django.recaptcha2.fields import ReCaptchaField
 from snowpenguin.django.recaptcha2.widgets import ReCaptchaWidget
