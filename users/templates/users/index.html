@@ -28,26 +28,21 @@
   </form>
   {% endif %}
 
-  <div class="pt-3 row">
-    <div class="col-4">
+  <div class="pt-3 text-left">
       <p class="logout" id="logout">
         {% trans "ログアウト" %}
       </p>
-    </div>
-    {% if user.is_staff %}
-    <a href="/admin/" target="_blank" rel="noopener noreferrer">
-      {% trans "ハウス管理" %}
-    </a>
-    {% else %}
-    <a href="{% url 'users:request_house_owner' %}">
-      {% trans "ハウス管理者権限の申請" %}
-    </a>
-    {% endif %}
-  </div>
-  <div class="py-2 row">
-    <p class="withdraw col-4" id="withdraw">
-      {% trans "退会" %}
-    </p>
+      {% if user.is_staff %}
+      <a href="/admin/" target="_blank" rel="noopener noreferrer">
+        {% trans "ハウス管理" %}
+      </a>
+      {% else %}
+      <a href="{% url 'users:request_house_owner' %}">
+        {% trans "ハウス管理者権限の申請" %}
+      </a>
+      {% endif %}
+      <p class="withdraw pt-3" id="withdraw">
+        {% trans "退会" %}
   </div>
 </div>
 {% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-24 21:23+0900\n"
+"POT-Creation-Date: 2021-04-24 23:33+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,23 @@ msgstr ""
 #: app/models.py:9
 msgid "家事"
 msgstr "House chore"
+
+#: app/templates/app/base.html:41 users/templates/users/base.html:45
+#: users/templates/users/modal.html:9
+msgid "ヘルプセンター"
+msgstr "Help Center"
+
+#: app/templates/app/modal.html:8
+msgid "表示させたいユーザー名を入力してください"
+msgstr "Please enter the user name you want to display."
+
+#: app/templates/app/modal.html:21 users/templates/users/modal.html:25
+msgid "キャンセル"
+msgstr "Cancel"
+
+#: app/templates/app/modal.html:24
+msgid "設定"
+msgstr "Set"
 
 #: app/templates/app/room.html:10
 msgid "このボタンは各ハウスの管理者にのみ見えています"
@@ -62,42 +79,30 @@ msgstr "yen / month"
 msgid "日"
 msgstr "date"
 
-#: app/templates/app/room.html:58 users/templates/users/base.html:92
+#: app/templates/app/room.html:58 users/templates/users/modal.html:28
 #: users/templates/users/signup_doing.html:24
 msgid "送信"
 msgstr "Submit"
 
-#: app/templates/app/room.html:65
+#: app/templates/app/room.html:66
 msgid "ユーザー名を設定する"
-msgstr ""
+msgstr "Set username"
 
-#: app/templates/app/room.html:68
+#: app/templates/app/room.html:69
 msgid "ハウスを間違えましたか？"
 msgstr "Did you make a mistake in the house?"
 
-#: app/templates/app/room.html:73 users/templates/users/index.html:35
+#: app/templates/app/room.html:74 users/templates/users/index.html:35
 msgid "ログアウト"
 msgstr "Logout"
 
-#: app/templates/app/room.html:77 users/templates/users/index.html:40
+#: app/templates/app/room.html:78 users/templates/users/index.html:43
 msgid "ハウス管理"
 msgstr "House manage"
 
-#: app/templates/app/room.html:81 users/templates/users/index.html:44
+#: app/templates/app/room.html:82 users/templates/users/index.html:47
 msgid "ハウス管理者権限の申請"
-msgstr "Application for house administrator authority"
-
-#: app/templates/app/room.html:91
-msgid "表示させたいユーザー名を入力してください"
-msgstr "Please enter the user name you want to display."
-
-#: app/templates/app/room.html:104 users/templates/users/base.html:89
-msgid "キャンセル"
-msgstr "Cancel"
-
-#: app/templates/app/room.html:107
-msgid "設定"
-msgstr "Set"
+msgstr "Apply for house administrator authority"
 
 #: users/admin.py:26
 msgid "Permissions"
@@ -143,18 +148,6 @@ msgstr "Your account has been locked for 1 hour"
 msgid "アカウントが1時間ロックされました。"
 msgstr "because you failed to log in more than 7 times."
 
-#: users/templates/users/base.html:62
-msgid "ヘルプセンター"
-msgstr "Help Center"
-
-#: users/templates/users/base.html:73
-msgid "お問い合わせ"
-msgstr "Contact Us"
-
-#: users/templates/users/base.html:83
-msgid "お問い合わせ内容"
-msgstr "Contents of inquiry"
-
 #: users/templates/users/index.html:9
 msgid "住んでいるハウスを選択してください"
 msgstr "Please select the house you live in."
@@ -175,7 +168,7 @@ msgstr "housemate"
 msgid "割り振られた家事を見る"
 msgstr "View assigned housechore"
 
-#: users/templates/users/index.html:50
+#: users/templates/users/index.html:54
 msgid "退会"
 msgstr "Withdraw"
 
@@ -215,6 +208,10 @@ msgstr "Terms of service"
 #: users/templates/users/login.html:55 users/templates/users/signup.html:54
 msgid "ハウス管理者"
 msgstr "House manager"
+
+#: users/templates/users/modal.html:19
+msgid "お問い合わせ内容"
+msgstr "Contents of inquiry"
 
 #: users/templates/users/pls_activate.html:8
 msgid "あなたのメールアドレス宛てに本登録用のメールを送りました。"

@@ -22,23 +22,14 @@
     <div class="col-lg-3 col-11 mx-auto container">
       {% block content %}
       {% endblock %}
-      <form class="mb-3" action="{% url 'set_language' %}" method="POST">{% csrf_token %}
-        <input name="next" type="hidden" value="{{ redirect_to }}">
-        <select name="language" id="changeLangApp">
-            {% get_current_language as LANGUAGE_CODE %}
-            {% get_available_languages as LANGUAGES %}
-            {% get_language_info_list for LANGUAGES as languages %}
-            {% for language in languages %}
-                <option value="{{ language.code }}"
-                {% if language.code == LANGUAGE_CODE %}
-                  selected
-                {% endif %}>
-                    {{ language.name_local }}
-                </option>
-            {% endfor %}
-        </select>
-        <input type="submit" id="langBtnApp" style="display: none;">
-      </form>
+      <div class="mx-2 d-flex justify-content-between my-3">
+        <p class="link" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+          {% trans "ヘルプセンター" %}
+        </p>
+        {% block language %}
+          {% include 'app/language.html' %}
+        {% endblock %}
+      </div>
     </div>
   </section>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
