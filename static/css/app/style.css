@@ -110,4 +110,9 @@ html body section .container p b {
   background-color: #609bb6;
   color: #ffffff;
 }
+
+.message-warning {
+  background-color: #dd4546;
+  color: #ffffff;
+}
 /*# sourceMappingURL=style.css.map */
