@@ -10,6 +10,7 @@ import smtplib
 from .models import Inquire
 from .forms import CustomUserCreationForm, HouseChooseForm, TwoStepAuthForm
 from . import utils
+from users.models import User
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
@@ -84,15 +85,15 @@ def pls_activate(request):
 
 
 def signup_doing(request):
-    user = request.user
+    user = User.objects.get(id=request.user.id)
     request.session["img"] = utils.get_image_b64(
         utils.get_auth_url(user.email, utils.get_secret(user)))
-    two_step_auth_form = TwoStepAuthForm(request.POST or None)
+    two_step_auth_form = TwoStepAuthForm()
     return render(request, 'users/signup_doing.html', {'two_step_auth_form': two_step_auth_form})
 
 
 def signup_done(request):
-    user = request.user
+    user = User.objects.get(id=request.user.id)
     user.is_active = True
     user.save()
     return render(request, 'users/signup_done.html')
@@ -122,7 +123,8 @@ def index(request):
 
 @login_required
 def request_ch_house(request):
-    EMAIL = request.user.email
+    user = User.objects.get(id=request.user.id)
+    EMAIL = user.email
     PASSWORD = EMAIL_HOST_PASSWORD
     TO = DEFAULT_FROM_EMAIL
     if DEBUG:
@@ -154,7 +156,8 @@ def request_ch_house(request):
 
 @login_required
 def request_house_owner(request):
-    EMAIL = request.user.email
+    user = User.objects.get(id=request.user.id)
+    EMAIL = user.email
     PASSWORD = EMAIL_HOST_PASSWORD
     TO = DEFAULT_FROM_EMAIL
     if DEBUG:
@@ -192,11 +195,10 @@ def inquire(request):
     content = request.GET.get(key='content')
     inquire = Inquire(content=content,)
     inquire.save()
-
-    EMAIL = request.user.email
+    user = User.objects.get(id=request.user.id)
+    EMAIL = user.email
     PASSWORD = EMAIL_HOST_PASSWORD
     TO = DEFAULT_FROM_EMAIL
-
     if DEBUG:
         msg = MIMEText(
             'ユーザーから問い合わせを受けました。\n'
@@ -210,8 +212,6 @@ def inquire(request):
     msg['Subject'] = '【Atom】ユーザーから問い合わせを受けました'
     msg['From'] = EMAIL
     msg['To'] = TO
-
-    # access to the socket
     s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
     s.starttls()
     s.login(DEFAULT_FROM_EMAIL, PASSWORD)
@@ -219,13 +219,12 @@ def inquire(request):
     s.quit()
     messages.success(
         request, f"サポートセンターに問い合わせを送信しました。 / You have sent an inquiry to the support center.")
-
     return redirect('users:login')
 
 
 @login_required
 def withdraw(request):
-    user = request.user
+    user = User.objects.get(id=request.user.id)
     user.is_active = False
     return render(request, 'users/withdraw.html')
 
