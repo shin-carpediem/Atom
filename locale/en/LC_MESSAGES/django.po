@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-24 23:47+0900\n"
+"POT-Creation-Date: 2021-04-25 23:16+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,8 +22,16 @@ msgstr ""
 msgid "家事"
 msgstr "House chore"
 
-#: app/templates/app/base.html:27 users/templates/users/base.html:30
-#: users/templates/users/modal.html:9
+#: app/templates/app/404.html:8 users/templates/users/500.html:8
+msgid "500エラー"
+msgstr "500 Error"
+
+#: app/templates/app/500.html:8 users/templates/users/404.html:8
+msgid "404エラー"
+msgstr "404 Error"
+
+#: app/templates/app/base.html:24 app/templates/app/modal.html:38
+#: users/templates/users/base.html:27 users/templates/users/modal.html:9
 msgid "ヘルプセンター"
 msgstr "Help Center"
 
@@ -31,13 +39,24 @@ msgstr "Help Center"
 msgid "表示させたいユーザー名を入力してください"
 msgstr "Please enter the user name you want to display."
 
-#: app/templates/app/modal.html:21 users/templates/users/modal.html:25
+#: app/templates/app/modal.html:21 app/templates/app/modal.html:54
+#: users/templates/users/modal.html:25
 msgid "キャンセル"
 msgstr "Cancel"
 
 #: app/templates/app/modal.html:24
 msgid "設定"
 msgstr "Set"
+
+#: app/templates/app/modal.html:48 users/templates/users/modal.html:19
+msgid "お問い合わせ内容"
+msgstr "Contents of inquiry"
+
+#: app/templates/app/modal.html:57 app/templates/app/room.html:59
+#: users/templates/users/modal.html:28
+#: users/templates/users/signup_doing.html:24
+msgid "送信"
+msgstr "Submit"
 
 #: app/templates/app/room.html:9
 msgid "このボタンは各ハウスの管理者にのみ見えています"
@@ -67,40 +86,35 @@ msgstr "Check it when you have done and"
 msgid "送信ボタンを押してください"
 msgstr "press the submit button."
 
-#: app/templates/app/room.html:48
+#: app/templates/app/room.html:50
 msgid "公共費"
 msgstr "Public expenses"
 
-#: app/templates/app/room.html:50
+#: app/templates/app/room.html:52
 msgid "円 / 毎月"
 msgstr "yen / month"
 
-#: app/templates/app/room.html:52
+#: app/templates/app/room.html:54
 msgid "日"
 msgstr "date"
 
-#: app/templates/app/room.html:57 users/templates/users/modal.html:28
-#: users/templates/users/signup_doing.html:24
-msgid "送信"
-msgstr "Submit"
-
-#: app/templates/app/room.html:65
+#: app/templates/app/room.html:67
 msgid "ユーザー名を設定する"
 msgstr "Set username"
 
-#: app/templates/app/room.html:68
+#: app/templates/app/room.html:70
 msgid "ハウスを間違えましたか？"
 msgstr "Did you make a mistake in the house?"
 
-#: app/templates/app/room.html:73 users/templates/users/index.html:33
+#: app/templates/app/room.html:75 users/templates/users/index.html:33
 msgid "ログアウト"
 msgstr "Logout"
 
-#: app/templates/app/room.html:77 users/templates/users/index.html:37
+#: app/templates/app/room.html:79 users/templates/users/index.html:37
 msgid "ハウス管理"
 msgstr "House manage"
 
-#: app/templates/app/room.html:81 users/templates/users/index.html:41
+#: app/templates/app/room.html:83 users/templates/users/index.html:41
 msgid "ハウス管理者権限の申請"
 msgstr "Apply for house administrator authority"
 
@@ -208,10 +222,6 @@ msgstr "Terms of service"
 #: users/templates/users/login.html:54 users/templates/users/signup.html:53
 msgid "ハウス管理者"
 msgstr "House manager"
-
-#: users/templates/users/modal.html:19
-msgid "お問い合わせ内容"
-msgstr "Contents of inquiry"
 
 #: users/templates/users/pls_activate.html:7
 msgid "あなたのメールアドレス宛てに本登録用のメールを送りました。"
