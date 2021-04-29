@@ -82,14 +82,15 @@ def assign_chore(request):
                     <html>
                     <head>
                       <link rel="preconnect" href="https://fonts.gstatic.com">
-　　　　　　               <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-                         <style type="text/css">
-                        p, a {font-size:12.0pt; font-family:'Krona One', sans-serif; color: #609bb6;}
+　　　　　　            <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+                      <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+                      <style type="text/css">
+                        p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
                       </style>
                     </head>
                     <body>
-                      <img style="width: 100px;" src="cid:{logo_image}" alt="Logo">
-                      <br><br><br>
+                      <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
+                      <br><br>
                       <p>今週の自分が担当する家事をご確認ください。</p>
                       <a href="https://atom-production.herokuapp.com/room">家事を確認する</a>
                       <br><br>
@@ -97,9 +98,10 @@ def assign_chore(request):
                       <a href="https://atom-production.herokuapp.com/room">Check my housechore</a>
                       <br>
                       <p>Thank you.</p>
-                      <br><br><br>
                       <hr>
-                      <p style="font-size: smaller;">From Atom team</p>
+                      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
+                      <p style="color:#609bb6;">From Atom team</p>
+                      </div>
                     </body>
                     </html>
                     """
@@ -205,11 +207,11 @@ def finish_task(request):
 　　　　　　<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
           <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
           <style type="text/css">
-            p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;;}
+            p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
           </style>
         </head>
         <body>
-          <p style="font-size:20.0pt; font-family: 'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
+          <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
           <br><br>
           <p>ハウスメイトから家事完了の連絡を受けました。</p>
           <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
@@ -219,8 +221,8 @@ def finish_task(request):
           <br>
           <p>Thank you.</p>
           <hr>
-          <img style="padding:5px 5px 0px 0px; float:left; width: 20px;" src="cid:{logo_image}" alt="Logo">
-          <p>From Atom team</p>
+          <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
+          <p style="color:#609bb6;">From Atom team</p>
           </div>
         </body>
         </html>
