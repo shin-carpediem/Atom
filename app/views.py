@@ -167,8 +167,21 @@ def reset_common_fee(request):
 @login_required
 @require_POST
 def finish_task(request):
+
     try:
         user = User.objects.get(id=request.user.id)
+
+        values = request.POST.getlist('task')
+        if 'weekly' in values:
+            user.done_weekly = True
+        if 'monthly' in values:
+            user.done_monthly = True
+        else:
+            messages.warning(
+                request, f"チェックボックスにチェックを入れてください。/ Please check the check box.")
+            return render(request, 'app/room.html')
+        user.save()
+
         EMAIL = request.user.email
         PASSWORD = EMAIL_HOST_PASSWORD
         TO = User.objects.filter(house=request.user.house, is_active='True',
@@ -231,12 +244,6 @@ def finish_task(request):
 
         messages.success(request, f"報告できました。/ The a report was successful.")
 
-        values = request.POST.getlist('task')
-        if 'weekly' in values:
-            user.done_weekly = True
-        if 'monthly' in values:
-            user.done_monthly = True
-        user.save()
     except:
         messages.warning(
             request, f"まだハウス管理者がいないようです。/ It seems that there is no house manager yet.")
@@ -255,7 +262,7 @@ def request_house_owner(request):
         msg['Subject'] = '【Atom】ユーザーからハウス管理者権限の申請が届きました'
         msg['From'] = EMAIL
         msg['To'] = TO
-        # Create the body of the message (a plain-text and an HTML version).
+
         html = """\
         <html>
         <head>
