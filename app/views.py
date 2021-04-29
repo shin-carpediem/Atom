@@ -3,7 +3,10 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext as _
+from django.views.decorators.http import require_POST
+from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
 import smtplib
 from .models import HouseChore
 from users.models import User
@@ -76,35 +79,47 @@ def assign_chore(request):
                     TO = (User.objects.filter(
                         house=request.user.house, is_active='True').values_list('email')[i][0])
 
-                    if DEBUG:
-                        msg = MIMEText(
-                            '今週の自分が担当する家事をご確認ください。\n'
-                            '\n'
-                            'http://127.0.0.1:8000/room\n'
-                            '\n'
-                            '\n'
-                            '\n'
-                            'Please check the housework you are in charge of this week. \n'
-                            '\n'
-                            'http://127.0.0.1:8000/room\n'
-                            '\n'
-                        )
-                    else:
-                        msg = MIMEText(
-                            '今週の自分が担当する家事をご確認ください。\n'
-                            '\n'
-                            'https://atom-production.herokuapp.com/room\n'
-                            '\n'
-                            '\n'
-                            '\n'
-                            'Please check the housework you are in charge of this week. \n'
-                            '\n'
-                            'https://atom-production.herokuapp.com/room\n'
-                            '\n'
-                        )
+                    msg = MIMEMultipart('alternative')
+                    html = """\
+                    <html>
+                    <head>
+                      <link rel="preconnect" href="https://fonts.gstatic.com">
+　　　　　　               <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+                         <style type="text/css">
+                        p, a {font-size:14.0pt; font-family:'Krona One', sans-serif; color: #609bb6;}
+                      </style>
+                    </head>
+                    <body>
+                      <img style="width: 100px;" src="cid:{logo_image}" alt="Logo">
+                      <br><br><br>
+                      <a href="https://atom-production.herokuapp.com/room">今週の自分が担当する家事をご確認ください。</a>
+                      <br><br>
+                      <a href="https://atom-production.herokuapp.com/room">Please check the housework you are in charge of this week.</a>
+                      <br>
+                      <p>Thank you.</p>
+                      <br><br><br>
+                      <hr>
+                      <p style="font-size: smaller;">From Atom team</p>
+                    </body>
+                    </html>
+                    """
+
                     msg['Subject'] = '【Atom】今週の家事が割り振られました / This week’s housework has been allocated'
                     msg['From'] = house_owner_email
                     msg['To'] = TO
+
+                    fp = open('static/img/users/icon.png', 'rb')
+                    img = MIMEImage(fp.read())
+                    fp.close()
+                    # Define the image's ID as referenced above
+                    img.add_header('Content-ID', '<logo_image>')
+                    msg.attach(img)
+
+                    # Attach parts into message container.
+                    # According to RFC 2046, the last part of a multipart message, in this case
+                    # the HTML message, is best and preferred.
+                    template = MIMEText(html, 'html')
+                    msg.attach(template)
 
                     # access to the socket
                     s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
@@ -150,41 +165,78 @@ def reset_common_fee(request):
 
 
 @login_required
+@require_POST
 def finish_task(request):
-    if request.method == 'POST':
-        user = User.objects.get(id=request.user.id)
-        values = request.POST.getlist('task')
-        if 'weekly' in values:
-            user.done_weekly = True
-        if 'monthly' in values:
-            user.done_monthly = True
-    user.save()
-
-    EMAIL = request.user.email
-    PASSWORD = EMAIL_HOST_PASSWORD
-
     try:
+        user = User.objects.get(id=request.user.id)
+        EMAIL = request.user.email
+        PASSWORD = EMAIL_HOST_PASSWORD
         TO = User.objects.filter(house=request.user.house, is_active='True',
                                  is_staff='True').values_list('email')[0][0]
 
-        msg = MIMEText(
-            'ハウスメイトから家事完了の連絡を受けました。\n'
-            '\n'
-            '\n'
-            'You received a notification from your housemate that he/she finised the housework.\n'
-            '\n'
-        )
+        # Create message container - the correct MIME type is multipart/alternative.
+        msg = MIMEMultipart('alternative')
         msg['Subject'] = '【Atom】ハウスメイトから家事完了の連絡を受けました'
         msg['From'] = EMAIL
         msg['To'] = TO
+
+        # Create the body of the message (a plain-text and an HTML version).
+        html = """\
+        <html>
+        <head>
+          <link rel="preconnect" href="https://fonts.gstatic.com">
+　　　　　　<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+          <style type="text/css">
+            p, a {font-size:14.0pt; font-family:'Krona One', sans-serif; color: #609bb6;}
+          </style>
+        </head>
+        <body>
+          <img style="width: 100px;" src="cid:{logo_image}" alt="Logo">
+          <br><br><br>
+          <p>ハウスメイトから家事完了の連絡を受けました。</p>
+          <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
+          <br><br>
+          <p>You received a notification from your housemate that he/she finised the housework.</p>
+          <a href="https://atom-production.herokuapp.com/admin/">Go to admin page</a>
+          <br>
+          <p>Thank you.</p>
+          <br><br><br>
+          <hr>
+          <p style="font-size: smaller;">From Atom team</p>
+        </body>
+        </html>
+        """
+
+        fp = open('static/img/users/icon.png', 'rb')
+        img = MIMEImage(fp.read())
+        fp.close()
+        # Define the image's ID as referenced above
+        img.add_header('Content-ID', '<logo_image>')
+        msg.attach(img)
+
+        # Attach parts into message container.
+        # According to RFC 2046, the last part of a multipart message, in this case
+        # the HTML message, is best and preferred.
+        template = MIMEText(html, 'html')
+        msg.attach(template)
 
         # access to the socket
         s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
         s.starttls()
         s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+        # sendmail function takes 3 arguments: sender's address, recipient's address
+        # and message to send - here it is sent as one string.
         s.sendmail(EMAIL, TO, msg.as_string())
         s.quit()
+
         messages.success(request, f"報告できました。/ The a report was successful.")
+
+        values = request.POST.getlist('task')
+        if 'weekly' in values:
+            user.done_weekly = True
+        if 'monthly' in values:
+            user.done_monthly = True
+        user.save()
     except:
         messages.warning(
             request, f"まだハウス管理者がいないようです。/ It seems that there is no house manager yet.")
