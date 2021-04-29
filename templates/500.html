@@ -1,11 +1,10 @@
 {% extends 'users/base.html' %}
-{% load i18n %}
 {% load static %}
 
 {% block content %}
 <div class="pt-4 pb-3 text-center">
-  <p>
-    {% trans "404エラー" %}
-  </p>
+  <a href="#" onclick="history.back(); return false;">
+    <img src="{% static 'img/users/error_500.svg' %}" alt="500 Error">
+  </a>
 </div>
 {% endblock content %}
