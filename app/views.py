@@ -43,9 +43,7 @@ def assign_chore(request):
             for i in range(UserNum):
                 housemate = User.objects.filter(
                     house=request.user.house, is_active='True').order_by('id')[i]
-                print(housemate)
                 housemate.done_weekly = False
-                print(housemate)
                 housemate.housechore_title = ''
                 housemate.housechore_title = list_item[i][0]
                 housemate.housechore_desc = ''
@@ -66,15 +64,17 @@ def assign_chore(request):
                       <link rel="preconnect" href="https://fonts.gstatic.com">
 　　　　　　               <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
                          <style type="text/css">
-                        p, a {font-size:14.0pt; font-family:'Krona One', sans-serif; color: #609bb6;}
+                        p, a {font-size:12.0pt; font-family:'Krona One', sans-serif; color: #609bb6;}
                       </style>
                     </head>
                     <body>
                       <img style="width: 100px;" src="cid:{logo_image}" alt="Logo">
                       <br><br><br>
-                      <a href="https://atom-production.herokuapp.com/room">今週の自分が担当する家事をご確認ください。</a>
+                      <p>今週の自分が担当する家事をご確認ください。</p>
+                      <a href="https://atom-production.herokuapp.com/room">家事を確認する</a>
                       <br><br>
-                      <a href="https://atom-production.herokuapp.com/room">Please check the housework you are in charge of this week.</a>
+                      <p>Please check the housework you are in charge of this week.</p>
+                      <a href="https://atom-production.herokuapp.com/room">Check my housechore</a>
                       <br>
                       <p>Thank you.</p>
                       <br><br><br>
@@ -138,6 +138,16 @@ def reset_common_fee(request):
 def finish_task(request):
     try:
         user = User.objects.get(id=request.user.id)
+        values = request.POST.getlist('task')
+        if 'weekly' in values:
+            user.done_weekly = True
+        if 'monthly' in values:
+            user.done_monthly = True
+        else:
+            messages.warning(
+                request, f"チェックボックスにチェックを入れてください。/ Please check the check box.")
+            return render(request, 'app/room.html')
+        user.save()
         EMAIL = request.user.email
         PASSWORD = EMAIL_HOST_PASSWORD
         TO = User.objects.filter(house=request.user.house, is_active='True',
@@ -152,7 +162,7 @@ def finish_task(request):
           <link rel="preconnect" href="https://fonts.gstatic.com">
 　　　　　　<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
           <style type="text/css">
-            p, a {font-size:14.0pt; font-family:'Krona One', sans-serif; color: #609bb6;}
+            p, a {font-size:12.0pt; font-family:'Krona One', sans-serif; color: #609bb6;}
           </style>
         </head>
         <body>
@@ -184,12 +194,6 @@ def finish_task(request):
         s.sendmail(EMAIL, TO, msg.as_string())
         s.quit()
         messages.success(request, f"報告できました。/ The a report was successful.")
-        values = request.POST.getlist('task')
-        if 'weekly' in values:
-            user.done_weekly = True
-        if 'monthly' in values:
-            user.done_monthly = True
-        user.save()
     except:
         messages.warning(
             request, f"まだハウス管理者がいないようです。/ It seems that there is no house manager yet.")
@@ -203,41 +207,44 @@ def request_house_owner(request):
     try:
         TO = User.objects.filter(house=request.user.house, is_active='True',
                                  is_staff='True').values_list('email')[0][0]
-        if DEBUG:
-            msg = MIMEText(
-                'ユーザーからハウス管理者権限の申請が届きました。\n'
-                '\n'
-                '’is_staff’ を True にしてください。\n'
-                '\n'
-                'http://127.0.0.1:8000/admin/\n'
-                '\n'
-                '\n'
-                'You received an application for house administrator privileges from a user.\n'
-                '\n'
-                'Please set ’is_staff’ of this user to True.\n'
-                '\n'
-                'http://127.0.0.1:8000/admin/\n'
-                '\n'
-            )
-        else:
-            msg = MIMEText(
-                'ユーザーからハウス管理者権限の申請が届きました。\n'
-                '\n'
-                '’is_staff’ を True にしてください。\n'
-                '\n'
-                'https://atom-production.herokuapp.com/admin/\n'
-                '\n'
-                '\n'
-                'You received an application for house administrator privileges from a user.\n'
-                '\n'
-                'Please set ’is_staff’ of this user to True.\n'
-                '\n'
-                'https://atom-production.herokuapp.com/admin/\n'
-                '\n'
-            )
+        msg = MIMEMultipart('alternative')
         msg['Subject'] = '【Atom】ユーザーからハウス管理者権限の申請が届きました'
         msg['From'] = EMAIL
         msg['To'] = TO
+        html = """\
+        <html>
+        <head>
+          <link rel="preconnect" href="https://fonts.gstatic.com">
+　　　　　　<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+          <style type="text/css">
+            p, a {font-size:12.0pt; font-family:'Krona One', sans-serif; color: #609bb6;}
+          </style>
+        </head>
+        <body>
+          <img style="width: 100px;" src="cid:{logo_image}" alt="Logo">
+          <br><br><br>
+          <p>ユーザーからハウス管理者権限の申請が届きました。</p>
+          <p>’is_staff’ を True にしてください。</p>
+          <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
+          <br><br>
+          <p>You received an application for house administrator privileges from a user.</p>
+          <p>Please set ’is_staff’ of this user to True.</p>
+          <a href="https://atom-production.herokuapp.com/admin/">Go to admin page</a>
+          <br>
+          <p>Thank you.</p>
+          <br><br><br>
+          <hr>
+          <p style="font-size: smaller;">From Atom team</p>
+        </body>
+        </html>
+        """
+        fp = open('static/img/users/icon.png', 'rb')
+        img = MIMEImage(fp.read())
+        fp.close()
+        img.add_header('Content-ID', '<logo_image>')
+        msg.attach(img)
+        template = MIMEText(html, 'html')
+        msg.attach(template)
         s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
         s.starttls()
         s.login(DEFAULT_FROM_EMAIL, PASSWORD)
