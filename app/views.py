@@ -172,18 +172,18 @@ def finish_task(request):
         user = User.objects.get(id=request.user.id)
 
         values = request.POST.getlist('task')
-        if 'weekly' in values:
+        if 'weekly' in values and 'monthly' in values:
             user.done_weekly = True
-        else:
-            messages.warning(
-                request, f"チェックボックスにチェックを入れてください。/ Please check the check box.")
-        if 'monthly' in values:
+            user.done_monthly = True
+        elif 'weekly' in values:
+            user.done_weekly = True
+        elif 'monthly' in values:
             user.done_monthly = True
         else:
             messages.warning(
                 request, f"チェックボックスにチェックを入れてください。/ Please check the check box.")
-
             return render(request, 'app/room.html')
+
         user.save()
 
         EMAIL = request.user.email
@@ -203,13 +203,14 @@ def finish_task(request):
         <head>
           <link rel="preconnect" href="https://fonts.gstatic.com">
 　　　　　　<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
           <style type="text/css">
-            p, a {font-size:12.0pt; font-family:'Krona One', sans-serif; color: #609bb6;}
+            p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;;}
           </style>
         </head>
         <body>
-          <img style="width: 100px;" src="cid:{logo_image}" alt="Logo">
-          <br><br><br>
+          <p style="font-size:20.0pt; font-family: 'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
+          <br><br>
           <p>ハウスメイトから家事完了の連絡を受けました。</p>
           <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
           <br><br>
@@ -217,9 +218,10 @@ def finish_task(request):
           <a href="https://atom-production.herokuapp.com/admin/">Go to admin page</a>
           <br>
           <p>Thank you.</p>
-          <br><br><br>
           <hr>
-          <p style="font-size: smaller;">From Atom team</p>
+          <img style="padding:5px 5px 0px 0px; float:left; width: 20px;" src="cid:{logo_image}" alt="Logo">
+          <p>From Atom team</p>
+          </div>
         </body>
         </html>
         """
@@ -273,12 +275,10 @@ def request_house_owner(request):
           <link rel="preconnect" href="https://fonts.gstatic.com">
 　　　　　　<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
           <style type="text/css">
-            p, a {font-size:12.0pt; font-family:'Krona One', sans-serif; color: #609bb6;}
+            p, a {font-size:10.0pt; font-family:'Krona One',sans-serif; color:#383636;}
           </style>
         </head>
         <body>
-          <img style="width: 100px;" src="cid:{logo_image}" alt="Logo">
-          <br><br><br>
           <p>ユーザーからハウス管理者権限の申請が届きました。</p>
           <p>’is_staff’ を True にしてください。</p>
           <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
@@ -288,9 +288,9 @@ def request_house_owner(request):
           <a href="https://atom-production.herokuapp.com/admin/">Go to admin page</a>
           <br>
           <p>Thank you.</p>
-          <br><br><br>
           <hr>
-          <p style="font-size: smaller;">From Atom team</p>
+          <img style="width: 50px;" src="cid:{logo_image}" alt="Logo">
+          <p style="font-size:smaller; color:#609bb6;">From Atom team</p>
         </body>
         </html>
         """
