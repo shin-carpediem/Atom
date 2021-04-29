@@ -174,11 +174,15 @@ def finish_task(request):
         values = request.POST.getlist('task')
         if 'weekly' in values:
             user.done_weekly = True
+        else:
+            messages.warning(
+                request, f"チェックボックスにチェックを入れてください。/ Please check the check box.")
         if 'monthly' in values:
             user.done_monthly = True
         else:
             messages.warning(
                 request, f"チェックボックスにチェックを入れてください。/ Please check the check box.")
+
             return render(request, 'app/room.html')
         user.save()
 
