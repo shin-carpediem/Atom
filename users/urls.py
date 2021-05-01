@@ -21,6 +21,7 @@ urlpatterns = [
     path('policy/', views.policy, name='policy'),
     path('terms/', views.terms, name='terms'),
     path('axes_locked/', views.axes_locked, name='axes_locked'),
+    path('manage_top/', views.manage_top, name='manage_top'),
     path('manage/', views.manage, name='manage'),
     path('manage/housemate/<int:housemate_id>/',
          views.housemate_detail, name='housemate_detail'),

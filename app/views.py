@@ -210,10 +210,10 @@ def finish_task(request):
           <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
           <br><br>
           <p>ハウスメイトから家事完了の連絡を受けました。</p>
-          <a href="https://atom-production.herokuapp.com/manage/">管理画面へ</a>
+          <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
           <br><br>
           <p>You received a notification from your housemate that he/she finised the housework.</p>
-          <a href="https://atom-production.herokuapp.com/manage/">Go to admin page</a>
+          <a href="https://atom-production.herokuapp.com/manage_top/">Go to admin page</a>
           <br>
           <p>Thank you.</p>
           <hr>
@@ -284,7 +284,7 @@ def request_ch_house(request):
       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
       <br><br>
       <p>ユーザーからハウス変更の申請が届きました。</p>
-      <a href="https://atom-production.herokuapp.com/manage/">管理画面へ</a>
+      <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
       <br>
       <p>Thank you.</p>
       <hr>
