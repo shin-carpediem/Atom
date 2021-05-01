@@ -45,6 +45,14 @@
     </div>
   </section>
 
+  {% block request_house_owner %}
+    {% include 'users/request_house_owner.html' %}
+  {% endblock %}
+
+  {% block add_housechore %}
+    {% include 'users/manage/add_housechore.html' %}
+  {% endblock %}
+
   {% block delete_housechore %}
     {% include 'users/manage/delete_housechore.html' %}
   {% endblock %}
@@ -53,16 +61,8 @@
     {% include 'users/manage/deactivate_housemate.html' %}
   {% endblock %}
 
-  {% block request_house_owner %}
-    {% include 'users/request_house_owner.html' %}
-  {% endblock %}
-
   {% block help_center %}
     {% include 'common/help_center.html' %}
-  {% endblock %}
-
-  {% block add_housechore %}
-    {% include 'users/manage/add_housechore.html' %}
   {% endblock %}
 
   {% block bootstrap %}

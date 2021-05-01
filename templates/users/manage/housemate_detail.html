@@ -11,40 +11,76 @@
 <div>
   <hr class="mt-5">
   <table class="w-100 mx-auto housemate_detail">
-    <tr><th>email</th><td>{{ housemate.email }}</td></tr>
-    <tr><th>
-      {% trans "ユーザー名" %}
-    </th><td>{{ housemate.name }}</td></tr>
-    <tr><th>
-      {% trans "ハウス名" %}
-    </th><td>{{ housemate.house }}</td></tr>
-    <tr><th>
-      {% trans "共益費" %}
-    </th><td>{{ house_common_fee }}</td></tr>
-    <tr><th>
-      {% trans "共益費の支払い期日" %}
-    </th><td>{{ house_common_fee_date }}</td></tr>
-    <tr><th>
-      {% trans "家事" %}
-    </th><td>{{ housemate.housechore_title }}</td></tr>
-    <tr><th>
-      {% trans "詳細" %}
-    </th><td>{{ housemate.housechore_desc }}</td></tr>
-    <tr><th>
-      {% trans "毎週の家事完了" %}
-    </th><td>{{ housemate.done_weekly }}</td></tr>
-    <tr><th>
-      {% trans "共益費の支払い完了" %}
-    </th><td>{{ housemate.done_monthly }}</td></tr>
-    <tr><th>
-      {% trans "ハウス管理者権限" %}
-    </th><td>{{ housemate.is_staff }}</td></tr>
-    <tr><th>
-      {% trans "本登録完了" %}
-    </th><td>{{ housemate.is_active }}</td></tr>
-    <tr><th>
-      {% trans "仮登録日" %}
-    </th><td>{{ housemate.is_date_joined }}</td></tr>
+    <tr>
+      <th>email</th>
+      <td>{{ housemate.email }}</td>
+    </tr>
+    <tr>
+      <th>
+        {% trans "ユーザー名" %}
+      </th>
+      <td>{{ housemate.name }}</td>
+    </tr>
+    <tr>
+      <th>
+        {% trans "ハウス名" %}
+      </th>
+      <td>{{ housemate.house }}</td>
+    </tr>
+    <tr>
+      <th>
+        {% trans "共益費" %}
+      </th>
+      <td>{{ house_common_fee }}</td>
+    </tr>
+    <tr>
+      <th>
+        {% trans "共益費の支払い期日" %}
+      </th>
+      <td>{{ house_common_fee_date }}</td>
+    </tr>
+    <tr>
+      <th>
+        {% trans "家事" %}
+      </th>
+      <td>{{ housemate.housechore_title }}</td>
+    </tr>
+    <tr>
+      <th>
+        {% trans "詳細" %}
+      </th>
+      <td>{{ housemate.housechore_desc }}</td>
+    </tr>
+    <tr>
+      <th>
+        {% trans "毎週の家事完了" %}
+      </th>
+      <td>{{ housemate.done_weekly }}</td>
+    </tr>
+    <tr>
+      <th>
+        {% trans "共益費の支払い完了" %}
+      </th>
+      <td>{{ housemate.done_monthly }}</td>
+    </tr>
+    <tr>
+      <th>
+        {% trans "ハウス管理者権限" %}
+      </th>
+      <td>{{ housemate.is_staff }}</td>
+    </tr>
+    <tr>
+      <th>
+        {% trans "本登録完了" %}
+      </th>
+      <td>{{ housemate.is_active }}</td>
+    </tr>
+    <tr>
+      <th>
+        {% trans "仮登録日" %}
+      </th>
+      <td>{{ housemate.is_date_joined }}</td>
+    </tr>
   </table>
   <hr class="mb-5">
   <a href="{% url 'users:manage' %}">戻る</a>
