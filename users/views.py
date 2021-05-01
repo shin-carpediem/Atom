@@ -192,7 +192,7 @@ def request_house_owner(request):
       <br><br>
       <p>ユーザーからハウス管理者権限の申請が届きました。</p>
       <p>’is_staff’をTrueにしてください。</p>
-      <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
+      <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
       <br>
       <p>Thank you.</p>
       <br><br><br>
@@ -246,7 +246,7 @@ def inquire(request):
       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
       <br><br>
       <p>ユーザーから問い合わせが受けました。</p>
-      <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
+      <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
       <br>
       <p>Thank you.</p>
       <hr>
@@ -293,6 +293,10 @@ def axes_locked(request):
     return render(request, 'users/axes_locked.html')
 
 
+def manage_top(request):
+    return render(request, 'users/manage_top.html')
+
+
 @login_required
 @staff_member_required
 def manage(request):
@@ -337,6 +341,34 @@ def add_housechore(request):
     title = request.POST.get('title')
     description = request.POST.get('description')
     HouseChore(title=title, description=description, house=user.house).save()
+    return redirect('users:manage')
+
+
+@login_required
+@staff_member_required
+@require_POST
+def update_housechore(request):
+    id = request.POST.get('id')
+    title = request.POST.get('title')
+    description = request.POST.get('description')
+    housechore = HouseChore.objects.filter(id=id)[0]
+    housechore.title = title
+    housechore.description = description
+    housechore.save()
+    messages.success(
+        request, f"{title}を更新しました。/ {title} has been updated.")
+    return redirect('users:manage')
+
+
+@login_required
+@staff_member_required
+@require_POST
+def delete_housechore(request):
+    title = request.POST.get('housechore_title')
+    housechore = HouseChore.objects.filter(title=title)[0]
+    housechore.delete()
+    messages.success(
+        request, f"{title}を削除しました。/ {title} has been deleted.")
     return redirect('users:manage')
 
 

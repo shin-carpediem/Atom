@@ -1,0 +1,12 @@
+{% extends 'users/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="my-5">
+  <button class="w-100 btn"><a style="color: white;" href="{% url 'users:manage' %}">管理画面へ</a></button>
+</div>
+<a href="{% url 'users:index' %}">
+  {% trans "ユーザー画面に戻る" %}
+</a>
+{% endblock %}

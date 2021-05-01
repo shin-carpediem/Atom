@@ -10,18 +10,54 @@
 </div>
 <div>
   <hr class="mt-5">
-  <table class="w-100 mx-auto housemate_detail">
-    <tr><th>
-      {% trans "家事" %}
-    </th><td>{{ housechore.title }}</td></tr>
-    <tr><th>
-      {% trans "詳細" %}
-    </th><td>{{ housechore.description }}</td></tr>
-    <tr><th>
-      {% trans "ハウス" %}
-    </th><td>{{ housechore.house }}</td></tr>
-  </table>
-  <hr class="mb-5">
+  <form action="{% url 'users:update_housechore' %}" method="POST">{% csrf_token %}
+    <table class="w-100 mx-auto housemate_detail">
+      <tr><th>ID</th>
+        <td><input class="w-100" type="number" value="{{ housechore.id }}" name="id" readonly></td>
+      </tr>
+      <tr>
+        <th>
+        {% trans "家事" %}
+        </th>
+        <td><input class="w-100" type="text" value="{{ housechore.title }}" name="title" required></td>
+      </tr>
+      <tr>
+        <th>
+        {% trans "詳細" %}
+        </th>
+        <td>
+        <textarea class="w-100" value="{{ housechore.description }}" name="description"></textarea></td>
+      </tr>
+      <tr>
+        <th>
+        {% trans "ハウス" %}
+        </th>
+        <td>{{ housechore.house }}</td>
+      </tr>
+      <tr>
+        <th>
+        {% trans "有効/無効*" %}
+        </th>
+        <td>
+          <select name="is_active" class="w-100">
+            <option value="{{ housechore.is_active }}">{{ housechore.is_active }}</option>
+            {% if housechore.is_active == False %}
+            <option value="True">True</option>
+            {% else %}
+            <option value="False">False</option>
+            {% endif %}
+          </select>
+        </td>
+      </tr>
+    </table>
+    <p class="pt-3" style="font-size: smaller;">
+      {% trans "*無効にすると家事割り振りの対象外となり、数としてもカウントされなくなります。この操作はいつでも元に戻せます。" %}
+    </p>
+    <hr>
+      <button class="btn mb-5 w-100">
+        {% trans "更新" %}
+      </button>
+  </form>
   <a href="{% url 'users:manage' %}">戻る</a>
 </div>
 {% endblock %}
