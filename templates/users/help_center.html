@@ -1,11 +1,11 @@
 {% load i18n %}
 {% load static %}
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="help_center" tabindex="-1" role="dialog" aria-labelledby="help_center_ModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
+        <h5 class="modal-title" id="help_center_ModalLabel">
           {% trans "ヘルプセンター" %}
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -15,10 +15,12 @@
       <div class="modal-body">
         <form action="{% url 'users:inquire' %}" method="GET">
           <div class="form-group">
+            <label>Email:</label><br>
+            <input class="my-3" type="email" name="email" required>
             <label for="message-text" class="col-form-label">
               {% trans "お問い合わせ内容" %}
-            </label>
-            <textarea class="form-control" id="message-text" name="content" required></textarea>
+            </label><br>
+            <textarea class="form-control" name="content" required></textarea>
           </div>
           <div class="d-flex pt-2">
             <button type="button" class="btn w-50 mr-1" data-dismiss="modal">

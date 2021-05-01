@@ -1,17 +1,20 @@
+import smtplib
 from django.http import request
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+from django.views.decorators.http import require_POST
 from axes.backends import AxesBackend
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
-import smtplib
-from .models import Inquire
+from .models import User, Inquire, RequestHouseOwner
 from .forms import CustomUserCreationForm, HouseChooseForm, TwoStepAuthForm
 from . import utils
-from users.models import User, Inquire
+from app.models import HouseChore
+from app.forms import AddHousechoreForm
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
@@ -163,59 +166,10 @@ def index(request):
 
 
 @login_required
-def request_ch_house(request):
-    user = User.objects.get(id=request.user.id)
-    EMAIL = user.email
-    PASSWORD = EMAIL_HOST_PASSWORD
-    TO = DEFAULT_FROM_EMAIL
-    msg = MIMEMultipart('alternative')
-    msg['Subject'] = '【Atom】ユーザーからハウス変更の申請が届きました'
-    msg['From'] = EMAIL
-    msg['To'] = TO
-    html = """\
-    <html>
-    <head>
-      <link rel="preconnect" href="https://fonts.gstatic.com">
-　　　 <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-      <style type="text/css">
-        p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
-      </style>
-    </head>
-    <body>
-      <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
-      <br><br>
-      <p>ユーザーからハウス変更の申請が届きました。</p>
-      <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
-      <br>
-      <p>Thank you.</p>
-      <hr>
-      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-      <p style="color:#609bb6;">From Atom team</p>
-      </div>
-    </body>
-    </html>
-    """
-    fp = open('static/img/users/icon.png', 'rb')
-    img = MIMEImage(fp.read())
-    fp.close()
-    img.add_header('Content-ID', '<logo_image>')
-    msg.attach(img)
-    template = MIMEText(html, 'html')
-    msg.attach(template)
-    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-    s.starttls()
-    s.login(DEFAULT_FROM_EMAIL, PASSWORD)
-    s.sendmail(EMAIL, TO, msg.as_string())
-    s.quit()
-    messages.success(
-        request, f"ハウス名変更の申請が完了しました。 / The application for changing the house name has been completed.")
-    return render(request, 'users/index.html')
-
-
-@login_required
+@require_POST
 def request_house_owner(request):
-    user = User.objects.get(id=request.user.id)
+    user = request.user
+    RequestHouseOwner(email=user.email, house=user.house).save()
     EMAIL = user.email
     PASSWORD = EMAIL_HOST_PASSWORD
     TO = DEFAULT_FROM_EMAIL
@@ -263,7 +217,7 @@ def request_house_owner(request):
     s.quit()
     messages.success(
         request, f"ハウス管理者権限の申請が完了しました。 / Application for house administrator authority has been completed.")
-    return render(request, 'users/index.html')
+    return redirect('users:index')
 
 
 def inquire(request):
@@ -302,7 +256,6 @@ def inquire(request):
     </body>
     </html>
     """
-
     fp = open('static/img/users/icon.png', 'rb')
     img = MIMEImage(fp.read())
     fp.close()
@@ -322,8 +275,9 @@ def inquire(request):
 
 @login_required
 def withdraw(request):
-    user = User.objects.get(id=request.user.id)
+    user = User.objects.get(id=request.user.id)[0]
     user.is_active = False
+    user.save()
     return render(request, 'users/withdraw.html')
 
 
@@ -337,3 +291,63 @@ def terms(request):
 
 def axes_locked(request):
     return render(request, 'users/axes_locked.html')
+
+
+@login_required
+@staff_member_required
+def manage(request):
+    form = AddHousechoreForm(request.POST or None)
+    housemates = User.objects.filter(
+        house=request.user.house, is_active=True).order_by('id')
+    housechores = HouseChore.objects.filter(
+        house=request.user.house).order_by('id')
+    ctx = {
+        'housemates': housemates,
+        'housechores': housechores,
+        'form': form,
+    }
+    return render(request, 'users/manage.html', ctx)
+
+
+@login_required
+@staff_member_required
+def housemate_detail(request, housemate_id):
+    housemate = get_object_or_404(User, pk=housemate_id)
+    ctx = {
+        'housemate': housemate,
+    }
+    return render(request, 'users/housemate_detail.html', ctx)
+
+
+@login_required
+@staff_member_required
+def housechore_detail(request, housechore_id):
+    housechore = get_object_or_404(HouseChore, pk=housechore_id)
+    ctx = {
+        'housechore': housechore,
+    }
+    return render(request, 'users/housechore_detail.html', ctx)
+
+
+@login_required
+@staff_member_required
+@require_POST
+def add_housechore(request):
+    user = request.user
+    title = request.POST.get('title')
+    description = request.POST.get('description')
+    HouseChore(title=title, description=description, house=user.house).save()
+    return redirect('users:manage')
+
+
+@login_required
+@staff_member_required
+@require_POST
+def deactivate_housemate(request):
+    email = request.POST.get('housemate_email')
+    user = User.objects.filter(email=email)[0]
+    user.is_active = False
+    user.save()
+    messages.success(
+        request, f"{email}をdeactivateしました。/ {email} has been deactivated.")
+    return redirect('users:manage')

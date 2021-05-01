@@ -23,7 +23,7 @@
       {% block content %}
       {% endblock %}
       <div class="d-flex justify-content-between mt-3">
-        <p class="link" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+        <p class="link" data-toggle="modal" data-target="#help_center">
           {% trans "ヘルプセンター" %}
         </p>
         {% block language %}
@@ -32,8 +32,17 @@
       </div>
     </div>
   </section>
-  {% block modal %}
-    {% include 'users/modal.html' %}
+  {% block deactivate_housemate %}
+    {% include 'users/deactivate_housemate.html' %}
+  {% endblock %}
+  {% block add_housechore %}
+    {% include 'users/add_housechore.html' %}
+  {% endblock %}
+  {% block request_house_owner %}
+    {% include 'users/request_house_owner.html' %}
+  {% endblock %}
+  {% block help_center %}
+    {% include 'users/help_center.html' %}
   {% endblock %}
   {% block bootstrap %}
     {% include 'users/bootstrap.html' %}

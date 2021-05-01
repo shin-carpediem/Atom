@@ -1,0 +1,69 @@
+{% extends 'users/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="header">
+  <h5>
+    {% trans "ハウス管理" %}
+  </h5>
+</div>
+<div>
+  <p class="pt-5 mx-auto text-center">
+    {% trans "ハウスメイト" %}
+  </p>
+  <hr class="pb-2">
+  <table class="w-100 mx-auto manage_table">
+    <tr>
+      <th>email</th>
+      <th>
+        {% trans "家事" %}
+      </th>
+      <th>
+      </th>
+      <th>
+        {% trans "公益費" %}
+      </th>
+    </tr>
+    {% for housemate in housemates %}
+    <tr>
+      <td class="text-left"><a href="{% url 'users:housemate_detail' housemate.id %}">{{ housemate.email }}</a></td>
+      <td>{{ housemate.housechore_title }}</td>
+      <td>{{ housemate.done_weekly }}</td>
+      <td>{{ housemate.done_monthly }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <hr>
+  <button class="mb-5 btn w-100" data-toggle="modal" data-target="#deactivate_housemate">
+    {% trans "特定のハウスメイトをdeactivateする" %}
+  </button>
+  <p class="pt-3 mx-auto text-center">
+    {% trans "家事" %}
+  </p>
+  <hr class="pb-2">
+  <table class="w-100 mx-auto manage_table">
+    <tr>
+      <th>
+        {% trans "サマリ" %}
+      </th>
+      <th>
+        {% trans "詳細" %}
+      </th>
+    </tr>
+    {% for housechore in housechores %}
+    <tr>
+      <td><a href="{% url 'users:housechore_detail' housechore.id %}">{{ housechore.title }}</a></td>
+      <td class="text-left">{{ housechore.description }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <hr>
+  <button class="mb-5 btn w-100" data-toggle="modal" data-target="#add_housechore">
+    {% trans "家事を追加" %}
+  </button>
+</div>
+<a href="{% url 'users:index' %}">
+  {% trans "ユーザー画面に戻る" %}
+</a>
+{% endblock %}

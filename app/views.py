@@ -9,13 +9,15 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 import smtplib
 from .models import HouseChore
-from users.models import User
+from users.models import User, RequestChHouse
+from users.forms import HouseChooseForm
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
 @login_required
 def room(request):
-    return render(request, 'app/room.html')
+    house_choose_form = HouseChooseForm(request.POST or None)
+    return render(request, 'app/room.html', {'house_choose_form': house_choose_form})
 
 
 @login_required
@@ -184,7 +186,6 @@ def finish_task(request):
           <hr>
           <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
           <p style="color:#609bb6;">From Atom team</p>
-          </div>
         </body>
         </html>
         """
@@ -208,56 +209,54 @@ def finish_task(request):
 
 
 @login_required
-def request_house_owner(request):
-    EMAIL = request.user.email
+@require_POST
+def request_ch_house(request):
+    user = request.user
+    request_house = request.POST.get('name')
+    RequestChHouse(email=user.email, current_house=user.house,
+                   request_house=request_house).save()
+    EMAIL = user.email
     PASSWORD = EMAIL_HOST_PASSWORD
-    try:
-        TO = User.objects.filter(house=request.user.house, is_active='True',
-                                 is_staff='True').values_list('email')[0][0]
-        msg = MIMEMultipart('alternative')
-        msg['Subject'] = '【Atom】ユーザーからハウス管理者権限の申請が届きました'
-        msg['From'] = EMAIL
-        msg['To'] = TO
-        html = """\
-        <html>
-        <head>
-          <link rel="preconnect" href="https://fonts.gstatic.com">
-　　　　　　<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-          <style type="text/css">
-            p, a {font-size:10.0pt; font-family:'Krona One',sans-serif; color:#383636;}
-          </style>
-        </head>
-        <body>
-          <p>ユーザーからハウス管理者権限の申請が届きました。</p>
-          <p>’is_staff’ を True にしてください。</p>
-          <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
-          <br><br>
-          <p>You received an application for house administrator privileges from a user.</p>
-          <p>Please set ’is_staff’ of this user to True.</p>
-          <a href="https://atom-production.herokuapp.com/admin/">Go to admin page</a>
-          <br>
-          <p>Thank you.</p>
-          <hr>
-          <img style="width: 50px;" src="cid:{logo_image}" alt="Logo">
-          <p style="font-size:smaller; color:#609bb6;">From Atom team</p>
-        </body>
-        </html>
-        """
-        fp = open('static/img/users/icon.png', 'rb')
-        img = MIMEImage(fp.read())
-        fp.close()
-        img.add_header('Content-ID', '<logo_image>')
-        msg.attach(img)
-        template = MIMEText(html, 'html')
-        msg.attach(template)
-        s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-        s.starttls()
-        s.login(DEFAULT_FROM_EMAIL, PASSWORD)
-        s.sendmail(EMAIL, TO, msg.as_string())
-        s.quit()
-        messages.success(
-            request, f"ハウス管理者権限の申請が完了しました / Application for house administrator authority has been completed.")
-    except:
-        messages.warning(
-            request, f"まだハウス管理者がいないようです。/ It seems that there is no house manager yet.")
-    return render(request, 'app/room.html')
+    TO = DEFAULT_FROM_EMAIL
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = '【Atom】ユーザーからハウス変更の申請が届きました'
+    msg['From'] = EMAIL
+    msg['To'] = TO
+    html = """\
+    <html>
+    <head>
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+　　　 <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+      <style type="text/css">
+        p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
+      </style>
+    </head>
+    <body>
+      <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
+      <br><br>
+      <p>ユーザーからハウス変更の申請が届きました。</p>
+      <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
+      <br>
+      <p>Thank you.</p>
+      <hr>
+      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
+      <p style="color:#609bb6;">From Atom team</p>
+    </body>
+    </html>
+    """
+    fp = open('static/img/users/icon.png', 'rb')
+    img = MIMEImage(fp.read())
+    fp.close()
+    img.add_header('Content-ID', '<logo_image>')
+    msg.attach(img)
+    template = MIMEText(html, 'html')
+    msg.attach(template)
+    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+    s.starttls()
+    s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+    s.sendmail(EMAIL, TO, msg.as_string())
+    s.quit()
+    messages.success(
+        request, f"ハウス変更の申請が完了しました。 / The application for changing the house has been completed.")
+    return redirect('users:index')

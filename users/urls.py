@@ -14,12 +14,18 @@ urlpatterns = [
     path('', auth_views.LoginView.as_view(
         template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('request_ch_house', views.request_ch_house, name='request_ch_house'),
     path('request_house_owner', views.request_house_owner,
          name='request_house_owner'),
     path('inquire/', views.inquire, name='inquire'),
     path('withdraw/', views.withdraw, name='withdraw'),
     path('policy/', views.policy, name='policy'),
     path('terms/', views.terms, name='terms'),
-    path('axes_locked/', views.axes_locked, name='axes_locked')
+    path('axes_locked/', views.axes_locked, name='axes_locked'),
+    path('manage/', views.manage, name='manage'),
+    path('manage/housemate/<int:housemate_id>/',
+         views.housemate_detail, name='housemate_detail'),
+    path('manage/housechore/<int:housechore_id>/',
+         views.housechore_detail, name='housechore_detail'),
+    path('manage/add_housechore', views.add_housechore, name='add_housechore'),
+    path('manage/deactivate_housemate', views.deactivate_housemate, name='deactivate_housemate'),
 ]

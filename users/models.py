@@ -75,7 +75,27 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Inquire(models.Model):
+    email = models.EmailField("email", blank=True, null=True)
     content = models.CharField("問い合わせ内容", max_length=256, blank=True, null=True)
+    created_at = models.DateTimeField("日付", auto_now=True)
+
+    def __str__(self):
+        return self.created_at
+
+
+class RequestChHouse(models.Model):
+    email = models.EmailField("email", blank=True, null=True)
+    current_house = models.ForeignKey(House, on_delete=PROTECT, blank=True, null=True)
+    request_house = models.CharField("希望するハウス", max_length=256, blank=True, null=True)
+    created_at = models.DateTimeField("日付", auto_now=True)
+
+    def __str__(self):
+        return self.created_at
+
+
+class RequestHouseOwner(models.Model):
+    email = models.EmailField("email", blank=True, null=True)
+    house = models.ForeignKey(House, on_delete=PROTECT, blank=True, null=True)
     created_at = models.DateTimeField("日付", auto_now=True)
 
     def __str__(self):
