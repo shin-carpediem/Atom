@@ -113,6 +113,10 @@ html body section .container .withdraw:hover {
   text-decoration: underline;
 }
 
+html body section .container .housemate_detail tr td {
+  text-align: center;
+}
+
 .message-success {
   background-color: #609bb6;
   color: #ffffff;

@@ -1,6 +1,6 @@
 import smtplib
 from django.http import request
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -13,6 +13,8 @@ from email.mime.image import MIMEImage
 from .models import User, Inquire, RequestHouseOwner
 from .forms import CustomUserCreationForm, HouseChooseForm, TwoStepAuthForm
 from . import utils
+from app.models import HouseChore
+from app.forms import AddHousechoreForm
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
@@ -309,6 +311,7 @@ def inquire(request):
 def withdraw(request):
     user = User.objects.get(id=request.user.id)
     user.is_active = False
+    user.save()
     return render(request, 'users/withdraw.html')
 
 
@@ -324,10 +327,47 @@ def axes_locked(request):
     return render(request, 'users/axes_locked.html')
 
 
+@login_required
 @staff_member_required
 def manage(request):
+    form = AddHousechoreForm(request.POST or None)
     housemates = User.objects.filter(house=request.user.house).order_by('id')
+    housechores = HouseChore.objects.filter(
+        house=request.user.house).order_by('id')
     ctx = {
-        'housemates': housemates
+        'housemates': housemates,
+        'housechores': housechores,
+        'form': form,
     }
     return render(request, 'users/manage.html', ctx)
+
+
+@login_required
+@staff_member_required
+def housemate_detail(request, housemate_id):
+    housemate = get_object_or_404(User, pk=housemate_id)
+    ctx = {
+        'housemate': housemate,
+    }
+    return render(request, 'users/housemate_detail.html', ctx)
+
+
+@login_required
+@staff_member_required
+def housechore_detail(request, housechore_id):
+    housechore = get_object_or_404(HouseChore, pk=housechore_id)
+    ctx = {
+        'housechore': housechore,
+    }
+    return render(request, 'users/housechore_detail.html', ctx)
+
+
+@login_required
+@staff_member_required
+@require_POST
+def add_housechore(request):
+    user = request.user
+    title = request.POST.get('title')
+    description = request.POST.get('description')
+    HouseChore(title=title, description=description, house=user.house).save()
+    return redirect('users:manage')

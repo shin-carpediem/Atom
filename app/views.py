@@ -18,65 +18,6 @@ from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASS
 @login_required
 def room(request):
     house_choose_form = HouseChooseForm(request.POST or None)
-    # if request.method == 'POST':
-    #     user = request.user
-    #     request_house = house_choose_form.cleaned_data['house']
-    #     RequestChHouse(email=user.email, current_house=user.house,
-    #                    request_house=request_house).save()
-
-    #     EMAIL = user.email
-    #     PASSWORD = EMAIL_HOST_PASSWORD
-    #     TO = DEFAULT_FROM_EMAIL
-
-    #     msg = MIMEMultipart('alternative')
-    #     msg['Subject'] = '【Atom】ユーザーからハウス変更の申請が届きました'
-    #     msg['From'] = EMAIL
-    #     msg['To'] = TO
-
-    #     html = """\
-    #     <html>
-    #     <head>
-    #       <link rel="preconnect" href="https://fonts.gstatic.com">
-    #       <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-    #       <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-    #       <style type="text/css">
-    #         p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
-    #       </style>
-    #     </head>
-    #     <body>
-    #       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
-    #       <br><br>
-    #       <p>ユーザーからハウス変更の申請が届きました。</p>
-    #       <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
-    #       <br>
-    #       <p>Thank you.</p>
-    #       <hr>
-    #       <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-    #       <p style="color:#609bb6;">From Atom team</p>
-    #     </body>
-    #     </html>
-    #     """
-
-    #     fp = open('static/img/users/icon.png', 'rb')
-    #     img = MIMEImage(fp.read())
-    #     fp.close()
-    #     img.add_header('Content-ID', '<logo_image>')
-    #     msg.attach(img)
-
-    #     template = MIMEText(html, 'html')
-    #     msg.attach(template)
-
-    #     # access to the socket
-    #     s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-    #     s.starttls()
-    #     s.login(DEFAULT_FROM_EMAIL, PASSWORD)
-    #     s.sendmail(EMAIL, TO, msg.as_string())
-    #     s.quit()
-    #     messages.success(
-    #         request, f"ハウス変更の申請が完了しました。 / The application for changing the house has been completed.")
-
-    #     return redirect('users:index')
-
     return render(request, 'app/room.html', {'house_choose_form': house_choose_form})
 
 

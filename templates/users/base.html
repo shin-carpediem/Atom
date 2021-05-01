@@ -45,6 +45,10 @@
     </div>
   </section>
 
+  {% block add_housechore %}
+    {% include 'users/add_housechore.html' %}
+  {% endblock %}
+
   {% block request_house_owner %}
     {% include 'users/request_house_owner.html' %}
   {% endblock %}

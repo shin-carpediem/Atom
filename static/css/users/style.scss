@@ -121,11 +121,20 @@ html {
             text-decoration: underline;
           }
         }
+        // manage
+        .housemate_detail {
+          tr {
+            td {
+              text-align: center;
+            }
+          }
+        }
       }
     }
   }
 }
 
+// messages
 .message-success {
   background-color: $blue;
   color: $white;

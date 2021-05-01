@@ -21,5 +21,10 @@ urlpatterns = [
     path('policy/', views.policy, name='policy'),
     path('terms/', views.terms, name='terms'),
     path('axes_locked/', views.axes_locked, name='axes_locked'),
-    path('manage/', views.manage, name='manage')
+    path('manage/', views.manage, name='manage'),
+    path('manage/housemate/<int:housemate_id>/',
+         views.housemate_detail, name='housemate_detail'),
+    path('manage/housechore/<int:housechore_id>/',
+         views.housechore_detail, name='housechore_detail'),
+    path('manage/add_housechore', views.add_housechore, name='add_housechore'),
 ]

@@ -1,0 +1,27 @@
+{% extends 'users/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="header">
+  <h5>
+    {% trans "ハウス管理" %}
+  </h5>
+</div>
+<div>
+  <hr class="mt-5">
+  <table class="w-100 mx-auto housemate_detail">
+    <tr><th>
+      {% trans "家事" %}
+    </th><td>{{ housechore.title }}</td></tr>
+    <tr><th>
+      {% trans "詳細" %}
+    </th><td>{{ housechore.description }}</td></tr>
+    <tr><th>
+      {% trans "ハウス" %}
+    </th><td>{{ housechore.house }}</td></tr>
+  </table>
+  <hr class="mb-5">
+  <a href="{% url 'users:manage' %}">戻る</a>
+</div>
+{% endblock %}
