@@ -69,6 +69,11 @@ input {
   border-color: $light-grey;
   border-radius: 4px;
 }
+textarea, select {
+  border-color: $grey;
+  box-shadow: 0.6px 0.6px $grey inset;
+  border-radius: 4px;
+}
 
 /* Make images easier to work with */
 img,

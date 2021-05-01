@@ -59,9 +59,14 @@
     {% endfor %}
   </table>
   <hr>
-  <button class="mb-5 btn w-100" data-toggle="modal" data-target="#add_housechore">
-    {% trans "家事を追加" %}
-  </button>
+  <div class="row d-flex justify-content-around mb-5 mx-sm-0 mx-1">
+    <button class="btn col-sm-5 col-12" data-toggle="modal" data-target="#add_housechore">
+      {% trans "追加" %}
+    </button>
+    <button class="btn col-sm-5 col-12" data-toggle="modal" data-target="#delete_housechore">
+      {% trans "削除" %}
+    </button>
+  </div>
 </div>
 <a href="{% url 'users:index' %}">
   {% trans "ユーザー画面に戻る" %}

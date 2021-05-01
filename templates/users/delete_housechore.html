@@ -1,0 +1,42 @@
+{% load i18n %}
+{% load static %}
+
+<div class="modal fade" id="delete_housechore" tabindex="-1" role="dialog" aria-labelledby="delete_housechore_ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="delete_housemate_ModalLabel">
+          {% trans "特定の家事を削除する" %}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          {% trans "削除された家事は復元できず、また、ハウス管理画面の家事一覧に表示されなくなります。" %}
+        </p>
+        <p>
+          <b>
+            {% trans "ハウスメイトの人数が減って家事が余った場合は、”削除”ではなく、”更新”ボタンから”有効/無効”を”無効”にしてください。" %}
+          </b>
+        </p>
+        <form action="{% url 'users:delete_housechore' %}" method="POST">{% csrf_token %}
+          <select name="housechore_title" class="py-2 my-3 w-50">
+            {% for housechore in housechores %}
+            <option name="housemate_title">{{ housechore.title }}</option>
+            {% endfor %}
+          </select>
+          <div class="d-flex pt-2">
+            <button type="button" class="btn w-50 mr-1" data-dismiss="modal">
+              {% trans "キャンセル" %}
+            </button>
+            <button type="submit" class="btn w-50 ml-1">
+              {% trans "削除" %}
+            </button>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>
+

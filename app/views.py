@@ -45,7 +45,7 @@ def assign_chore(request):
         if UserNum == HouseChoreNum:
             # 家事の並び順をシャッフルする
             random_housechore_list = HouseChore.objects.filter(
-                house=request.user.house).values_list('title', 'description').order_by('?')
+                house=request.user.house, is_active=True).values_list('title', 'description').order_by('?')
             # titleのクエリセットからリストにする
             list_item = list(random_housechore_list)
 
@@ -137,18 +137,12 @@ def assign_chore(request):
         elif UserNum > HouseChoreNum:
             messages.warning(
                 request, f"家事の数が足りません。家事をしなくてもいい人数分、「今週はなし」という家事を作成してください。/ There are not enough housework. Create a housework called ”Nothing this week” for the number of people who do not have to do the housework.")
-            if DEBUG:
-                return redirect('http://127.0.0.1:8000/admin/')
-            else:
-                return redirect('https://atom-production.herokuapp.com/admin/')
+            return redirect('users:manage')
 
         else:
             messages.warning(
                 request, f"家事の数がオーバーしています。(メール認証が完了している)ハウスメイトの人数分まで家事を削除してください。/ The number of household chores is over. Delete up to the number of housemates (whose email verification has been completed).")
-            if DEBUG:
-                return redirect('http://127.0.0.1:8000/admin/')
-            else:
-                return redirect('https://atom-production.herokuapp.com/admin/')
+            return redirect('users:manage')
 
     return redirect('app:room')
 
@@ -216,10 +210,10 @@ def finish_task(request):
           <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
           <br><br>
           <p>ハウスメイトから家事完了の連絡を受けました。</p>
-          <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
+          <a href="https://atom-production.herokuapp.com/manage/">管理画面へ</a>
           <br><br>
           <p>You received a notification from your housemate that he/she finised the housework.</p>
-          <a href="https://atom-production.herokuapp.com/admin/">Go to admin page</a>
+          <a href="https://atom-production.herokuapp.com/manage/">Go to admin page</a>
           <br>
           <p>Thank you.</p>
           <hr>
@@ -290,7 +284,7 @@ def request_ch_house(request):
       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
       <br><br>
       <p>ユーザーからハウス変更の申請が届きました。</p>
-      <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
+      <a href="https://atom-production.herokuapp.com/manage/">管理画面へ</a>
       <br>
       <p>Thank you.</p>
       <hr>

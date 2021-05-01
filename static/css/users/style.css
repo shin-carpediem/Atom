@@ -31,6 +31,13 @@ input {
   border-radius: 4px;
 }
 
+textarea, select {
+  border-color: #c3c2c2;
+  -webkit-box-shadow: 0.6px 0.6px #c3c2c2 inset;
+          box-shadow: 0.6px 0.6px #c3c2c2 inset;
+  border-radius: 4px;
+}
+
 /* Make images easier to work with */
 img,
 picture,
