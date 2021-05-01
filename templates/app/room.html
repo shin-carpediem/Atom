@@ -76,7 +76,7 @@
       {% trans "ログアウト" %}
     </a>
     {% if user.is_staff %}
-    <a href="/admin/" target="_blank" rel="noopener noreferrer">
+    <a href="{% url 'users:manage' %}" target="_blank" rel="noopener noreferrer">
       {% trans "ハウス管理" %}
     </a>
     {% else %}

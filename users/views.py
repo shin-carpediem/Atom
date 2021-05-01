@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.views.decorators.http import require_POST
 from axes.backends import AxesBackend
 from email.mime.multipart import MIMEMultipart
@@ -321,3 +322,12 @@ def terms(request):
 
 def axes_locked(request):
     return render(request, 'users/axes_locked.html')
+
+
+@staff_member_required
+def manage(request):
+    housemates = User.objects.filter(house=request.user.house).order_by('id')
+    ctx = {
+        'housemates': housemates
+    }
+    return render(request, 'users/manage.html', ctx)

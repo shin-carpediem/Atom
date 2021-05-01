@@ -1,0 +1,29 @@
+{% extends 'users/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="header">
+  <h5>
+    {% trans "ハウス管理" %}
+  </h5>
+</div>
+<div>
+  <table class="w-100 mx-auto my-5">
+    <tr>
+      <th>email</th>
+      <th>家事</th>
+      <th>毎週</th>
+      <th>公益費</th>
+    </tr>
+    {% for housemate in housemates %}
+    <tr>
+      <td><a href="#">{{ housemate.email }}</a></td>
+      <td>{{ housemate.housechore_title }}</td>
+      <td>{{ housemate.done_weekly }}</td>
+      <td>{{ housemate.done_monthly }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

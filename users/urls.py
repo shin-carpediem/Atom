@@ -20,5 +20,6 @@ urlpatterns = [
     path('withdraw/', views.withdraw, name='withdraw'),
     path('policy/', views.policy, name='policy'),
     path('terms/', views.terms, name='terms'),
-    path('axes_locked/', views.axes_locked, name='axes_locked')
+    path('axes_locked/', views.axes_locked, name='axes_locked'),
+    path('manage/', views.manage, name='manage')
 ]
