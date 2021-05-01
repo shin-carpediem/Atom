@@ -38,12 +38,15 @@
         {% trans "ハウス管理" %}
       </a>
       {% else %}
-      <a href="{% url 'users:request_house_owner' %}">
+      <p class="link" data-toggle="modal" data-target="#request_house_owner">
         {% trans "ハウス管理者権限の申請" %}
-      </a>
+      </p>
       {% endif %}
-      <p class="withdraw pt-3" id="withdraw">
+      {% if user.is_superuser != True %}
+      <p class="withdraw" id="withdraw">
         {% trans "退会" %}
+      {% endif %}
+      </p>
   </div>
 </div>
 {% endblock %}

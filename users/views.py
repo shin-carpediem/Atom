@@ -1,17 +1,17 @@
+import smtplib
 from django.http import request
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from axes.backends import AxesBackend
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
-import smtplib
-from .models import Inquire
+from .models import User, Inquire, RequestHouseOwner
 from .forms import CustomUserCreationForm, HouseChooseForm, TwoStepAuthForm
 from . import utils
-from users.models import User, Inquire
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
@@ -73,7 +73,7 @@ def signup(request):
                     """
                 else:
                     html = """\
-                                        <head>
+                    <head>
                       <link rel="preconnect" href="https://fonts.gstatic.com">
 　　　　　　            <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
                       <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
@@ -180,66 +180,11 @@ def index(request):
 
 
 @login_required
-def request_ch_house(request):
-    user = User.objects.get(id=request.user.id)
-    EMAIL = user.email
-    PASSWORD = EMAIL_HOST_PASSWORD
-    TO = DEFAULT_FROM_EMAIL
-
-    msg = MIMEMultipart('alternative')
-    msg['Subject'] = '【Atom】ユーザーからハウス変更の申請が届きました'
-    msg['From'] = EMAIL
-    msg['To'] = TO
-
-    html = """\
-    <html>
-    <head>
-      <link rel="preconnect" href="https://fonts.gstatic.com">
-　　　 <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-      <style type="text/css">
-        p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
-      </style>
-    </head>
-    <body>
-      <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
-      <br><br>
-      <p>ユーザーからハウス変更の申請が届きました。</p>
-      <a href="https://atom-production.herokuapp.com/admin/">管理画面へ</a>
-      <br>
-      <p>Thank you.</p>
-      <hr>
-      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-      <p style="color:#609bb6;">From Atom team</p>
-      </div>
-    </body>
-    </html>
-    """
-
-    fp = open('static/img/users/icon.png', 'rb')
-    img = MIMEImage(fp.read())
-    fp.close()
-    img.add_header('Content-ID', '<logo_image>')
-    msg.attach(img)
-
-    template = MIMEText(html, 'html')
-    msg.attach(template)
-
-    # access to the socket
-    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-    s.starttls()
-    s.login(DEFAULT_FROM_EMAIL, PASSWORD)
-    s.sendmail(EMAIL, TO, msg.as_string())
-    s.quit()
-    messages.success(
-        request, f"ハウス名変更の申請が完了しました。 / The application for changing the house name has been completed.")
-
-    return render(request, 'users/index.html')
-
-
-@login_required
+@require_POST
 def request_house_owner(request):
-    user = User.objects.get(id=request.user.id)
+    user = request.user
+    RequestHouseOwner(email=user.email, house=user.house).save()
+
     EMAIL = user.email
     PASSWORD = EMAIL_HOST_PASSWORD
     TO = DEFAULT_FROM_EMAIL
@@ -294,7 +239,7 @@ def request_house_owner(request):
     messages.success(
         request, f"ハウス管理者権限の申請が完了しました。 / Application for house administrator authority has been completed.")
 
-    return render(request, 'users/index.html')
+    return redirect('users:index')
 
 
 def inquire(request):

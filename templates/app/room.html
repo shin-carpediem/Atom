@@ -64,14 +64,14 @@
 <hr>
 <div class="mx-2">
   <div class="pt-1">
-    <p class="link" data-toggle="modal" data-target="#exampleModal_username" data-whatever="@mdo">
+    <p class="link" data-toggle="modal" data-target="#ch_username">
       {% trans "ユーザー名を設定する" %}
     </p>
-    <a href="{% url 'users:request_ch_house' %}">
+    <p class="link" data-toggle="modal" data-target="#request_ch_house">
       {% trans "ハウスを間違えましたか？" %}
-    </a>
+    </p>
   </div>
-  <div class="py-3">
+  <div class="pb-3 d-flex">
     <a class="pr-1" href="{% url 'users:logout' %}">
       {% trans "ログアウト" %}
     </a>
@@ -80,9 +80,9 @@
       {% trans "ハウス管理" %}
     </a>
     {% else %}
-    <a href="{% url 'app:request_house_owner' %}">
+    <p class="link" data-toggle="modal" data-target="#request_house_owner">
       {% trans "ハウス管理者権限の申請" %}
-    </a>
+    </p>
     {% endif %}
   </div>
 </div>

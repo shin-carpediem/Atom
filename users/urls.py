@@ -14,7 +14,6 @@ urlpatterns = [
     path('', auth_views.LoginView.as_view(
         template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('request_ch_house', views.request_ch_house, name='request_ch_house'),
     path('request_house_owner', views.request_house_owner,
          name='request_house_owner'),
     path('inquire/', views.inquire, name='inquire'),
