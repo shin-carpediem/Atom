@@ -131,11 +131,11 @@ def signup(request):
                 return render(request, 'users/pls_activate.html')
     else:
         form = CustomUserCreationForm()
-    return render(request, 'users/signup.html', {'form': form})
+    return render(request, 'users/auth/signup.html', {'form': form})
 
 
 def pls_activate(request):
-    return render(request, 'users/pls_activate.html')
+    return render(request, 'users/auth/pls_activate.html')
 
 
 # 2 step google authenticate
@@ -146,14 +146,14 @@ def signup_doing(request):
     request.session["img"] = utils.get_image_b64(
         utils.get_auth_url(user.email, utils.get_secret(user)))
     two_step_auth_form = TwoStepAuthForm()
-    return render(request, 'users/signup_doing.html', {'two_step_auth_form': two_step_auth_form})
+    return render(request, 'users/auth/signup_doing.html', {'two_step_auth_form': two_step_auth_form})
 
 
 def signup_done(request):
     user = User.objects.get(id=request.user.id)
     user.is_active = True
     user.save()
-    return render(request, 'users/signup_done.html')
+    return render(request, 'users/auth/signup_done.html')
 
 
 def password_reset(request):
@@ -312,7 +312,7 @@ def withdraw(request):
     user = User.objects.get(id=request.user.id)[0]
     user.is_active = False
     user.save()
-    return render(request, 'users/withdraw.html')
+    return render(request, 'users/auth/withdraw.html')
 
 
 def policy(request):
@@ -324,11 +324,11 @@ def terms(request):
 
 
 def axes_locked(request):
-    return render(request, 'users/axes_locked.html')
+    return render(request, 'users/auth/axes_locked.html')
 
 
 def manage_top(request):
-    return render(request, 'users/manage_top.html')
+    return render(request, 'users/manage/manage_top.html')
 
 
 @login_required
@@ -344,7 +344,7 @@ def manage(request):
         'housechores': housechores,
         'form': form,
     }
-    return render(request, 'users/manage.html', ctx)
+    return render(request, 'users/manage/manage.html', ctx)
 
 
 @login_required
@@ -354,7 +354,7 @@ def housemate_detail(request, housemate_id):
     ctx = {
         'housemate': housemate,
     }
-    return render(request, 'users/housemate_detail.html', ctx)
+    return render(request, 'users/manage/housemate_detail.html', ctx)
 
 
 @login_required
@@ -364,7 +364,7 @@ def housechore_detail(request, housechore_id):
     ctx = {
         'housechore': housechore,
     }
-    return render(request, 'users/housechore_detail.html', ctx)
+    return render(request, 'users/manage/housechore_detail.html', ctx)
 
 
 @login_required
@@ -398,11 +398,16 @@ def update_housechore(request):
 @staff_member_required
 @require_POST
 def delete_housechore(request):
-    title = request.POST.get('housechore_title')
-    housechore = HouseChore.objects.filter(title=title)[0]
-    housechore.delete()
-    messages.success(
-        request, f"{title}を削除しました。/ {title} has been deleted.")
+    try:
+        title = request.POST.get('housechore_title')
+        housechore = HouseChore.objects.filter(title=title)[0]
+        housechore.delete()
+        messages.success(
+            request, f"{title}を削除しました。/ {title} has been deleted.")
+    except:
+        messages.warning(
+            request, f"家事がありません。/ There are no housechore."
+        )
     return redirect('users:manage')
 
 
