@@ -45,6 +45,10 @@
     </div>
   </section>
 
+  {% block deactivate_housemate %}
+    {% include 'users/deactivate_housemate.html' %}
+  {% endblock %}
+
   {% block add_housechore %}
     {% include 'users/add_housechore.html' %}
   {% endblock %}

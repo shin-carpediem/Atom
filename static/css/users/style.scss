@@ -122,6 +122,16 @@ html {
           }
         }
         // manage
+        .manage_table {
+          tr {
+            th {
+              text-align: center;
+            }
+            td {
+              text-align: center;
+            }
+          }
+        }
         .housemate_detail {
           tr {
             td {

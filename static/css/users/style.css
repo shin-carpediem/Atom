@@ -113,6 +113,14 @@ html body section .container .withdraw:hover {
   text-decoration: underline;
 }
 
+html body section .container .manage_table tr th {
+  text-align: center;
+}
+
+html body section .container .manage_table tr td {
+  text-align: center;
+}
+
 html body section .container .housemate_detail tr td {
   text-align: center;
 }

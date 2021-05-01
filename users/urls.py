@@ -27,4 +27,5 @@ urlpatterns = [
     path('manage/housechore/<int:housechore_id>/',
          views.housechore_detail, name='housechore_detail'),
     path('manage/add_housechore', views.add_housechore, name='add_housechore'),
+    path('manage/deactivate_housemate', views.deactivate_housemate, name='deactivate_housemate'),
 ]

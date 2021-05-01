@@ -309,7 +309,7 @@ def inquire(request):
 
 @login_required
 def withdraw(request):
-    user = User.objects.get(id=request.user.id)
+    user = User.objects.get(id=request.user.id)[0]
     user.is_active = False
     user.save()
     return render(request, 'users/withdraw.html')
@@ -331,7 +331,8 @@ def axes_locked(request):
 @staff_member_required
 def manage(request):
     form = AddHousechoreForm(request.POST or None)
-    housemates = User.objects.filter(house=request.user.house).order_by('id')
+    housemates = User.objects.filter(
+        house=request.user.house, is_active=True).order_by('id')
     housechores = HouseChore.objects.filter(
         house=request.user.house).order_by('id')
     ctx = {
@@ -370,4 +371,17 @@ def add_housechore(request):
     title = request.POST.get('title')
     description = request.POST.get('description')
     HouseChore(title=title, description=description, house=user.house).save()
+    return redirect('users:manage')
+
+
+@login_required
+@staff_member_required
+@require_POST
+def deactivate_housemate(request):
+    email = request.POST.get('housemate_email')
+    user = User.objects.filter(email=email)[0]
+    user.is_active = False
+    user.save()
+    messages.success(
+        request, f"{email}をdeactivateしました。/ {email} has been deactivated.")
     return redirect('users:manage')
