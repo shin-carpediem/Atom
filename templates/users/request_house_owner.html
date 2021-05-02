@@ -20,7 +20,7 @@
               {% trans "申請フォームを記入してください。" %}
             </label><br><br>
             <label>Email:</label>
-            <input class="my-3" type="email" name="email" required>
+            <input class="my-3" type="email" name="email" readonly style="border: none; pointer-events: none;">
             {{ house_choose_form.as_p }}
           </div>
           <div class="d-flex pt-2">

@@ -17,7 +17,7 @@
         <form action="{% url 'app:request_ch_house' %}" method="POST">{% csrf_token %}
           <div class="form-group">
             <label>Email:</label>
-            <input class="mb-3 w-50" type="email" name="email" value="{{ user.email }}" readonly><br>
+            <input class="mb-3 w-50" type="email" name="email" value="{{ user.email }}" readonly style="border: none; pointer-events: none;"><br>
             <label>
               {% trans "現在のハウス:" %}
             </label>

@@ -14,7 +14,7 @@
     <table class="w-100 mx-auto housemate_detail">
       <tr>
         <th>ID</th>
-        <td><input class="w-100" type="number" value="{{ housechore.id }}" name="id" readonly></td>
+        <td><input class="w-100" type="number" value="{{ housechore.id }}" name="id" readonly style="border: none; pointer-events: none;"></td>
       </tr>
       <tr>
         <th>
@@ -27,7 +27,7 @@
           {% trans "詳細" %}
         </th>
         <td>
-          <textarea class="w-100" value="{{ housechore.description }}" name="description"></textarea>
+          <textarea class="w-100" rows=8 value="{{ housechore.description }}" name="description"></textarea>
         </td>
       </tr>
       <tr>
