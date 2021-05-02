@@ -56,13 +56,13 @@ def signup(request):
                       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
                       <br><br>
                       <p>Atomをご利用いただきありがとうございます。</p>
-                      <p>あなたのアカウント（{{ new_user.email }}）は現在、仮登録の状態です。</p>
+                      <p>あなたのアカウント（{{ TO }}）は現在、仮登録の状態です。</p>
                       <p>以下のURLをクリックして、アカウントの本登録を行なってください。</p>
                       <br>
                       <a href="http://127.0.0.1:8000/signup/doing/">http://127.0.0.1:8000/signup/doing/</a>
                       <br><br>
                       <p>Thank you for using Atom. </p>
-                      <p>Your account（{{ new_user.email }}）is currently in a temporary registration status.</p>
+                      <p>Your account（{{ TO }}）is currently in a temporary registration status.</p>
                       <p>Click the URL below to register your account</p>
                       <br>
                       <a href="http://127.0.0.1:8000/signup/doing/">http://127.0.0.1:8000/signup/doing/</a>
@@ -89,13 +89,13 @@ def signup(request):
                       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
                       <br><br>
                       <p>Atomをご利用いただきありがとうございます。</p>
-                      <p>あなたのアカウント（{{ new_user.email }}）、仮登録の状態です。</p>
+                      <p>あなたのアカウント（{{ TO }}）は現在、仮登録の状態です。</p>
                       <p>以下のURLをクリックして、アカウントの本登録を行なってください。</p>
                       <br>
                       <a href="https://atom-production.herokuapp.com/signup/doing/">https://atom-production.herokuapp.com/signup/doing/</a>
                       <br><br>
                       <p>Thank you for using Atom. </p>
-                      <p>Your account（{{ new_user.email }}）is currently in a temporary registration status.</p>
+                      <p>Your account（{{ TO }}）is currently in a temporary registration status.</p>
                       <p>Click the URL below to register your account</p>
                       <br>
                       <a href="https://atom-production.herokuapp.com/signup/doing/">https://atom-production.herokuapp.com/signup/doing/</a>
@@ -116,7 +116,7 @@ def signup(request):
                 msg.attach(img)
 
                 html = Template(html)
-                context = Context({'new_user': new_user})
+                context = Context({'TO': TO})
                 template = MIMEText(html.render(context=context), 'html')
                 msg.attach(template)
 
@@ -195,6 +195,7 @@ def index(request):
 @require_POST
 def request_house_owner(request):
     user = request.user
+    user_id = user.id
     RequestHouseOwner(email=user.email, house=user.house).save()
 
     EMAIL = user.email
@@ -219,7 +220,7 @@ def request_house_owner(request):
     <body>
       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
       <br><br>
-      <p>ユーザー（ユーザーID：{{ user.id }}）（メールアドレス：{{ user.email }}）からハウス管理者権限の申請が届きました。</p>
+      <p>ユーザー（ユーザーID：{{ user_id }}）（メールアドレス：{{ EMAIL }}）からハウス管理者権限の申請が届きました。</p>
       <p>’is_staff’をTrueにしてください。</p>
       <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
       <br>
@@ -240,7 +241,7 @@ def request_house_owner(request):
     msg.attach(img)
 
     html = Template(html)
-    context = Context({'user.id': user.id, 'user.email': user.email})
+    context = Context({'user_id': user_id, 'EMAIL': EMAIL})
     template = MIMEText(html.render(context=context), 'html')
     msg.attach(template)
 
@@ -268,6 +269,7 @@ def inquire(request):
     inquire.save()
 
     user = User.objects.get(id=request.user.id)
+    user_id = user.id
     EMAIL = user.email
     PASSWORD = EMAIL_HOST_PASSWORD
     TO = DEFAULT_FROM_EMAIL
@@ -290,7 +292,7 @@ def inquire(request):
     <body>
       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
       <br><br>
-      <p>ユーザー（ユーザーID：{{ user.id }}）（メールアドレス：{{ user.email }}）から問い合わせが受けました。</p>
+      <p>ユーザー（ユーザーID：{{ user_id }}）（メールアドレス：{{ EMAIL }}）から問い合わせが受けました。</p>
       <hr>
       <p>問い合わせ内容</p>
       <p>{{ content }}</p>
@@ -315,7 +317,7 @@ def inquire(request):
 
     html = Template(html)
     context = Context(
-        {'user.id': user.id, 'user.email': user.email, 'content': content})
+        {'user_id': user_id, 'EMAIL': EMAIL, 'content': content})
     template = MIMEText(html.render(context=context), 'html')
     msg.attach(template)
 

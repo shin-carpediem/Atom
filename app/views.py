@@ -38,24 +38,27 @@ def set_username(request):
 @staff_member_required
 def assign_chore(request):
     if request.method == 'POST':
+        housemates = User.objects.filter(
+            house=request.user.house, is_active='True')
         # is_staff権限のユーザーのハウスと同じハウスメイト(is_active=true)の人数を算出
-        UserNum = User.objects.filter(
-            house=request.user.house, is_active='True').count()
+        UserNum = housemates.count()
+
+        housechores = HouseChore.objects.filter(
+            house=request.user.house, is_active='True')
         # is_staff権限のユーザーのハウスの家事の個数を算出
-        HouseChoreNum = HouseChore.objects.filter(
-            house=request.user.house).count()
+        HouseChoreNum = housechores.count()
+
         # ハウスメイトの人数と家事の個数が一致するなら家事を割り振る
         if UserNum == HouseChoreNum:
             # 家事の並び順をシャッフルする
-            random_housechore_list = HouseChore.objects.filter(
-                house=request.user.house, is_active=True).values_list('title', 'description').order_by('?')
+            random_housechore_list = housechores.values_list(
+                'title', 'description').order_by('?')
             # titleのクエリセットからリストにする
             list_item = list(random_housechore_list)
 
             for i in range(UserNum):
                 # i+1 番目のモデルの家事インスタンスを取得
-                housemate = User.objects.filter(
-                    house=request.user.house, is_active='True').order_by('id')[i]
+                housemate = housemates.order_by('id')[i]
                 # ハウスメイトの家事実施状況をyetにする
                 housemate.done_weekly = False
                 # i+1 番目のモデルの家事インスタンスを一旦削除
@@ -79,8 +82,11 @@ def assign_chore(request):
 
                 # TODO:ここ処理めちゃ長くなっちゃうから、一列で表現できるようにする
                 for i in range(UserNum):
-                    TO = (User.objects.filter(
-                        house=request.user.house, is_active='True').values_list('email')[i][0])
+                    target_users = User.objects.filter(
+                        house=request.user.house, is_active='True')
+                    TO = target_users.values_list('email')[i][0]
+                    housemate_housechore_title = target_users.values_list('housechore_title')[i][0]
+                    housemate_housechore_desc = target_users.values_list('housechore_desc')[i][0]
 
                     msg = MIMEMultipart('alternative')
                     html = """\
@@ -98,11 +104,16 @@ def assign_chore(request):
                       <br><br>
                       <p>今週の自分が担当する家事をご確認ください。</p>
                       <hr>
-                      <p></p>
+                      <p>家事のサマリ：{{ housemate_housechore_title }}</p>
+                      <p>詳細：{{ housemate_housechore_desc }}</p>
                       <hr>
                       <a href="https://atom-production.herokuapp.com/room">ページへ移動する</a>
                       <br><br>
                       <p>Please check the housework you are in charge of this week.</p>
+                      <hr>
+                      <p>Summary：{{ housemate_housechore_title }}</p>
+                      <p>Description：{{ housemate_housechore_desc }}</p>
+                      <hr>
                       <a href="https://atom-production.herokuapp.com/room">Go to page</a>
                       <br>
                       <p>Thank you.</p>
@@ -126,7 +137,8 @@ def assign_chore(request):
                     msg.attach(img)
 
                     html = Template(html)
-                    context = Context({'new_user': new_user})
+                    context = Context({'housemate_housechore_title': housemate_housechore_title,
+                                       'housemate_housechore_desc': housemate_housechore_desc})
                     # Attach parts into message container.
                     # According to RFC 2046, the last part of a multipart message, in this case
                     # the HTML message, is best and preferred.
@@ -161,18 +173,25 @@ def assign_chore(request):
 
 @login_required
 @staff_member_required
+@require_POST
 def reset_common_fee(request):
-    if request.method == 'POST':
-        UserNum = User.objects.filter(
-            house=request.user.house, is_active='True').count()
+    Users = User.objects.filter(house=request.user.house, is_active='True')
+    # すでに1人以上が共益費を支払い終えていたら、全員の共益費をリセットする関数を実行する。
+    TrueUsersNum = Users.filter(done_monthly='True').count()
+    if TrueUsersNum >= 1:
+        UserNum = Users.count()
         for i in range(UserNum):
-            housemate = User.objects.filter(
-                house=request.user.house, is_active='True').order_by('id')[i]
+            housemate = Users.order_by('id')[i]
             housemate.done_monthly = False
             housemate.save()
         messages.success(
             request, f"ハウスメイト全員分の共益費支払いをリセットしました。/ It was successful in resetting common fee for all housemates.")
-    return redirect('app:room')
+        return redirect('app:room')
+    else:
+        messages.warning(
+            request, f"まだ誰も今月分の共益費を支払っていません。/ No one has paid this month's common service fee yet."
+        )
+        return render(request, 'app/room.html')
 
 
 @login_required
@@ -181,6 +200,7 @@ def finish_task(request):
 
     try:
         user = User.objects.get(id=request.user.id)
+        user_email = user.email
         user_housechore_title = user.housechore_title
         user_housechore_desc = user.housechore_desc
 
@@ -198,6 +218,8 @@ def finish_task(request):
             return render(request, 'app/room.html')
 
         user.save()
+        user_done_weekly = user.done_weekly
+        user_done_monthly = user.done_monthly
 
         EMAIL = request.user.email
         PASSWORD = EMAIL_HOST_PASSWORD
@@ -224,16 +246,22 @@ def finish_task(request):
         <body>
           <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
           <br><br>
-          <p>ハウスメイトの{{ user.email }}さんから家事完了の連絡を受けました。</p>
+          <p>ハウスメイトの{{ user_email }}さんから家事完了の連絡を受けました。</p>
           <hr>
           <p>家事のサマリ：{{ user_housechore_title }}</p>
           <p>詳細：{{ user_housechore_desc }}</p>
-          <p>ステータス：{{ user.done_weekly }}</p>
-          <p>共益費の支払い完了：{{ user.done_monthly }}</p>
+          <p>ステータス：{{ user_done_weekly }}</p>
+          <p>共益費の支払い完了：{{ user_done_monthly }}</p>
           <hr>
           <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
           <br><br>
-          <p>You received a notification from your housemate {{ user.email }} that he/she finised the housework.</p>
+          <p>You received a notification from your housemate {{ user_email }} that he/she finised the housework.</p>
+          <hr>
+          <p>Summary: {{ user_housechore_title }}</p>
+          <p>Description: {{ user_housechore_desc }}</p>
+          <p>Status: {{ user_done_weekly }}</p>
+          <p>Completion of payment of common service fee: {{ user_done_monthly }}</p>
+          <hr>
           <a href="https://atom-production.herokuapp.com/manage_top/">Go to admin page</a>
           <br>
           <p>Thank you.</p>
@@ -256,11 +284,11 @@ def finish_task(request):
         # the HTML message, is best and preferred.
         html = Template(html)
         context = Context(
-            {'user.email': user.email,
+            {'user_email': user_email,
              'user_housechore_title': user_housechore_title,
              'user_housechore_desc': user_housechore_desc,
-             'user.done_weekly': user.done_weekly,
-             'user.done_monthly': user.done_monthly})
+             'user_done_weekly': user_done_weekly,
+             'user_done_monthly': user_done_monthly})
         template = MIMEText(html.render(context=context), 'html')
         msg.attach(template)
 
