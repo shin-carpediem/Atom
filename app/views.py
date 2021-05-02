@@ -97,13 +97,17 @@ def assign_chore(request):
                     msg.attach(img)
                     template = MIMEText(html, 'html')
                     msg.attach(template)
-                    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-                    s.starttls()
-                    s.login(EMAIL, PASSWORD)
-                    s.sendmail(EMAIL, TO, msg.as_string())
-                    s.quit()
-                messages.success(
-                    request, f"割り振りに成功しました。 / The allocation was successful.")
+                    try:
+                        s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+                        s.starttls()
+                        s.login(EMAIL, PASSWORD)
+                        s.sendmail(EMAIL, TO, msg.as_string())
+                        s.quit()
+                        messages.success(
+                            request, f"割り振りに成功しました。 / The allocation was successful.")
+                    except:
+                        messages.warning(
+                            request, f"メール送信に失敗しましたが、割り振りは完了しました。別途アナウンスをしてください。/ Email sending failed, but allocation is complete. Please make a separate announcement.")
         elif UserNum > HouseChoreNum:
             messages.warning(
                 request, f"家事の数が足りません。家事をしなくてもいい人数分、「今週はなし」という家事を作成してください。/ There are not enough housework. Create a housework called ”Nothing this week” for the number of people who do not have to do the housework.")
@@ -189,12 +193,17 @@ def finish_task(request):
         msg.attach(img)
         template = MIMEText(html, 'html')
         msg.attach(template)
-        s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-        s.starttls()
-        s.login(DEFAULT_FROM_EMAIL, PASSWORD)
-        s.sendmail(EMAIL, TO, msg.as_string())
-        s.quit()
-        messages.success(request, f"報告できました。/ The a report was successful.")
+        try:
+            s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+            s.starttls()
+            s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+            s.sendmail(EMAIL, TO, msg.as_string())
+            s.quit()
+            messages.success(
+                request, f"報告できました。/ The a report was successful.")
+        except:
+            messages.warning(
+                request, f"メール送信に失敗しましたが、ステータスは変更できました。/ Failed to send an email, but your status has been successfully changed.")
     except:
         messages.warning(
             request, f"まだハウス管理者がいないようです。/ It seems that there is no house manager yet.")
@@ -245,11 +254,16 @@ def request_ch_house(request):
     msg.attach(img)
     template = MIMEText(html, 'html')
     msg.attach(template)
-    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-    s.starttls()
-    s.login(DEFAULT_FROM_EMAIL, PASSWORD)
-    s.sendmail(EMAIL, TO, msg.as_string())
-    s.quit()
-    messages.success(
-        request, f"ハウス変更の申請が完了しました。 / The application for changing the house has been completed.")
+    try:
+        s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+        s.starttls()
+        s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+        s.sendmail(EMAIL, TO, msg.as_string())
+        s.quit()
+        messages.success(
+            request, f"ハウス変更の申請が完了しました。 / The application for changing the house has been completed.")
+    except:
+        messages.warning(
+            request, f"メール送信に失敗しました。しばらくしてもう一度お試しください。/ Failed to send the email. Please try again after a while."
+        )
     return redirect('users:index')

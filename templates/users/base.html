@@ -7,7 +7,7 @@
   <meta name="description" content="シェアハウスで家事を自動で割り振ってみよう">
   <meta name="keywords" content="家事 シェアハウス Atom house chore">
   {% block header %}
-    {% include 'users/header.html' %}
+    {% include 'common/header.html' %}
   {% endblock %}
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -16,7 +16,7 @@
 </head>
 <body>
   {% block messages %}
-    {% include 'users/messages.html' %}
+    {% include 'common/messages.html' %}
   {% endblock %}
   <section class="row mx-auto mt-lg-5 pt-5 mt-2">
     <div class="col-lg-3 col-11 mx-auto container">
@@ -27,32 +27,28 @@
           {% trans "ヘルプセンター" %}
         </p>
         {% block language %}
-          {% include 'users/language.html' %}
+          {% include 'common/language.html' %}
         {% endblock %}
       </div>
     </div>
   </section>
-
-  {% block delete_housechore %}
-    {% include 'users/delete_housechore.html' %}
-  {% endblock %}
-
-  {% block deactivate_housemate %}
-    {% include 'users/deactivate_housemate.html' %}
-  {% endblock %}
   {% block request_house_owner %}
     {% include 'users/request_house_owner.html' %}
   {% endblock %}
-  {% block help_center %}
-    {% include 'users/help_center.html' %}
-  {% endblock %}
-
   {% block add_housechore %}
-    {% include 'users/add_housechore.html' %}
+    {% include 'users/manage/add_housechore.html' %}
   {% endblock %}
-
+  {% block delete_housechore %}
+    {% include 'users/manage/delete_housechore.html' %}
+  {% endblock %}
+  {% block deactivate_housemate %}
+    {% include 'users/manage/deactivate_housemate.html' %}
+  {% endblock %}
+  {% block help_center %}
+    {% include 'common/help_center.html' %}
+  {% endblock %}
   {% block bootstrap %}
-    {% include 'users/bootstrap.html' %}
+    {% include 'common/bootstrap.html' %}
   {% endblock %}
   <script src="{% static 'js/users/base.min.js' %}"></script>
 </body>
