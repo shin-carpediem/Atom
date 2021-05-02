@@ -125,14 +125,18 @@ def assign_chore(request):
                     template = MIMEText(html, 'html')
                     msg.attach(template)
 
-                    # access to the socket
-                    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-                    s.starttls()
-                    s.login(EMAIL, PASSWORD)
-                    s.sendmail(EMAIL, TO, msg.as_string())
-                    s.quit()
-                messages.success(
-                    request, f"割り振りに成功しました。 / The allocation was successful.")
+                    try:
+                        # access to the socket
+                        s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+                        s.starttls()
+                        s.login(EMAIL, PASSWORD)
+                        s.sendmail(EMAIL, TO, msg.as_string())
+                        s.quit()
+                        messages.success(
+                            request, f"割り振りに成功しました。 / The allocation was successful.")
+                    except:
+                        messages.warning(
+                            request, f"メール送信に失敗しましたが、割り振りは完了しました。別途アナウンスをしてください。/ Email sending failed, but allocation is complete. Please make a separate announcement.")
 
         elif UserNum > HouseChoreNum:
             messages.warning(
@@ -236,16 +240,21 @@ def finish_task(request):
         template = MIMEText(html, 'html')
         msg.attach(template)
 
-        # access to the socket
-        s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-        s.starttls()
-        s.login(DEFAULT_FROM_EMAIL, PASSWORD)
-        # sendmail function takes 3 arguments: sender's address, recipient's address
-        # and message to send - here it is sent as one string.
-        s.sendmail(EMAIL, TO, msg.as_string())
-        s.quit()
+        try:
+            # access to the socket
+            s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+            s.starttls()
+            s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+            # sendmail function takes 3 arguments: sender's address, recipient's address
+            # and message to send - here it is sent as one string.
+            s.sendmail(EMAIL, TO, msg.as_string())
+            s.quit()
 
-        messages.success(request, f"報告できました。/ The a report was successful.")
+            messages.success(
+                request, f"報告できました。/ The a report was successful.")
+        except:
+            messages.warning(
+                request, f"メール送信に失敗しましたが、ステータスは変更できました。/ Failed to send an email, but your status has been successfully changed.")
 
     except:
         messages.warning(
@@ -303,13 +312,18 @@ def request_ch_house(request):
     template = MIMEText(html, 'html')
     msg.attach(template)
 
-    # access to the socket
-    s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-    s.starttls()
-    s.login(DEFAULT_FROM_EMAIL, PASSWORD)
-    s.sendmail(EMAIL, TO, msg.as_string())
-    s.quit()
-    messages.success(
-        request, f"ハウス変更の申請が完了しました。 / The application for changing the house has been completed.")
+    try:
+        # access to the socket
+        s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+        s.starttls()
+        s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+        s.sendmail(EMAIL, TO, msg.as_string())
+        s.quit()
+        messages.success(
+            request, f"ハウス変更の申請が完了しました。 / The application for changing the house has been completed.")
+    except:
+        messages.warning(
+            request, f"メール送信に失敗しました。しばらくしてもう一度お試しください。/ Failed to send the email. Please try again after a while."
+        )
 
     return redirect('users:index')
