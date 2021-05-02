@@ -128,6 +128,7 @@ html {
         }
         // manage
         .manage_table {
+          overflow-x: scroll;
           tr {
             th {
               text-align: center;

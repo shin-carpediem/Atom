@@ -42,11 +42,11 @@
         </th>
         <td>
           <select name="is_active" class="w-100">
-            <option value="{{ housechore.is_active }}">{{ housechore.is_active }}</option>
+            <option value="{{ housechore.is_active }}" name="is_active">{{ housechore.is_active }}</option>
             {% if housechore.is_active == False %}
-            <option value="True">True</option>
+            <option value="True" name="is_active">True</option>
             {% else %}
-            <option value="False">False</option>
+            <option value="False" name="is_active">False</option>
             {% endif %}
           </select>
         </td>

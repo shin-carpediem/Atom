@@ -50,11 +50,15 @@
       <th>
         {% trans "詳細" %}
       </th>
+      <th>
+        {% trans "有効/無効" %}
+      </th>
     </tr>
     {% for housechore in housechores %}
     <tr>
       <td><a href="{% url 'users:housechore_detail' housechore.id %}">{{ housechore.title }}</a></td>
       <td class="text-left">{{ housechore.description }}</td>
+      <td>{{ housechore.is_active }}</td>
     </tr>
     {% endfor %}
   </table>

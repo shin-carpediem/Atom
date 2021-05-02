@@ -120,6 +120,10 @@ html body section .container .withdraw:hover {
   text-decoration: underline;
 }
 
+html body section .container .manage_table {
+  overflow-x: scroll;
+}
+
 html body section .container .manage_table tr th {
   text-align: center;
 }

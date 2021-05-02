@@ -89,7 +89,7 @@ class Inquire(models.Model):
     created_at = models.DateTimeField("日付", auto_now=True)
 
     def __str__(self):
-        return self.created_at
+        return str(self.created_at)
 
 
 class RequestChHouse(models.Model):
@@ -99,7 +99,7 @@ class RequestChHouse(models.Model):
     created_at = models.DateTimeField("日付", auto_now=True)
 
     def __str__(self):
-        return self.created_at
+        return str(self.created_at)
 
 
 class RequestHouseOwner(models.Model):
@@ -108,4 +108,4 @@ class RequestHouseOwner(models.Model):
     created_at = models.DateTimeField("日付", auto_now=True)
 
     def __str__(self):
-        return self.created_at
+        return str(self.created_at)
