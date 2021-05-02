@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.decorators.http import require_POST
+from django.template import Context, Template
 from axes.backends import AxesBackend
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -29,102 +30,102 @@ def signup(request):
                 request=request, email=input_email, password=input_password)
             if new_user is not None:
                 login(request, new_user)
+                EMAIL = DEFAULT_FROM_EMAIL
+                PASSWORD = EMAIL_HOST_PASSWORD
+                TO = input_email
+                msg = MIMEMultipart('alternative')
+                msg['Subject'] = '【Atom】本登録をしてください / Please make a formal registration'
+                msg['From'] = DEFAULT_FROM_EMAIL
+                msg['To'] = TO
+                if DEBUG:
+                    html = """\
+                    <head>
+                      <link rel="preconnect" href="https://fonts.gstatic.com">
+　　　　　　            <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+                      <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+                      <style type="text/css">
+                        p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
+                      </style>
+                    </head>
+                    <body>
+                      <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
+                      <br><br>
+                      <p>Atomをご利用いただきありがとうございます。</p>
+                      <p>あなたのアカウント（{{ TO }}）は現在、仮登録の状態です。</p>
+                      <p>以下のURLをクリックして、アカウントの本登録を行なってください。</p>
+                      <br>
+                      <a href="http://127.0.0.1:8000/signup/doing/">http://127.0.0.1:8000/signup/doing/</a>
+                      <br><br>
+                      <p>Thank you for using Atom. </p>
+                      <p>Your account（{{ TO }}）is currently in a temporary registration status.</p>
+                      <p>Click the URL below to register your account</p>
+                      <br>
+                      <a href="http://127.0.0.1:8000/signup/doing/">http://127.0.0.1:8000/signup/doing/</a>
+                      <br>
+                      <p>Thank you.</p>
+                      <hr>
+                      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
+                      <p style="color:#609bb6;">From Atom team</p>
+                      </div>
+                    </body>
+                    </html>
+                    """
+                else:
+                    html = """\
+                    <head>
+                      <link rel="preconnect" href="https://fonts.gstatic.com">
+　　　　　　            <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+                      <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+                      <style type="text/css">
+                        p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
+                      </style>
+                    </head>
+                    <body>
+                      <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
+                      <br><br>
+                      <p>Atomをご利用いただきありがとうございます。</p>
+                      <p>あなたのアカウント（{{ TO }}）は現在、仮登録の状態です。</p>
+                      <p>以下のURLをクリックして、アカウントの本登録を行なってください。</p>
+                      <br>
+                      <a href="https://atom-production.herokuapp.com/signup/doing/">https://atom-production.herokuapp.com/signup/doing/</a>
+                      <br><br>
+                      <p>Thank you for using Atom. </p>
+                      <p>Your account（{{ TO }}）is currently in a temporary registration status.</p>
+                      <p>Click the URL below to register your account</p>
+                      <br>
+                      <a href="https://atom-production.herokuapp.com/signup/doing/">https://atom-production.herokuapp.com/signup/doing/</a>
+                      <br>
+                      <p>Thank you.</p>
+                      <hr>
+                      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
+                      <p style="color:#609bb6;">From Atom team</p>
+                      </div>
+                    </body>
+                    </html>
+                    """
+                fp = open('static/img/users/icon.png', 'rb')
+                img = MIMEImage(fp.read())
+                fp.close()
+                img.add_header('Content-ID', '<logo_image>')
+                msg.attach(img)
+                html = Template(html)
+                context = Context({'TO': TO})
+                template = MIMEText(html.render(context=context), 'html')
+                msg.attach(template)
                 try:
-                    EMAIL = DEFAULT_FROM_EMAIL
-                    PASSWORD = EMAIL_HOST_PASSWORD
-                    TO = input_email
-                    msg = MIMEMultipart('alternative')
-                    msg['Subject'] = '【Atom】本登録をしてください / Please make a formal registration'
-                    msg['From'] = DEFAULT_FROM_EMAIL
-                    msg['To'] = TO
-                    if DEBUG:
-                        html = """\
-                        <head>
-                          <link rel="preconnect" href="https://fonts.gstatic.com">
-　　　　　　                <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-                          <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-                          <style type="text/css">
-                            p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
-                          </style>
-                        </head>
-                        <body>
-                          <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
-                          <br><br>
-                          <p>Atomをご利用いただきありがとうございます。</p>
-                          <p>あなたのアカウントは現在、仮登録の状態です。</p>
-                          <p>以下のURLをクリックして、アカウントの本登録を行なってください。</p>
-                          <br>
-                          <a href="http://127.0.0.1:8000/signup/doing/">http://127.0.0.1:8000/signup/doing/</a>
-                          <br><br>
-                          <p>Thank you for using Atom. </p>
-                          <p>Your account is currently in a temporary registration status.</p>
-                          <p>Click the URL below to register your account</p>
-                          <br>
-                          <a href="http://127.0.0.1:8000/signup/doing/">http://127.0.0.1:8000/signup/doing/</a>
-                          <br>
-                          <p>Thank you.</p>
-                          <hr>
-                          <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-                          <p style="color:#609bb6;">From Atom team</p>
-                          </div>
-                        </body>
-                        </html>
-                        """
-                    else:
-                        html = """\
-                        <head>
-                          <link rel="preconnect" href="https://fonts.gstatic.com">
-　　　　　　                <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-                          <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-                          <style type="text/css">
-                            p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
-                          </style>
-                        </head>
-                        <body>
-                          <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
-                          <br><br>
-                          <p>Atomをご利用いただきありがとうございます。</p>
-                          <p>あなたのアカウントは現在、仮登録の状態です。</p>
-                          <p>以下のURLをクリックして、アカウントの本登録を行なってください。</p>
-                          <br>
-                          <a href="https://atom-production.herokuapp.com/signup/doing/">https://atom-production.herokuapp.com/signup/doing/</a>
-                          <br><br>
-                          <p>Thank you for using Atom. </p>
-                          <p>Your account is currently in a temporary registration status.</p>
-                          <p>Click the URL below to register your account</p>
-                          <br>
-                          <a href="https://atom-production.herokuapp.com/signup/doing/">https://atom-production.herokuapp.com/signup/doing/</a>
-                          <br>
-                          <p>Thank you.</p>
-                          <hr>
-                          <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-                          <p style="color:#609bb6;">From Atom team</p>
-                          </div>
-                        </body>
-                        </html>
-                        """
-                    fp = open('static/img/users/icon.png', 'rb')
-                    img = MIMEImage(fp.read())
-                    fp.close()
-                    img.add_header('Content-ID', '<logo_image>')
-                    msg.attach(img)
-                    template = MIMEText(html, 'html')
-                    msg.attach(template)
                     s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
                     s.starttls()
                     s.login(EMAIL, PASSWORD)
                     s.sendmail(EMAIL, TO, msg.as_string())
                     s.quit()
-                    if new_user.email == DEFAULT_FROM_EMAIL:
-                        return render(request, 'users/pls_activate.html')
-                    else:
+                    if new_user.email != DEFAULT_FROM_EMAIL:
                         new_user.is_active = False
-                    return render(request, 'users/pls_activate.html')
-                except:
+                        new_user.save()
+                    return render(request, 'users/auth/pls_activate.html')
+                except Exception:
                     messages.warning(
                         request, f"メール送信に失敗しました。しばらくしてもう一度お試しください。/ Failed to send the email. Please try again after a while."
                     )
-
     else:
         form = CustomUserCreationForm()
     return render(request, 'users/auth/signup.html', {'form': form})
@@ -175,48 +176,51 @@ def index(request):
 @require_POST
 def request_house_owner(request):
     user = request.user
+    user_id = user.id
     RequestHouseOwner(email=user.email, house=user.house).save()
+    EMAIL = user.email
+    PASSWORD = EMAIL_HOST_PASSWORD
+    TO = DEFAULT_FROM_EMAIL
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = '【Atom】ユーザーからハウス管理者権限の申請が届きました'
+    msg['From'] = EMAIL
+    msg['To'] = TO
+    html = """\
+    <html>
+    <head>
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+      <style type="text/css">
+        p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
+      </style>
+    </head>
+    <body>
+      <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
+      <br><br>
+      <p>ユーザー（ユーザーID：{{ user_id }}）（メールアドレス：{{ EMAIL }}）からハウス管理者権限の申請が届きました。</p>
+      <p>’is_staff’をTrueにしてください。</p>
+      <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
+      <br>
+      <p>Thank you.</p>
+      <br><br><br>
+      <hr>
+      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
+      <p style="color:#609bb6;">From Atom team</p>
+      </div>
+    </body>
+    </html>
+    """
+    fp = open('static/img/users/icon.png', 'rb')
+    img = MIMEImage(fp.read())
+    fp.close()
+    img.add_header('Content-ID', '<logo_image>')
+    msg.attach(img)
+    html = Template(html)
+    context = Context({'user_id': user_id, 'EMAIL': EMAIL})
+    template = MIMEText(html.render(context=context), 'html')
+    msg.attach(template)
     try:
-        EMAIL = user.email
-        PASSWORD = EMAIL_HOST_PASSWORD
-        TO = DEFAULT_FROM_EMAIL
-        msg = MIMEMultipart('alternative')
-        msg['Subject'] = '【Atom】ユーザーからハウス管理者権限の申請が届きました'
-        msg['From'] = EMAIL
-        msg['To'] = TO
-        html = """\
-        <html>
-        <head>
-          <link rel="preconnect" href="https://fonts.gstatic.com">
-　    　　 <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-          <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-          <style type="text/css">
-            p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
-          </style>
-        </head>
-        <body>
-          <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
-          <br><br>
-          <p>ユーザーからハウス管理者権限の申請が届きました。</p>
-          <p>’is_staff’をTrueにしてください。</p>
-          <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
-          <br>
-          <p>Thank you.</p>
-          <br><br><br>
-          <hr>
-          <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-          <p style="color:#609bb6;">From Atom team</p>
-          </div>
-        </body>
-        </html>
-        """
-        fp = open('static/img/users/icon.png', 'rb')
-        img = MIMEImage(fp.read())
-        fp.close()
-        img.add_header('Content-ID', '<logo_image>')
-        msg.attach(img)
-        template = MIMEText(html, 'html')
-        msg.attach(template)
         s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
         s.starttls()
         s.login(DEFAULT_FROM_EMAIL, PASSWORD)
@@ -235,46 +239,54 @@ def inquire(request):
     content = request.GET.get(key='content')
     inquire = Inquire(content=content,)
     inquire.save()
+    user = User.objects.get(id=request.user.id)
+    user_id = user.id
+    EMAIL = user.email
+    PASSWORD = EMAIL_HOST_PASSWORD
+    TO = DEFAULT_FROM_EMAIL
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = '【Atom】ユーザーから問い合わせを受けました'
+    msg['From'] = EMAIL
+    msg['To'] = TO
+    html = """\
+    <html>
+    <head>
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+      <style type="text/css">
+        p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
+      </style>
+    </head>
+    <body>
+      <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
+      <br><br>
+      <p>ユーザー（ユーザーID：{{ user_id }}）（メールアドレス：{{ EMAIL }}）から問い合わせが受けました。</p>
+      <hr>
+      <p>問い合わせ内容</p>
+      <p>{{ content }}</p>
+      <hr>
+      <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
+      <br>
+      <p>Thank you.</p>
+      <hr>
+      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
+      <p style="color:#609bb6;">From Atom team</p>
+      </div>
+    </body>
+    </html>
+    """
+    fp = open('static/img/users/icon.png', 'rb')
+    img = MIMEImage(fp.read())
+    fp.close()
+    img.add_header('Content-ID', '<logo_image>')
+    msg.attach(img)
+    html = Template(html)
+    context = Context(
+        {'user_id': user_id, 'EMAIL': EMAIL, 'content': content})
+    template = MIMEText(html.render(context=context), 'html')
+    msg.attach(template)
     try:
-        user = User.objects.get(id=request.user.id)
-        EMAIL = user.email
-        PASSWORD = EMAIL_HOST_PASSWORD
-        TO = DEFAULT_FROM_EMAIL
-        msg = MIMEMultipart('alternative')
-        msg['Subject'] = '【Atom】ユーザーから問い合わせを受けました'
-        msg['From'] = EMAIL
-        msg['To'] = TO
-        html = """\
-        <html>
-        <head>
-          <link rel="preconnect" href="https://fonts.gstatic.com">
-　　　     <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-          <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-          <style type="text/css">
-            p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
-          </style>
-        </head>
-        <body>
-          <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
-          <br><br>
-          <p>ユーザーから問い合わせが受けました。</p>
-          <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
-          <br>
-          <p>Thank you.</p>
-          <hr>
-          <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-          <p style="color:#609bb6;">From Atom team</p>
-          </div>
-        </body>
-        </html>
-        """
-        fp = open('static/img/users/icon.png', 'rb')
-        img = MIMEImage(fp.read())
-        fp.close()
-        img.add_header('Content-ID', '<logo_image>')
-        msg.attach(img)
-        template = MIMEText(html, 'html')
-        msg.attach(template)
         s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
         s.starttls()
         s.login(DEFAULT_FROM_EMAIL, PASSWORD)

@@ -31,13 +31,13 @@
       <th>
         {% trans "共益費" %}
       </th>
-      <td>{{ house_common_fee }}</td>
+      <td>{{ housemate.house_common_fee }}</td>
     </tr>
     <tr>
       <th>
         {% trans "共益費の支払い期日" %}
       </th>
-      <td>{{ house_common_fee_date }}</td>
+      <td>{{ housemate.house_common_fee_date }}</td>
     </tr>
     <tr>
       <th>
@@ -79,7 +79,7 @@
       <th>
         {% trans "仮登録日" %}
       </th>
-      <td>{{ housemate.is_date_joined }}</td>
+      <td>{{ housemate.date_joined }}</td>
     </tr>
   </table>
   <hr class="mb-5">
