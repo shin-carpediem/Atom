@@ -85,8 +85,10 @@ def assign_chore(request):
                     target_users = User.objects.filter(
                         house=request.user.house, is_active='True')
                     TO = target_users.values_list('email')[i][0]
-                    housemate_housechore_title = target_users.values_list('housechore_title')[i][0]
-                    housemate_housechore_desc = target_users.values_list('housechore_desc')[i][0]
+                    housemate_housechore_title = target_users.values_list('housechore_title')[
+                        i][0]
+                    housemate_housechore_desc = target_users.values_list('housechore_desc')[
+                        i][0]
 
                     msg = MIMEMultipart('alternative')
                     html = """\
@@ -103,18 +105,12 @@ def assign_chore(request):
                       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
                       <br><br>
                       <p>今週の自分が担当する家事をご確認ください。</p>
-                      <hr>
-                      <p>家事のサマリ：{{ housemate_housechore_title }}</p>
-                      <p>詳細：{{ housemate_housechore_desc }}</p>
-                      <hr>
-                      <a href="https://atom-production.herokuapp.com/room">ページへ移動する</a>
-                      <br><br>
                       <p>Please check the housework you are in charge of this week.</p>
                       <hr>
-                      <p>Summary：{{ housemate_housechore_title }}</p>
-                      <p>Description：{{ housemate_housechore_desc }}</p>
+                      <p>家事のサマリ|Summary：{{ housemate_housechore_title }}</p>
+                      <p>詳細|Description：{{ housemate_housechore_desc }}</p>
                       <hr>
-                      <a href="https://atom-production.herokuapp.com/room">Go to page</a>
+                      <a href="https://atom-production.herokuapp.com/room">ページへ移動する / Go to page</a>
                       <br>
                       <p>Thank you.</p>
                       <hr>
@@ -153,10 +149,10 @@ def assign_chore(request):
                         s.sendmail(EMAIL, TO, msg.as_string())
                         s.quit()
                         messages.success(
-                            request, f"割り振りに成功しました。 / The allocation was successful.")
+                            request, f"{TO}さんへの割り振りに成功しました。 / The allocation to {TO} was successful.")
                     except:
                         messages.warning(
-                            request, f"メール送信に失敗しましたが、割り振りは完了しました。別途アナウンスをしてください。/ Email sending failed, but allocation is complete. Please make a separate announcement.")
+                            request, f"{TO}さんへのメール送信に失敗しましたが、割り振りは完了しました。別途アナウンスをしてください。/ Email sending to {TO} failed, but allocation is complete. Please make a separate announcement.")
 
         elif UserNum > HouseChoreNum:
             messages.warning(
@@ -247,22 +243,14 @@ def finish_task(request):
           <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
           <br><br>
           <p>ハウスメイトの{{ user_email }}さんから家事完了の連絡を受けました。</p>
-          <hr>
-          <p>家事のサマリ：{{ user_housechore_title }}</p>
-          <p>詳細：{{ user_housechore_desc }}</p>
-          <p>ステータス：{{ user_done_weekly }}</p>
-          <p>共益費の支払い完了：{{ user_done_monthly }}</p>
-          <hr>
-          <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
-          <br><br>
           <p>You received a notification from your housemate {{ user_email }} that he/she finised the housework.</p>
           <hr>
-          <p>Summary: {{ user_housechore_title }}</p>
-          <p>Description: {{ user_housechore_desc }}</p>
-          <p>Status: {{ user_done_weekly }}</p>
-          <p>Completion of payment of common service fee: {{ user_done_monthly }}</p>
+          <p>家事のサマリ|Summary：{{ user_housechore_title }}</p>
+          <p>詳細|Description：{{ user_housechore_desc }}</p>
+          <p>ステータス|Status：{{ user_done_weekly }}</p>
+          <p>共益費の支払い完了|Completion of payment of common service fee：{{ user_done_monthly }}</p>
           <hr>
-          <a href="https://atom-production.herokuapp.com/manage_top/">Go to admin page</a>
+          <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ / Go to admin page</a>
           <br>
           <p>Thank you.</p>
           <hr>
