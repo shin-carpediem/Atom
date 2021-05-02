@@ -367,9 +367,11 @@ def update_housechore(request):
     id = request.POST.get('id')
     title = request.POST.get('title')
     description = request.POST.get('description')
+    is_active = request.POST.get('is_active')
     housechore = HouseChore.objects.filter(id=id)[0]
     housechore.title = title
     housechore.description = description
+    housechore.is_active = is_active
     housechore.save()
     messages.success(
         request, f"{title}を更新しました。/ {title} has been updated.")

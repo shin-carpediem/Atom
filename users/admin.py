@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.utils.translation import ugettext_lazy as _
 from guardian.admin import GuardedModelAdmin
-from .models import User, House
+from .models import User, House, Inquire, RequestChHouse, RequestHouseOwner
 
 
 class MyUserChangeForm(UserChangeForm):
@@ -48,6 +48,30 @@ class HouseAdmin(GuardedModelAdmin):
     list_display = ('name', 'common_fee', 'common_fee_date', 'created_at')
     search_fields = ('name', )
     ordering = ('name', )
+
+
+@admin.register(Inquire)
+class InquireAdmin(GuardedModelAdmin):
+    fields = ['email', 'content']
+    list_display = ('email', 'content', 'created_at')
+    search_fields = ('email', )
+    ordering = ('email', )
+
+
+@admin.register(RequestChHouse)
+class RequestChHouseAdmin(GuardedModelAdmin):
+    fields = ['email', 'current_house', 'request_house']
+    list_display = ('email', 'current_house', 'request_house', 'created_at')
+    search_fields = ('email', )
+    ordering = ('email', )
+
+
+@admin.register(RequestHouseOwner)
+class RequestHouseOwnerAdmin(GuardedModelAdmin):
+    fields = ['email', 'house']
+    list_display = ('email', 'house', 'created_at')
+    search_fields = ('email', )
+    ordering = ('email', )
 
 
 admin.site.register(User, MyUserAdmin)
