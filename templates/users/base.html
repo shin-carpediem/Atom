@@ -3,16 +3,15 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <title>Atom</title>
-  <meta name="description" content="シェアハウスで家事を自動で割り振ってみよう">
-  <meta name="keywords" content="家事 シェアハウス Atom house chore">
   {% block header %}
     {% include 'common/header.html' %}
   {% endblock %}
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="{% static 'css/users/style.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/users/bootstrap-social.min.css' %}">
+  {% block style %}
+    {% include 'common/style.html' %}
+  {% endblock %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap-social.min.css' %}">
 </head>
 <body>
   {% block messages %}
@@ -47,9 +46,8 @@
   {% block help_center %}
     {% include 'common/help_center.html' %}
   {% endblock %}
-  {% block bootstrap %}
-    {% include 'common/bootstrap.html' %}
+  {% block script %}
+    {% include 'common/script.html' %}
   {% endblock %}
-  <script src="{% static 'js/users/base.min.js' %}"></script>
 </body>
 </html>

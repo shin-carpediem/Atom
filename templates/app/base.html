@@ -3,13 +3,12 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <title>家事割り振りアプリ</title>
-  <meta name="description" content="シェアハウスで家事を自動で割り振ってみよう">
-  <meta name="keywords" content="家事 シェアハウス Atom house chore">
   {% block header %}
     {% include 'common/header.html' %}
   {% endblock %}
-  <link rel="stylesheet" href="{% static 'css/app/style.min.css' %}">
+  {% block style %}
+    {% include 'common/style.html' %}
+  {% endblock %}
 </head>
 <body>
   {% block messages %}
@@ -41,9 +40,8 @@
   {% block help_center %}
     {% include 'common/help_center.html' %}
   {% endblock %}
-  {% block bootstrap %}
-    {% include 'common/bootstrap.html' %}
+  {% block script %}
+    {% include 'common/script.html' %}
   {% endblock %}
-  <script src="{% static 'js/users/base.min.js' %}"></script>
 </body>
 </html>
