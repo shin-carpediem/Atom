@@ -8,7 +8,7 @@ urlpatterns = [
     path('index', views.index, name='index'),
     path('signup/', views.signup, name='signup'),
     path('pls_activate/', views.pls_activate, name='pls_activate'),
-    path('signup/doing/', views.signup_doing, name='signup_doing'),
+    path('signup/doing/<token>/', views.signup_doing, name='signup_doing'),
     path('signup/done/', views.signup_done, name='signup_done'),
     path('password_reset/', views.password_reset, name='password_reset'),
     path('', auth_views.LoginView.as_view(

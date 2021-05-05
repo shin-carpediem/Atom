@@ -1,18 +1,21 @@
 import smtplib
 from django.http import request
+from django.http.response import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
+from django.conf import settings
 from django.contrib import messages
+from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.signing import BadSignature, SignatureExpired, loads, dumps
 from django.views.decorators.http import require_POST
 from django.template import Context, Template
 from axes.backends import AxesBackend
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from .models import User, Inquire, RequestHouseOwner
-from .forms import CustomUserCreationForm, HouseChooseForm, TwoStepAuthForm
-from . import utils
+from .forms import CustomUserCreationForm, HouseChooseForm
 from app.models import HouseChore
 from app.forms import AddHousechoreForm
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
@@ -29,6 +32,8 @@ def signup(request):
                 request=request, email=input_email, password=input_password)
             if new_user is not None:
                 login(request, new_user)
+                current_site = get_current_site(request)
+                domain = current_site.domain
                 EMAIL = DEFAULT_FROM_EMAIL
                 PASSWORD = EMAIL_HOST_PASSWORD
                 TO = input_email
@@ -49,23 +54,21 @@ def signup(request):
                     <body>
                       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
                       <br><br>
+                      <p>{{ TO }} 様</p>
                       <p>Atomをご利用いただきありがとうございます。</p>
                       <p>あなたのアカウント（{{ TO }}）は現在、仮登録の状態です。</p>
-                      <p>以下のURLをクリックして、アカウントの本登録を行なってください。</p>
+                      <p>1時間以内に以下のURLをクリックして、アカウントの本登録を行なってください。</p>
                       <br>
-                      <a href="http://127.0.0.1:8000/signup/doing/">http://127.0.0.1:8000/signup/doing/</a>
+                      <p>{{ protocol }}://{{ domain }}{% url 'users:signup_doing' token %}</p>
                       <br><br>
+                      <p>Dear {{ TO }}</p>
                       <p>Thank you for using Atom. </p>
                       <p>Your account（{{ TO }}）is currently in a temporary registration status.</p>
-                      <p>Click the URL below to register your account</p>
+                      <p>Click the URL below to register your account within 1 hour.</p>
                       <br>
-                      <a href="http://127.0.0.1:8000/signup/doing/">http://127.0.0.1:8000/signup/doing/</a>
+                      <p>{{ protocol }}://{{ domain }}{% url 'users:signup_doing' token %}</p>
                       <br>
                       <p>Thank you.</p>
-                    #   <hr>
-                    #   <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-                    #   <p style="color:#609bb6;">From Atom team</p>
-                    #   </div>
                     </body>
                     </html>
                     """
@@ -82,24 +85,30 @@ def signup(request):
                     <body>
                       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
                       <br><br>
+                      <p>{{ TO }} 様</p>
                       <p>Atomをご利用いただきありがとうございます。</p>
                       <p>あなたのアカウント（{{ TO }}）は現在、仮登録の状態です。</p>
-                      <p>以下のURLをクリックして、アカウントの本登録を行なってください。</p>
+                      <p>1時間以内に以下のURLをクリックして、アカウントの本登録を行なってください。</p>
                       <br>
-                      <a href="https://atom-production.herokuapp.com/signup/doing/">https://atom-production.herokuapp.com/signup/doing/</a>
+                      <p>{{ protocol }}://{{ domain }}{% url 'users:signup_doing' token %}</p>
                       <br><br>
                       <p>Thank you for using Atom. </p>
                       <p>Your account（{{ TO }}）is currently in a temporary registration status.</p>
-                      <p>Click the URL below to register your account</p>
+                      <p>Click the URL below to register your account within 1 hour.</p>
                       <br>
-                      <a href="https://atom-production.herokuapp.com/signup/doing/">https://atom-production.herokuapp.com/signup/doing/</a>
+                      <p>{{ protocol }}://{{ domain }}{% url 'users:signup_doing' token %}</p>
                       <br>
                       <p>Thank you.</p>
                     </body>
                     </html>
                     """
                 html = Template(html)
-                context = Context({'TO': TO})
+                context = Context({
+                    'TO': TO,
+                    'protocol': request.scheme,
+                    'domain': domain,
+                    'token': dumps(new_user.pk),
+                })
                 template = MIMEText(html.render(context=context), 'html')
                 msg.attach(template)
                 try:
@@ -108,14 +117,17 @@ def signup(request):
                     s.login(EMAIL, PASSWORD)
                     s.sendmail(EMAIL, TO, msg.as_string())
                     s.quit()
-                    if new_user.email != DEFAULT_FROM_EMAIL:
-                        new_user.is_active = False
-                        new_user.save()
-                    return render(request, 'users/auth/pls_activate.html')
                 except Exception:
                     messages.warning(
                         request, f"メール送信に失敗しました。しばらくしてもう一度お試しください。/ Failed to send the email. Please try again after a while."
                     )
+                if new_user.email != DEFAULT_FROM_EMAIL:
+                    new_user.is_active = False
+                    new_user.save()
+                ctx = {
+                    'new_user': new_user
+                }
+                return render(request, 'users/auth/pls_activate.html', ctx)
     else:
         form = CustomUserCreationForm()
     return render(request, 'users/auth/signup.html', {'form': form})
@@ -125,19 +137,31 @@ def pls_activate(request):
     return render(request, 'users/auth/pls_activate.html')
 
 
-def signup_doing(request):
-    user = User.objects.get(id=request.user.id)
-    request.session["img"] = utils.get_image_b64(
-        utils.get_auth_url(user.email, utils.get_secret(user)))
-    two_step_auth_form = TwoStepAuthForm()
-    return render(request, 'users/auth/signup_doing.html', {'two_step_auth_form': two_step_auth_form})
+def signup_doing(request, **kwargs):
+    token = kwargs.get('token')
+    return render(request, 'users/auth/signup_doing.html', {'token':token})
 
 
 def signup_done(request):
-    user = User.objects.get(id=request.user.id)
-    user.is_active = True
-    user.save()
-    return render(request, 'users/auth/signup_done.html')
+    timeout_seconds = getattr(settings, 'ACTIVATION_TIMEOUT_SECONDS', 60*60*1)
+    token = request.GET.get('token')
+    try:
+        user_pk = loads(token, max_age=timeout_seconds)
+    except SignatureExpired:
+        return HttpResponseBadRequest()
+    except BadSignature:
+        return HttpResponseBadRequest()
+    else:
+        try:
+            user = User.objects.get(pk=user_pk)
+        except User.DoesNotExist:
+            return HttpResponseBadRequest()
+        else:
+            if not user.is_active:
+                user.is_active = True
+                user.save()
+                return render(request, 'users/auth/signup_done.html')
+    return HttpResponseBadRequest()
 
 
 def password_reset(request):
@@ -384,6 +408,11 @@ def delete_housechore(request):
 def deactivate_housemate(request):
     email = request.POST.get('housemate_email')
     user = User.objects.filter(email=email)[0]
+    if user.is_staff == True:
+        messages.warning(
+            request, f"ハウス管理者をdeactivateする事はできません。別のハウスメイトにハウス管理者権限の申請をしてもらい、譲渡してから自身をdeactivateください。/ You cannot deactivate the house administrator. Ask another housemate to apply for house administrator privileges, transfer it, and then deactivate yourself.")
+        return redirect('users:manage')
+
     user.is_active = False
     user.save()
     messages.success(
