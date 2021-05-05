@@ -28,20 +28,11 @@
       </div>
     </div>
   </section>
-  {% block ch_username %}
-    {% include 'app/ch_username.html' %}
+  {% block modal %}
+    {% include 'app/modal.html' %}
   {% endblock %}
-  {% block request_ch_house %}
-    {% include 'app/request_ch_house.html' %}
-  {% endblock %}
-  {% block request_house_owner %}
-    {% include 'users/request_house_owner.html' %}
-  {% endblock %}
-  {% block help_center %}
-    {% include 'common/help_center.html' %}
-  {% endblock %}
-  {% block script %}
-    {% include 'common/script.html' %}
+  {% block footer %}
+    {% include 'common/footer.html' %}
   {% endblock %}
 </body>
 </html>

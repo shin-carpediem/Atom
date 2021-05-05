@@ -31,23 +31,11 @@
       </div>
     </div>
   </section>
-  {% block request_house_owner %}
-    {% include 'users/request_house_owner.html' %}
+  {% block modal %}
+    {% include 'users/manage/modal.html' %}
   {% endblock %}
-  {% block add_housechore %}
-    {% include 'users/manage/add_housechore.html' %}
-  {% endblock %}
-  {% block delete_housechore %}
-    {% include 'users/manage/delete_housechore.html' %}
-  {% endblock %}
-  {% block deactivate_housemate %}
-    {% include 'users/manage/deactivate_housemate.html' %}
-  {% endblock %}
-  {% block help_center %}
-    {% include 'common/help_center.html' %}
-  {% endblock %}
-  {% block script %}
-    {% include 'common/script.html' %}
+  {% block footer %}
+    {% include 'common/footer.html' %}
   {% endblock %}
 </body>
 </html>
