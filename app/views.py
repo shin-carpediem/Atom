@@ -8,7 +8,6 @@ from django.views.decorators.http import require_POST
 from django.template import Context, Template
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
 import smtplib
 from .models import HouseChore
 from users.models import User, RequestChHouse
@@ -113,10 +112,6 @@ def assign_chore(request):
                       <a href="https://atom-production.herokuapp.com/room">ページへ移動する / Go to page</a>
                       <br>
                       <p>Thank you.</p>
-                      <hr>
-                      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-                      <p style="color:#609bb6;">From Atom team</p>
-                      </div>
                     </body>
                     </html>
                     """
@@ -124,13 +119,6 @@ def assign_chore(request):
                     msg['Subject'] = '【Atom】今週の家事が割り振られました / This week’s housework has been allocated'
                     msg['From'] = house_owner_email
                     msg['To'] = TO
-
-                    fp = open('static/img/users/icon.png', 'rb')
-                    img = MIMEImage(fp.read())
-                    fp.close()
-                    # Define the image's ID as referenced above
-                    img.add_header('Content-ID', '<logo_image>')
-                    msg.attach(img)
 
                     html = Template(html)
                     context = Context({'housemate_housechore_title': housemate_housechore_title,
@@ -253,23 +241,10 @@ def finish_task(request):
           <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ / Go to admin page</a>
           <br>
           <p>Thank you.</p>
-          <hr>
-          <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-          <p style="color:#609bb6;">From Atom team</p>
         </body>
         </html>
         """
 
-        fp = open('static/img/users/icon.png', 'rb')
-        img = MIMEImage(fp.read())
-        fp.close()
-        # Define the image's ID as referenced above
-        img.add_header('Content-ID', '<logo_image>')
-        msg.attach(img)
-
-        # Attach parts into message container.
-        # According to RFC 2046, the last part of a multipart message, in this case
-        # the HTML message, is best and preferred.
         html = Template(html)
         context = Context(
             {'user_email': user_email,
@@ -281,12 +256,9 @@ def finish_task(request):
         msg.attach(template)
 
         try:
-            # access to the socket
             s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
             s.starttls()
             s.login(DEFAULT_FROM_EMAIL, PASSWORD)
-            # sendmail function takes 3 arguments: sender's address, recipient's address
-            # and message to send - here it is sent as one string.
             s.sendmail(EMAIL, TO, msg.as_string())
             s.quit()
 
@@ -341,18 +313,9 @@ def request_ch_house(request):
       <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
       <br>
       <p>Thank you.</p>
-      <hr>
-      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-      <p style="color:#609bb6;">From Atom team</p>
     </body>
     </html>
     """
-
-    fp = open('static/img/users/icon.png', 'rb')
-    img = MIMEImage(fp.read())
-    fp.close()
-    img.add_header('Content-ID', '<logo_image>')
-    msg.attach(img)
 
     html = Template(html)
     context = Context(
@@ -364,7 +327,6 @@ def request_ch_house(request):
     msg.attach(template)
 
     try:
-        # access to the socket
         s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
         s.starttls()
         s.login(DEFAULT_FROM_EMAIL, PASSWORD)

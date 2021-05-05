@@ -10,7 +10,7 @@ from django.template import Context, Template
 from axes.backends import AxesBackend
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
+# from email.mime.image import MIMEImage
 from .models import User, Inquire, RequestHouseOwner
 from .forms import CustomUserCreationForm, HouseChooseForm, TwoStepAuthForm
 from . import utils
@@ -68,10 +68,10 @@ def signup(request):
                       <a href="http://127.0.0.1:8000/signup/doing/">http://127.0.0.1:8000/signup/doing/</a>
                       <br>
                       <p>Thank you.</p>
-                      <hr>
-                      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-                      <p style="color:#609bb6;">From Atom team</p>
-                      </div>
+                    #   <hr>
+                    #   <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
+                    #   <p style="color:#609bb6;">From Atom team</p>
+                    #   </div>
                     </body>
                     </html>
                     """
@@ -101,19 +101,16 @@ def signup(request):
                       <a href="https://atom-production.herokuapp.com/signup/doing/">https://atom-production.herokuapp.com/signup/doing/</a>
                       <br>
                       <p>Thank you.</p>
-                      <hr>
-                      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-                      <p style="color:#609bb6;">From Atom team</p>
-                      </div>
                     </body>
                     </html>
                     """
 
-                fp = open('static/img/users/icon.png', 'rb')
-                img = MIMEImage(fp.read())
-                fp.close()
-                img.add_header('Content-ID', '<logo_image>')
-                msg.attach(img)
+                # fp = open('static/img/users/icon.png', 'rb')
+                # img = MIMEImage(fp.read())
+                # fp.close()
+                # # Define the image's ID as referenced above
+                # img.add_header('Content-ID', '<logo_image>')
+                # msg.attach(img)
 
                 html = Template(html)
                 context = Context({'TO': TO})
@@ -225,20 +222,9 @@ def request_house_owner(request):
       <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
       <br>
       <p>Thank you.</p>
-      <br><br><br>
-      <hr>
-      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-      <p style="color:#609bb6;">From Atom team</p>
-      </div>
     </body>
     </html>
     """
-
-    fp = open('static/img/users/icon.png', 'rb')
-    img = MIMEImage(fp.read())
-    fp.close()
-    img.add_header('Content-ID', '<logo_image>')
-    msg.attach(img)
 
     html = Template(html)
     context = Context({'user_id': user_id, 'EMAIL': EMAIL})
@@ -300,20 +286,9 @@ def inquire(request):
       <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ</a>
       <br>
       <p>Thank you.</p>
-      <hr>
-      <img style="padding:5px 5px 0px 0px; float:left; width:20px;" src="cid:{logo_image}" alt="Logo">
-      <p style="color:#609bb6;">From Atom team</p>
-      </div>
     </body>
     </html>
     """
-
-    fp = open('static/img/users/icon.png', 'rb')
-    img = MIMEImage(fp.read())
-    fp.close()
-    # Define the image's ID as referenced above
-    img.add_header('Content-ID', '<logo_image>')
-    msg.attach(img)
 
     html = Template(html)
     context = Context(
