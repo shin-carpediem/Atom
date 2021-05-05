@@ -2,6 +2,7 @@
 $grey: #c3c2c2;
 $light-grey: #f8f8f8;
 $white: #ffffff;
+$black: #383838;
 $dark-blue: #023465;
 $blue: #609bb6;
 $light-blue: #8ebbcf;
@@ -18,7 +19,6 @@ $red: #dd4546;
   padding: 10px;
   width: 100%;
 }
-
 @mixin button {
   padding: 6px;
   text-align: center;
@@ -29,31 +29,27 @@ $red: #dd4546;
     color: $white;
   }
 }
-
 @mixin link {
   cursor: pointer;
   color: $light-blue;
   &:hover {
     text-decoration: underline;
-    color: $dark-blue
+    color: $dark-blue;
   }
 }
 
 ul {
   list-style: none;
 }
-
 li {
   list-style: none;
 }
-
 a {
   color: $light-blue;
   &:hover {
     color: $dark-blue;
   }
 }
-
 a:not([class]) {
   text-decoration-skip-ink: auto;
 }
@@ -68,6 +64,12 @@ input {
 
 input {
   border-color: $light-grey;
+  border-radius: 4px;
+}
+textarea,
+select {
+  border-color: $grey;
+  box-shadow: 0.6px 0.6px $grey inset;
   border-radius: 4px;
 }
 
@@ -118,11 +120,40 @@ html {
             color: $dark-blue;
           }
         }
+        .logout,
+        .withdraw {
+          color: $light-blue;
+          cursor: pointer;
+          &:hover {
+            color: $dark-blue;
+            text-decoration: underline;
+          }
+        }
+        // manage
+        .manage_table {
+          overflow-x: scroll;
+          tr {
+            th {
+              text-align: center;
+            }
+            td {
+              text-align: center;
+            }
+          }
+        }
+        .housemate_detail {
+          tr {
+            td {
+              text-align: center;
+            }
+          }
+        }
       }
     }
   }
 }
 
+// messages
 .message-success {
   background-color: $blue;
   color: $white;

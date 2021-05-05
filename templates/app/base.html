@@ -5,19 +5,13 @@
 <html lang="ja">
 
 <head>
-  <!-- meta tag -->
-  <title>家事割り振りアプリ</title>
-  <meta name="description" content="シェアハウスで家事を自動で割り振ってみよう">
-  <meta name="keywords" content="家事 シェアハウス Atom house chore">
-
   {% block header %}
     {% include 'common/header.html' %}
   {% endblock %}
 
-  <!-- FontAwesome -->
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> -->
-
-  <link rel="stylesheet" href="{% static 'css/app/style.min.css' %}">
+  {% block style %}
+    {% include 'common/style.html' %}
+  {% endblock %}
 </head>
 
 <body>
@@ -60,8 +54,10 @@
   {% block bootstrap %}
     {% include 'common/bootstrap.html' %}
   {% endblock %}
-  <!-- device related -->
-  <script src="{% static 'js/users/base.min.js' %}"></script>
+
+  {% block javascript %}
+    {% include 'common/javascript.html' %}
+  {% endblock %}
 </body>
 
 </html>
