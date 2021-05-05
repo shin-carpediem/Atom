@@ -425,6 +425,11 @@ def delete_housechore(request):
 def deactivate_housemate(request):
     email = request.POST.get('housemate_email')
     user = User.objects.filter(email=email)[0]
+    if user.is_staff == True:
+        messages.warning(
+            request, f"ハウス管理者をdeactivateする事はできません。別のハウスメイトにハウス管理者権限の申請をしてもらい、譲渡してから自身をdeactivateください。/ You cannot deactivate the house administrator. Ask another housemate to apply for house administrator privileges, transfer it, and then deactivate yourself.")
+        return redirect('users:manage')
+
     user.is_active = False
     user.save()
     messages.success(
