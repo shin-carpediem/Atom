@@ -1,0 +1,112 @@
+{% load i18n %}
+{% load static %}
+
+<!-- change username -->
+<div class="modal fade" id="ch_username" tabindex="-1" role="dialog" aria-labelledby="ch_username_ModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title" id="ch_username_ModalLabel">
+          {% trans "表示させたいユーザー名を入力してください" %}
+        </p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'app:set_username' %}" method="GET">
+          <div class="form-group">
+            <input type="text" class="w-100 py-2" name="name" placeholder="ユーザー名">
+          </div>
+          <div class="d-flex pt-2">
+            <button type="button" class="btn w-50 mr-1" data-dismiss="modal">
+              {% trans "キャンセル" %}
+            </button>
+            <button type="submit" class="btn w-50 ml-1">
+              {% trans "設定" %}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- request change house -->
+<div class="modal fade" id="request_ch_house" tabindex="-1" role="dialog" aria-labelledby="request_ch_house_ModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="request_ch_house_ModalLabel">
+          {% trans "ハウス変更の申請" %}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'app:request_ch_house' %}" method="POST">{% csrf_token %}
+          <div class="form-group">
+            <label>Email:</label>
+            <input class="mb-3 w-50" type="email" name="email" value="{{ user.email }}" readonly style="border: none; pointer-events: none;"><br>
+            <label>
+              {% trans "現在のハウス:" %}
+            </label>
+            {{ user.house }}<br>
+            <label>
+              {% trans "新しく設定したいハウス:" %}
+            </label>
+            {{ house_choose_form.as_p }}
+          </div>
+          <div class="d-flex pt-2">
+            <button type="button" class="btn w-50 mr-1" data-dismiss="modal">
+              {% trans "キャンセル" %}
+            </button>
+            <button type="submit" class="btn w-50 ml-1">
+              {% trans "送信" %}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- request house owner -->
+<div class="modal fade" id="request_house_owner" tabindex="-1" role="dialog"
+  aria-labelledby="request_house_owner_ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="request_house_owner_ModalLabel">
+          {% trans "ハウス管理者権限の申請" %}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'users:request_house_owner' %}" method="POST">{% csrf_token %}
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">
+              {% trans "申請フォームを記入してください。" %}
+            </label><br><br>
+            <label>Email:</label>
+            <input class="my-3" type="email" name="email" readonly style="border: none; pointer-events: none;">
+            {{ house_choose_form.as_p }}
+          </div>
+          <div class="d-flex pt-2">
+            <button type="button" class="btn w-50 mr-1" data-dismiss="modal">
+              {% trans "キャンセル" %}
+            </button>
+            <button type="submit" class="btn w-50 ml-1">
+              {% trans "送信" %}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
