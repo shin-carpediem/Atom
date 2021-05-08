@@ -1,7 +1,4 @@
-ul {
-  list-style: none;
-}
-
+ul,
 li {
   list-style: none;
 }
@@ -150,5 +147,22 @@ html body section .container .housemate_detail tr td {
 .message-warning {
   background-color: #dd4546;
   color: #ffffff;
+}
+
+.breadcrumb_active {
+  display: inline-block;
+}
+
+.breadcrumb_current {
+  display: inline-block;
+  pointer-events: none;
+}
+
+.breadcrumb_current a {
+  color: #383838;
+}
+
+.breadcrumb_hide {
+  display: none;
 }
 /*# sourceMappingURL=style.css.map */

@@ -38,9 +38,7 @@ $red: #dd4546;
   }
 }
 
-ul {
-  list-style: none;
-}
+ul,
 li {
   list-style: none;
 }
@@ -158,8 +156,22 @@ html {
   background-color: $blue;
   color: $white;
 }
-
 .message-warning {
   background-color: $red;
   color: $white;
+}
+
+// breadcrumb
+.breadcrumb_active {
+  display: inline-block;
+}
+.breadcrumb_current {
+  display: inline-block;
+  pointer-events: none;
+  a {
+    color: $black;
+  }
+}
+.breadcrumb_hide {
+  display: none;
 }

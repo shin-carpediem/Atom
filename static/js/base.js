@@ -1,5 +1,8 @@
 "use strict";
 
+// default
+let path = window.location.pathname;
+
 const changeLangUsers = () => {
   const changelang = document.getElementById("changeLangUsers");
   const clickbtn = document.getElementById("langBtnUsers");
@@ -10,30 +13,53 @@ const changeLangUsers = () => {
 };
 changeLangUsers();
 
-const logOutConfirm = () => {
-  const logout = document.getElementById("logout");
+if (path !== "/") {
+  const logOutConfirm = () => {
+    const logout = document.getElementById("logout");
 
-  logout.addEventListener("click", () => {
-    const answer = confirm("ログアウトしますか? / Do you want to log out?");
-    console.log(answer);
-    if (answer) {
-      window.location.href = "/logout/";
-    }
-  });
+    logout.addEventListener("click", () => {
+      const answer = confirm("ログアウトしますか? / Are you sure log out?");
+      if (answer) {
+        window.location.href = "/logout/";
+      }
+    });
+  };
+  logOutConfirm();
+}
+
+const breadCrumb = () => {
+  const loginLi = document.getElementById("login_page");
+  const indexLi = document.getElementById("index_page");
+  const roomLi = document.getElementById("room_page");
+  console.log(path);
+
+  if (path == "/") {
+    loginLi.classList.add("breadcrumb_current");
+
+    indexLi.classList.add("breadcrumb_hide");
+
+    roomLi.classList.add("breadcrumb_hide");
+  }
+  if (path == "/index") {
+    loginLi.classList.remove("breadcrumb_current");
+    loginLi.classList.add("breadcrumb_active");
+
+    indexLi.classList.remove("breadcrumb_hide");
+    indexLi.classList.add("breadcrumb_current");
+
+    roomLi.classList.remove("breadcrumb_current");
+    roomLi.classList.add("breadcrumb_hide");
+  }
+  if (path == "/room") {
+    loginLi.classList.remove("breadcrumb_current");
+    loginLi.classList.add("breadcrumb_active");
+
+    indexLi.classList.remove("breadcrumb_hide");
+    indexLi.classList.remove("breadcrumb_current");
+    indexLi.classList.add("breadcrumb_active");
+
+    roomLi.classList.remove("breadcrumb_hide");
+    roomLi.classList.add("breadcrumb_current");
+  }
 };
-logOutConfirm();
-
-const withdrawConfirm = () => {
-  const logout = document.getElementById("withdraw");
-
-  logout.addEventListener("click", () => {
-    const answer = confirm(
-      "アカウントが削除されます。本当に退会しますか? / Your account will be deleted. Do you really want to unsubscribe?"
-    );
-    console.log(answer);
-    if (answer) {
-      window.location.href = "/withdraw/";
-    }
-  });
-};
-withdrawConfirm();
+breadCrumb();

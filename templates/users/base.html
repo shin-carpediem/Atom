@@ -31,14 +31,9 @@
       {% block content %}
       {% endblock %}
 
-      <div class="d-flex justify-content-between mt-3">
-        <p class="link" data-toggle="modal" data-target="#help_center">
-          {% trans "ヘルプセンター" %}
-        </p>
-        {% block language %}
-          {% include 'common/language.html' %}
-        {% endblock %}
-      </div>
+      {% block section_buttom %}
+        {% include 'common/section_buttom.html' %}
+      {% endblock %}
     </div>
   </section>
 
