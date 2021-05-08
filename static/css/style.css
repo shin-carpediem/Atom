@@ -52,6 +52,10 @@ select {
   font: inherit;
 }
 
+.prop_hide {
+  display: none;
+}
+
 html:focus-within {
   scroll-behavior: smooth;
 }
@@ -59,12 +63,24 @@ html:focus-within {
 html body {
   text-rendering: optimizeSpeed;
   background-color: #f8f8f8;
+  position: relative;
 }
 
 @media screen and (max-width: 600px) {
   html body {
     font-size: 0.7rem;
   }
+}
+
+html body .loading_icon {
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
 }
 
 html body .link {
@@ -109,6 +125,11 @@ html body section .container .header {
 
 html body section .container p b {
   color: #023465;
+}
+
+html body section .container .numtable p b {
+  font-size: x-large;
+  color: #609bb6;
 }
 
 html body section .container .logout,
@@ -160,9 +181,5 @@ html body section .container .housemate_detail tr td {
 
 .breadcrumb_current a {
   color: #383838;
-}
-
-.breadcrumb_hide {
-  display: none;
 }
 /*# sourceMappingURL=style.css.map */

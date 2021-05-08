@@ -86,6 +86,10 @@ textarea,
 select {
   font: inherit;
 }
+
+.prop_hide {
+  display: none;
+}
 // end of default
 
 html {
@@ -95,8 +99,18 @@ html {
   body {
     text-rendering: optimizeSpeed;
     background-color: $light-grey;
+    position: relative;
     @media screen and (max-width: 600px) {
       font-size: 0.7rem;
+    }
+    // loading
+    .loading_icon {
+      position: absolute;
+      z-index: 100;
+      top: 50%;
+      left: 50%;
+      transform: translateY(-50%);
+      transform: translateX(-50%);
     }
     .link {
       @include link;
@@ -116,6 +130,14 @@ html {
         p {
           b {
             color: $dark-blue;
+          }
+        }
+        .numtable {
+          p {
+            b {
+              font-size: x-large;
+              color: $blue;
+            }
           }
         }
         .logout,
@@ -151,7 +173,7 @@ html {
   }
 }
 
-// messages
+// message
 .message-success {
   background-color: $blue;
   color: $white;
@@ -171,7 +193,4 @@ html {
   a {
     color: $black;
   }
-}
-.breadcrumb_hide {
-  display: none;
 }

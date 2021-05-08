@@ -21,9 +21,20 @@ def room(request):
     user = request.user
     email = user.email
     house_choose_form = HouseChooseForm(request.POST or None)
+
+    housemates = User.objects.filter(
+        house=request.user.house, is_active='True')
+    UserNum = housemates.count()
+
+    housechores = HouseChore.objects.filter(
+        house=request.user.house, is_active='True')
+    HouseChoreNum = housechores.count()
+
     ctx = {
         'email': email,
         'house_choose_form': house_choose_form,
+        'user_num': UserNum,
+        'house_chore_num': HouseChoreNum,
     }
     return render(request, 'app/room.html', ctx)
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-06 00:45+0900\n"
+"POT-Creation-Date: 2021-05-08 16:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,16 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/models.py:9 templates/users/manage/housechore_detail.html:21
+#: app/models.py:9 templates/app/room.html:27
+#: templates/common/section_buttom.html:43
+#: templates/users/manage/housechore_detail.html:21
 #: templates/users/manage/housemate_detail.html:44
 #: templates/users/manage/manage.html:20 templates/users/manage/manage.html:42
 msgid "家事"
 msgstr "House chore"
-
-#: templates/app/base.html:29 templates/common/footer.html:48
-#: templates/users/base.html:36
-msgid "ヘルプセンター"
-msgstr "Help Center"
 
 #: templates/app/modal.html:11
 msgid "表示させたいユーザー名を入力してください"
@@ -57,12 +54,12 @@ msgid "新しく設定したいハウス:"
 msgstr "New house you want to set:"
 
 #: templates/app/modal.html:68 templates/app/modal.html:105
-#: templates/app/room.html:60 templates/common/footer.html:32
+#: templates/app/room.html:81 templates/common/footer.html:32
 #: templates/common/footer.html:69
 msgid "送信"
 msgstr "Submit"
 
-#: templates/app/modal.html:84 templates/app/room.html:84
+#: templates/app/modal.html:84 templates/app/room.html:105
 #: templates/common/footer.html:11 templates/users/index.html:42
 msgid "ハウス管理者権限の申請"
 msgstr "Apply for house administrator authority"
@@ -72,67 +69,98 @@ msgid "申請フォームを記入してください。"
 msgstr "lease fill in the application form."
 
 #: templates/app/room.html:10
-msgid "このボタンは各ハウスの管理者にのみ見えています"
-msgstr "This button is only visible to the manager of each house."
+msgid "下線よりも上は<br>各ハウスの管理者にのみ見えています"
+msgstr "Above the underline is<br>only visible to the manager of each house"
 
-#: templates/app/room.html:15
+#: templates/app/room.html:13
+msgid ""
+"家事を割り振るためには<br>ハウスメイトの人数分家事を追加/無効化してください"
+msgstr "Add / disable housework for the number of housemates to allocate housework"
+
+#: templates/app/room.html:19 templates/users/manage/manage.html:13
+msgid "ハウスメイト"
+msgstr "Housemate"
+
+#: templates/app/room.html:22
+msgid " 名"
+msgstr " "
+
+#: templates/app/room.html:30
+msgid " つ"
+msgstr " "
+
+#: templates/app/room.html:36
 msgid "今週の家事を割り振る"
 msgstr "Allocate this week's housechore"
 
-#: templates/app/room.html:20
+#: templates/app/room.html:41
 msgid "共益費を再度表示する"
 msgstr "Show common fee again"
 
-#: templates/app/room.html:28
+#: templates/app/room.html:49
 msgid "今週"
 msgstr "Housework that"
 
-#: templates/app/room.html:30
+#: templates/app/room.html:51
 msgid "さんが担当する家事"
 msgstr "is in charge of this week"
 
-#: templates/app/room.html:33
+#: templates/app/room.html:54
 msgid "終わったらチェックを入れて"
 msgstr "Check it when you have done and"
 
-#: templates/app/room.html:35
+#: templates/app/room.html:56
 msgid "送信ボタンを押してください"
 msgstr "press the submit button."
 
-#: templates/app/room.html:51
+#: templates/app/room.html:72
 msgid "公共費"
 msgstr "Public expenses"
 
-#: templates/app/room.html:53
+#: templates/app/room.html:74
 msgid "円 / 毎月"
 msgstr "yen / month"
 
-#: templates/app/room.html:55
+#: templates/app/room.html:76
 msgid "日"
 msgstr "date"
 
-#: templates/app/room.html:68
+#: templates/app/room.html:89
 msgid "ユーザー名を設定する"
 msgstr "Set username"
 
-#: templates/app/room.html:71
+#: templates/app/room.html:92
 msgid "ハウスを間違えましたか？"
 msgstr "Did you make a mistake in the house?"
 
-#: templates/app/room.html:76 templates/users/index.html:34
+#: templates/app/room.html:97 templates/users/index.html:34
 msgid "ログアウト"
 msgstr "Logout"
 
-#: templates/app/room.html:80 templates/users/index.html:38
+#: templates/app/room.html:101 templates/users/index.html:38
 #: templates/users/manage/housechore_detail.html:8
 #: templates/users/manage/housemate_detail.html:8
 #: templates/users/manage/manage.html:8
 msgid "ハウス管理"
 msgstr "House manage"
 
+#: templates/common/footer.html:48 templates/common/section_buttom.html:6
+msgid "ヘルプセンター"
+msgstr "Help Center"
+
 #: templates/common/footer.html:60
 msgid "お問い合わせ内容"
 msgstr "Contents of inquiry"
+
+#: templates/common/section_buttom.html:33 templates/users/auth/signup.html:42
+#: templates/users/login.html:8 templates/users/login.html:26
+msgid "ログイン"
+msgstr "Login"
+
+#: templates/common/section_buttom.html:38
+#: templates/users/manage/housechore_detail.html:35
+msgid "ハウス"
+msgstr "House"
 
 #: templates/users/auth/axes_locked.html:8
 msgid "ログインに7回以上失敗したため、"
@@ -162,7 +190,9 @@ msgstr "is a temporary registration status."
 msgid ""
 "本登録用のメールをお送りしましたので、メールに添付されたURLをクリックして、本"
 "登録を完了させてください。"
-msgstr "We have sent you an email for official registration. Please click the URL attached to the email to complete the official registration."
+msgstr ""
+"We have sent you an email for official registration. Please click the URL "
+"attached to the email to complete the official registration."
 
 #: templates/users/auth/signup.html:8 templates/users/auth/signup.html:30
 msgid "新規登録"
@@ -179,11 +209,6 @@ msgstr "Password (confirmation):"
 #: templates/users/auth/signup.html:37
 msgid "Googleで新規登録"
 msgstr "New registration on Google"
-
-#: templates/users/auth/signup.html:42 templates/users/login.html:8
-#: templates/users/login.html:26
-msgid "ログイン"
-msgstr "Login"
 
 #: templates/users/auth/signup.html:47 templates/users/login.html:48
 msgid "プライバシーポリシー"
@@ -264,10 +289,6 @@ msgstr "New registration is here"
 msgid "詳細"
 msgstr "Description"
 
-#: templates/users/manage/housechore_detail.html:35
-msgid "ハウス"
-msgstr "House"
-
 #: templates/users/manage/housechore_detail.html:41
 msgid "有効/無効*"
 msgstr "Enabled/disabled*"
@@ -319,10 +340,6 @@ msgstr "Complete registration"
 #: templates/users/manage/housemate_detail.html:80
 msgid "仮登録日"
 msgstr "Temporary registration date"
-
-#: templates/users/manage/manage.html:13
-msgid "ハウスメイト"
-msgstr "Housemate"
 
 #: templates/users/manage/manage.html:25
 msgid "公益費"
