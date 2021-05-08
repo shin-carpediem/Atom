@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-08 16:46+0900\n"
+"POT-Creation-Date: 2021-05-08 17:02+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,7 +75,8 @@ msgstr "Above the underline is<br>only visible to the manager of each house"
 #: templates/app/room.html:13
 msgid ""
 "家事を割り振るためには<br>ハウスメイトの人数分家事を追加/無効化してください"
-msgstr "Add / disable housework for the number of housemates to allocate housework"
+msgstr ""
+"Add / disable housework for the number of housemates to allocate housework"
 
 #: templates/app/room.html:19 templates/users/manage/manage.html:13
 msgid "ハウスメイト"
@@ -366,9 +367,13 @@ msgid "削除"
 msgstr "Delete"
 
 #: templates/users/manage/manage.html:76
-#: templates/users/manage/manage_top.html:10
+#: templates/users/manage/manage_top.html:14
 msgid "ユーザー画面に戻る"
 msgstr "Back to user screen"
+
+#: templates/users/manage/manage_top.html:9
+msgid "管理画面へ"
+msgstr ""
 
 #: templates/users/manage/modal.html:11
 msgid "家事を追加"
