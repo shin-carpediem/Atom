@@ -3,10 +3,10 @@
 {% load static %}
 
 {% block content %}
-<div class="pt-4 pb-3">
+<div class="px-2 pt-4 pb-3">
   <form class="my-5" action="{% url 'users:signup_done' %}" method="GET">
     <input type="text" value="{{ token }}" style="display: none;" name="token">
-    <button type="submit" class="btn w-100 mt-3">
+    <button type="submit" class="btn w-100 mt-3" onclick="loading_show()">
       {% trans "本登録" %}
     </button>
   </form>

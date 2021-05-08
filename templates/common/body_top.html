@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load static %}
+
+<!-- messages -->
+{% for message in messages %}
+  <p class="message-{{ message.tags }} text-center py-2">{{ message }}</p>
+{% endfor %}
+
+<!-- loading -->
+<div class="w-100">
+  <img src="{% static 'atom.gif' %}" alt="Loading..." class="loading_icon prop_hide" id="loading_icon">
+</div>

@@ -11,24 +11,24 @@
 <div class="px-2 mt-4">
   <form name="select_house" class="mb-4" action="{% url 'users:index' %}" method="POST">{% csrf_token %}
     {{ house_choose_form.as_p }}
-    <button type="submit" class="btn w-100 mt-2">
+    <button type="submit" class="btn w-100 mt-2" onclick="loading_show()">
       {% trans "このハウスメンバーとして登録" %}
     </button>
   </form>
   {% else %}
-  <p class="px-2 mt-4">
+  <p class="mt-4">
     {% trans "あなたは" %}
     {{ request.user.house }}
     {% trans "ハウスメイトとして登録しています" %}
   </p>
   <form action="{% url 'app:room' %}" method="POST">{% csrf_token %}
-    <button type="submit" class="mt-2 mb-5 btn w-100">
+    <button type="submit" class="mt-2 mb-5 btn w-100" onclick="loading_show()">
       {% trans "割り振られた家事を見る" %}
     </button>
   </form>
   {% endif %}
 
-  <div class="px-2 pt-3 text-left">
+  <div class="pt-3 text-left">
       <p class="logout" id="logout">
         {% trans "ログアウト" %}
       </p>

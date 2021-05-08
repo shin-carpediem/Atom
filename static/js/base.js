@@ -2,6 +2,7 @@
 
 // default
 let path = window.location.pathname;
+const loading_icon = document.getElementById("loading_icon");
 
 const changeLangUsers = () => {
   const changelang = document.getElementById("changeLangUsers");
@@ -36,30 +37,40 @@ const breadCrumb = () => {
   if (path == "/") {
     loginLi.classList.add("breadcrumb_current");
 
-    indexLi.classList.add("breadcrumb_hide");
+    indexLi.classList.add("prop_hide");
 
-    roomLi.classList.add("breadcrumb_hide");
+    roomLi.classList.add("prop_hide");
   }
   if (path == "/index") {
     loginLi.classList.remove("breadcrumb_current");
     loginLi.classList.add("breadcrumb_active");
 
-    indexLi.classList.remove("breadcrumb_hide");
+    indexLi.classList.remove("prop_hide");
     indexLi.classList.add("breadcrumb_current");
 
     roomLi.classList.remove("breadcrumb_current");
-    roomLi.classList.add("breadcrumb_hide");
+    roomLi.classList.add("prop_hide");
   }
   if (path == "/room") {
     loginLi.classList.remove("breadcrumb_current");
     loginLi.classList.add("breadcrumb_active");
 
-    indexLi.classList.remove("breadcrumb_hide");
+    indexLi.classList.remove("prop_hide");
     indexLi.classList.remove("breadcrumb_current");
     indexLi.classList.add("breadcrumb_active");
 
-    roomLi.classList.remove("breadcrumb_hide");
+    roomLi.classList.remove("prop_hide");
     roomLi.classList.add("breadcrumb_current");
   }
 };
 breadCrumb();
+
+const loading_show = () => {
+  loading_icon.classList.remove("prop_hide");
+};
+loading_show();
+
+const loading_hide = () => {
+  loading_icon.classList.add("prop_hide");
+};
+loading_hide();

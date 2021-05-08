@@ -4,7 +4,11 @@
 
 {% block content %}
 <div class="my-5">
-  <button class="w-100 btn"><a style="color: white;" href="{% url 'users:manage' %}">管理画面へ</a></button>
+  <button class="w-100 btn" onclick="loading_show()">
+    <a style="color: white;" href="{% url 'users:manage' %}">
+      {% trans "管理画面へ" %}
+    </a>
+  </button>
 </div>
 <a href="{% url 'users:index' %}">
   {% trans "ユーザー画面に戻る" %}

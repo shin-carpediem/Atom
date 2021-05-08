@@ -6,16 +6,37 @@
 {% if user.is_staff %}
 <div class="text-center mt-5 mb-3">
   <p>
-    {% trans "このボタンは各ハウスの管理者にのみ見えています" %}
+    {% trans "下線よりも上は<br>各ハウスの管理者にのみ見えています" %}
   </p>
+  <a href="{% url 'users:manage' %}" style="font-size: 12px;">
+    {% trans "家事を割り振るためには<br>ハウスメイトの人数分家事を追加/無効化してください" %}
+  </a>
+</div>
+<div class="row mx-auto text-center mb-2 numtable">
+  <div class="col-6">
+    <p>
+      {% trans "ハウスメイト" %}
+    </p>
+    <p><b>{{ user_num }}</b>
+      {% trans " 名" %}
+    </p>
+  </div>
+  <div class="col-6">
+    <p>
+      {% trans "家事" %}
+    </p>
+    <p><b>{{ house_chore_num }}</b>
+      {% trans " つ" %}
+    </p>
+  </div>
 </div>
 <form action="{% url 'app:assign_chore' %}" method="POST">{% csrf_token %}
-  <button type="submit" class="btn w-100 mb-2">
+  <button type="submit" class="btn w-100 mb-2" onclick="loading_show()">
     {% trans "今週の家事を割り振る" %}
   </button>
 </form>
 <form action="{% url 'app:reset_common_fee' %}" method="POST">{% csrf_token %}
-  <button type="submit" class="btn w-100 mb-2">
+  <button type="submit" class="btn w-100 mb-2" onclick="loading_show()">
     {% trans "共益費を再度表示する" %}
   </button>
 </form>
@@ -55,7 +76,7 @@
       </p>
     </div>
     {% endif %}
-    <button type="submit" class="btn w-100 mb-2">
+    <button type="submit" class="btn w-100 mb-2" onclick="loading_show()">
       {% trans "送信" %}
     </button>
   </form>
