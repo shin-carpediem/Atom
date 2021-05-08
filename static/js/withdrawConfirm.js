@@ -6,7 +6,7 @@ if (path == "/index") {
 
     logout.addEventListener("click", () => {
       const answer = confirm(
-        "アカウントが削除されます。本当に退会しますか? / Your account will be deleted. Are you sure withdraw this account?"
+        "再度ログインできなくなります。本当に退会しますか? / You will not be able to log in again. Are you sure withdraw this account?"
       );
       if (answer) {
         window.location.href = "/withdraw/";

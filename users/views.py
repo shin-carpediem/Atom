@@ -157,10 +157,9 @@ def pls_activate(request):
     return render(request, 'users/auth/pls_activate.html')
 
 
-# 2 step google authenticate
 def signup_doing(request, **kwargs):
     token = kwargs.get('token')
-    return render(request, 'users/auth/signup_doing.html', {'token':token})
+    return render(request, 'users/auth/signup_doing.html', {'token': token})
 
 
 def signup_done(request):
@@ -210,7 +209,65 @@ def index(request):
         user = request.user
         user.house = name
         user.save()
-        return render(request, 'app/room.html')
+
+        # ハウス管理者に、自分のハウスに新規家事割り当て対象ユーザーが追加された旨の通知メールを送る
+        if user.is_staff == False:
+            user_id = user.id
+            EMAIL = user.email
+            PASSWORD = EMAIL_HOST_PASSWORD
+            TO = User.objects.filter(house=request.user.house, is_active='True',
+                                     is_staff='True').values_list('email')[0][0]
+
+            msg = MIMEMultipart('alternative')
+            msg['Subject'] = '【Atom】あなたのハウスにユーザーが新規登録しました'
+            msg['From'] = EMAIL
+            msg['To'] = TO
+
+            html = """\
+            <html>
+            <head>
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+            <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+            <style type="text/css">
+                p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
+            </style>
+            </head>
+            <body>
+            <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
+            <br><br>
+            <p>ユーザー（ユーザーID：{{ user_id }}）（メールアドレス：{{ EMAIL }}）があなたのハウスに新規登録しました。</p>
+            <p>A user (user ID: {{user_id}}) (email address: {{EMAIL}}) has newly registered in your house.</p>
+            <p>次回の家事割り振りの対象になります。</p>
+            <p>He/she will be the target of the next housechore allocation.</p>
+            <p>心当たりがない場合は、管理画面からユーザーをdeactivateしてください。</p>
+            <p>If you have no idea, deactivate the user from the below admin page.</p>
+            <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ|Go to admin page</a>
+            <br>
+            <p>Thank you.</p>
+            </body>
+            </html>
+            """
+
+        html = Template(html)
+        context = Context({'user_id': user_id, 'EMAIL': EMAIL})
+        template = MIMEText(html.render(context=context), 'html')
+        msg.attach(template)
+
+        try:
+            # access to the socket
+            s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+            s.starttls()
+            s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+            s.sendmail(EMAIL, TO, msg.as_string())
+            s.quit()
+            messages.success(
+                request, f"ハウス管理者に、あなたが新規登録した事を報告しました。/ Reported to the house manager that you have newly registered.")
+            return redirect("app:room")
+        except:
+            messages.warning(
+                request, f"ハウス管理者に、あなたが新規登録した事を報告できませんでした。直接お伝えください。/ Could not report to the house manager that you have newly registered. Please tell him/her directly.")
+            return redirect("app:room")
 
     ctx = {
         'house_choose_form': house_choose_form,

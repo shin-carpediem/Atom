@@ -12,14 +12,20 @@ import smtplib
 from .models import HouseChore
 from users.models import User, RequestChHouse
 from users.forms import HouseChooseForm
-from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
+from atom.settings import DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
 # Create your views here.
 @login_required
 def room(request):
+    user = request.user
+    email = user.email
     house_choose_form = HouseChooseForm(request.POST or None)
-    return render(request, 'app/room.html', {'house_choose_form': house_choose_form})
+    ctx = {
+        'email': email,
+        'house_choose_form': house_choose_form,
+    }
+    return render(request, 'app/room.html', ctx)
 
 
 @login_required

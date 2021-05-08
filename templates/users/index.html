@@ -17,7 +17,7 @@
     </button>
   </form>
   {% else %}
-  <p class="px-2 mt-4">
+  <p class="mt-4">
     {% trans "あなたは" %}
     {{ request.user.house }}
     {% trans "ハウスメイトとして登録しています" %}
@@ -29,7 +29,7 @@
   </form>
   {% endif %}
 
-  <div class="px-2 pt-3 text-left">
+  <div class="pt-3 text-left">
       <p class="logout" id="logout">
         {% trans "ログアウト" %}
       </p>
