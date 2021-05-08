@@ -18,14 +18,9 @@
     <div class="col-lg-3 col-11 mx-auto container">
       {% block content %}
       {% endblock %}
-      <div class="mx-2 d-flex justify-content-between my-3">
-        <p class="link" data-toggle="modal" data-target="#help_center">
-          {% trans "ヘルプセンター" %}
-        </p>
-        {% block language %}
-          {% include 'common/language.html' %}
-        {% endblock %}
-      </div>
+      {% block section_buttom %}
+        {% include 'common/section_buttom.html' %}
+      {% endblock %}
     </div>
   </section>
   {% block modal %}

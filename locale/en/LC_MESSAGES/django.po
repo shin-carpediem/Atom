@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-01 22:26+0900\n"
+"POT-Creation-Date: 2021-05-08 09:27+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,53 +18,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/models.py:9 templates/users/housechore_detail.html:20
-#: templates/users/housemate_detail.html:28 templates/users/manage.html:20
-#: templates/users/manage.html:42
+#: app/models.py:8 templates/common/section_buttom.html:43
+#: templates/users/manage/housechore_detail.html:21
+#: templates/users/manage/housemate_detail.html:44
+#: templates/users/manage/manage.html:20 templates/users/manage/manage.html:42
 msgid "家事"
 msgstr "House chore"
 
-#: templates/app/base.html:35 templates/users/base.html:39
-#: templates/users/help_center.html:9
-msgid "ヘルプセンター"
-msgstr "Help Center"
-
-#: templates/app/ch_username.html:9
+#: templates/app/modal.html:11
 msgid "表示させたいユーザー名を入力してください"
 msgstr "Please enter the user name you want to display."
 
-#: templates/app/ch_username.html:22 templates/app/request_ch_house.html:31
-#: templates/users/add_housechore.html:22
-#: templates/users/deactivate_housemate.html:30
-#: templates/users/delete_housechore.html:32
-#: templates/users/help_center.html:27
-#: templates/users/request_house_owner.html:27
-#: templates/users/update_housechore.html:24
+#: templates/app/modal.html:24 templates/app/modal.html:65
+#: templates/app/modal.html:102 templates/common/footer.html:29
+#: templates/common/footer.html:66 templates/users/manage/modal.html:24
+#: templates/users/manage/modal.html:66 templates/users/manage/modal.html:106
 msgid "キャンセル"
 msgstr "Cancel"
 
-#: templates/app/ch_username.html:25
+#: templates/app/modal.html:27
 msgid "設定"
 msgstr "Set"
 
-#: templates/app/request_ch_house.html:9
+#: templates/app/modal.html:43
 msgid "ハウス変更の申請"
 msgstr "Application for house change"
 
-#: templates/app/request_ch_house.html:21
+#: templates/app/modal.html:55
 msgid "現在のハウス:"
 msgstr "Current house:"
 
-#: templates/app/request_ch_house.html:25
+#: templates/app/modal.html:59
 msgid "新しく設定したいハウス:"
 msgstr "New house you want to set:"
 
-#: templates/app/request_ch_house.html:34 templates/app/room.html:60
-#: templates/users/help_center.html:30
-#: templates/users/request_house_owner.html:30
-#: templates/users/signup_doing.html:24
+#: templates/app/modal.html:68 templates/app/modal.html:105
+#: templates/app/room.html:59 templates/common/footer.html:32
+#: templates/common/footer.html:69
 msgid "送信"
 msgstr "Submit"
+
+#: templates/app/modal.html:84 templates/app/room.html:83
+#: templates/common/footer.html:11 templates/users/index.html:41
+msgid "ハウス管理者権限の申請"
+msgstr "Apply for house administrator authority"
+
+#: templates/app/modal.html:94 templates/common/footer.html:21
+msgid "申請フォームを記入してください。"
+msgstr "lease fill in the application form."
 
 #: templates/app/room.html:9
 msgid "このボタンは各ハウスの管理者にのみ見えています"
@@ -118,137 +119,113 @@ msgstr "Did you make a mistake in the house?"
 msgid "ログアウト"
 msgstr "Logout"
 
-#: templates/app/room.html:80 templates/users/housechore_detail.html:8
-#: templates/users/housemate_detail.html:8 templates/users/index.html:38
-#: templates/users/manage.html:8
+#: templates/app/room.html:79 templates/users/index.html:37
+#: templates/users/manage/housechore_detail.html:8
+#: templates/users/manage/housemate_detail.html:8
+#: templates/users/manage/manage.html:8
 msgid "ハウス管理"
 msgstr "House manage"
 
-#: templates/app/room.html:84 templates/users/index.html:42
-#: templates/users/request_house_owner.html:9
-msgid "ハウス管理者権限の申請"
-msgstr "Apply for house administrator authority"
+#: templates/common/footer.html:48 templates/common/section_buttom.html:6
+msgid "ヘルプセンター"
+msgstr "Help Center"
 
-#: templates/users/add_housechore.html:9
-msgid "家事を追加"
-msgstr "Add housechore"
-
-#: templates/users/add_housechore.html:25 templates/users/manage.html:64
-msgid "追加"
-msgstr "Add"
-
-#: templates/users/axes_locked.html:8
-msgid "ログインに7回以上失敗したため、"
-msgstr "Your account has been locked for 1 hour"
-
-#: templates/users/axes_locked.html:10
-msgid "アカウントが1時間ロックされました。"
-msgstr "because you failed to log in more than 7 times."
-
-#: templates/users/deactivate_housemate.html:9 templates/users/manage.html:39
-msgid "特定のハウスメイトをdeactivateする"
-msgstr "Deactivate a specific housemate"
-
-#: templates/users/deactivate_housemate.html:17
-msgid ""
-"deactivateされたユーザーはログインできなくなり、また、ハウス管理画面のハウス"
-"メイト一覧に表示されなくなります。"
-msgstr "The deactivated user will not be able to log in and will no longer appear in the Housemates list on the House Management screen."
-
-#: templates/users/deactivate_housemate.html:20
-msgid ""
-"誤ってユーザーをdeactivateしてしまった場合は、ヘルプセンターにお問い合わせく"
-"ださい。"
-msgstr "If you accidentally deactivate a user, please contact the Help Center."
-
-#: templates/users/deactivate_housemate.html:33
-msgid "deactivate"
-msgstr "deactivate"
-
-#: templates/users/delete_housechore.html:9
-msgid "特定の家事を削除する"
-msgstr "Delete certain housechores"
-
-#: templates/users/delete_housechore.html:17
-msgid ""
-"削除された家事は復元できず、また、ハウス管理画面の家事一覧に表示されなくなり"
-"ます。"
-msgstr "Deleted household chores cannot be restored and will no longer appear in the household chores list on the house management screen."
-
-#: templates/users/delete_housechore.html:21
-msgid ""
-"ハウスメイトの人数が減って家事が余った場合は、”削除”ではなく、”更新”ボタンか"
-"ら”有効/無効”を”無効”にしてください。"
-msgstr "If the number of housemates decreases and you have extra housework, please change ”Enable / Disable” to ”Disable” from the ”Update” button instead of ”Delete”."
-
-#: templates/users/delete_housechore.html:35 templates/users/manage.html:67
-msgid "削除"
-msgstr "Delete"
-
-#: templates/users/help_center.html:21
+#: templates/common/footer.html:60
 msgid "お問い合わせ内容"
 msgstr "Contents of inquiry"
 
-#: templates/users/housechore_detail.html:26
-#: templates/users/housemate_detail.html:31 templates/users/manage.html:51
-msgid "詳細"
-msgstr "Description"
+#: templates/common/section_buttom.html:33 templates/users/auth/signup.html:41
+#: templates/users/login.html:7 templates/users/login.html:25
+msgid "ログイン"
+msgstr "Login"
 
-#: templates/users/housechore_detail.html:33
+#: templates/common/section_buttom.html:38
+#: templates/users/manage/housechore_detail.html:35
 msgid "ハウス"
 msgstr "House"
 
-#: templates/users/housechore_detail.html:39
-msgid "有効/無効*"
-msgstr "Enabled/disabled*"
+#: templates/users/auth/axes_locked.html:8
+msgid "ログインに7回以上失敗したため、"
+msgstr "Your account has been locked for 1 hour"
 
-#: templates/users/housechore_detail.html:54
+#: templates/users/auth/axes_locked.html:10
+msgid "アカウントが1時間ロックされました。"
+msgstr "because you failed to log in more than 7 times."
+
+#: templates/users/auth/pls_activate.html:7
+msgid "様"
+msgstr " "
+
+#: templates/users/auth/pls_activate.html:10
+msgid "Atomをご利用いただきありがとうございます。"
+msgstr "Thank you for using Atom."
+
+#: templates/users/auth/pls_activate.html:13
+msgid "あなたのアカウント"
+msgstr "Your account"
+
+#: templates/users/auth/pls_activate.html:15
+msgid "は現在、仮登録の状態です。"
+msgstr "is a temporary registration status."
+
+#: templates/users/auth/pls_activate.html:18
 msgid ""
-"*無効にすると家事割り振りの対象外となり、数としてもカウントされなくなります。"
-"この操作はいつでも元に戻せます。"
-msgstr "* If disabled, it will not be subject to housework allocation and will not be counted as a number. This operation can be undone at any time."
+"本登録用のメールをお送りしましたので、メールに添付されたURLをクリックして、本"
+"登録を完了させてください。"
+msgstr ""
+"We have sent you an email for official registration. Please click the URL "
+"attached to the email to complete the official registration."
 
-#: templates/users/housechore_detail.html:58
-msgid "更新"
-msgstr "Update"
+#: templates/users/auth/signup.html:7 templates/users/auth/signup.html:29
+msgid "新規登録"
+msgstr "Sign up"
 
-#: templates/users/housemate_detail.html:16
-msgid "ユーザー名"
-msgstr "User"
+#: templates/users/auth/signup.html:15 templates/users/login.html:20
+msgid "パスワード:"
+msgstr "Password:"
 
-#: templates/users/housemate_detail.html:19
-msgid "ハウス名"
-msgstr "House"
+#: templates/users/auth/signup.html:20
+msgid "パスワード(確認):"
+msgstr "Password (confirmation):"
 
-#: templates/users/housemate_detail.html:22
-msgid "共益費"
-msgstr "Common fee"
+#: templates/users/auth/signup.html:36
+msgid "Googleで新規登録"
+msgstr "New registration on Google"
 
-#: templates/users/housemate_detail.html:25
-msgid "共益費の支払い期日"
-msgstr "Due date for Common fee"
+#: templates/users/auth/signup.html:46 templates/users/login.html:47
+msgid "プライバシーポリシー"
+msgstr "privacy policy"
 
-#: templates/users/housemate_detail.html:34
-msgid "毎週の家事完了"
-msgstr "Weekly housework completed"
+#: templates/users/auth/signup.html:49 templates/users/login.html:50
+msgid "利用規約"
+msgstr "Terms of service"
 
-#: templates/users/housemate_detail.html:37
-msgid "共益費の支払い完了"
-msgstr "Completion of payment of common service fee"
+#: templates/users/auth/signup.html:53
+msgid "ハウス管理者"
+msgstr "House manager"
 
-#: templates/users/housemate_detail.html:40
-msgid "ハウス管理者権限"
-msgstr "House administrator authority"
-
-#: templates/users/housemate_detail.html:43
-msgid "本登録完了"
+#: templates/users/auth/signup_doing.html:10
+msgid "本登録"
 msgstr "Complete registration"
 
-#: templates/users/housemate_detail.html:46
-msgid "仮登録日"
-msgstr "Temporary registration date"
+#: templates/users/auth/signup_done.html:7
+msgid "本登録が完了しました。"
+msgstr "This registration is complete."
 
-#: templates/users/index.html:9
+#: templates/users/auth/signup_done.html:10
+msgid "ログインページへ"
+msgstr "Go to login page"
+
+#: templates/users/auth/withdraw.html:7
+msgid "アカウントがdeactivateされ、退会処理が完了しました。"
+msgstr ""
+"Your account has been deactivated and the withdrawal process is complete."
+
+#: templates/users/auth/withdraw.html:10
+msgid "ご利用ありがとうございました。"
+msgstr "Thank you for using."
+
+#: templates/users/index.html:8
 msgid "住んでいるハウスを選択してください"
 msgstr "Please select the house you live in."
 
@@ -268,22 +245,13 @@ msgstr "housemate"
 msgid "割り振られた家事を見る"
 msgstr "View assigned housechore"
 
-#: templates/users/index.html:47
+#: templates/users/index.html:46
 msgid "退会"
 msgstr "Withdraw"
-
-#: templates/users/login.html:7 templates/users/login.html:25
-#: templates/users/signup.html:41
-msgid "ログイン"
-msgstr "Login"
 
 #: templates/users/login.html:14
 msgid "Emailかパスワードが間違っています。"
 msgstr "The email or password is incorrect."
-
-#: templates/users/login.html:20 templates/users/signup.html:15
-msgid "パスワード:"
-msgstr "Password:"
 
 #: templates/users/login.html:31
 msgid "パスワードを忘れましたか？"
@@ -297,96 +265,139 @@ msgstr "Login with google"
 msgid "新規登録はこちらから"
 msgstr "New registration is here"
 
-#: templates/users/login.html:47 templates/users/signup.html:46
-msgid "プライバシーポリシー"
-msgstr "privacy policy"
+#: templates/users/manage/housechore_detail.html:27
+#: templates/users/manage/housemate_detail.html:50
+#: templates/users/manage/manage.html:51
+msgid "詳細"
+msgstr "Description"
 
-#: templates/users/login.html:50 templates/users/signup.html:49
-msgid "利用規約"
-msgstr "Terms of service"
+#: templates/users/manage/housechore_detail.html:41
+msgid "有効/無効*"
+msgstr "Enabled/disabled*"
 
-#: templates/users/manage.html:13
+#: templates/users/manage/housechore_detail.html:56
+msgid ""
+"*無効にすると家事割り振りの対象外となり、数としてもカウントされなくなります。"
+"この操作はいつでも元に戻せます。"
+msgstr ""
+"* If disabled, it will not be subject to housework allocation and will not "
+"be counted as a number. This operation can be undone at any time."
+
+#: templates/users/manage/housechore_detail.html:60
+msgid "更新"
+msgstr "Update"
+
+#: templates/users/manage/housemate_detail.html:20
+msgid "ユーザー名"
+msgstr "User"
+
+#: templates/users/manage/housemate_detail.html:26
+msgid "ハウス名"
+msgstr "House"
+
+#: templates/users/manage/housemate_detail.html:32
+msgid "共益費"
+msgstr "Common fee"
+
+#: templates/users/manage/housemate_detail.html:38
+msgid "共益費の支払い期日"
+msgstr "Due date for Common fee"
+
+#: templates/users/manage/housemate_detail.html:56
+msgid "毎週の家事完了"
+msgstr "Weekly housework completed"
+
+#: templates/users/manage/housemate_detail.html:62
+msgid "共益費の支払い完了"
+msgstr "Completion of payment of common service fee"
+
+#: templates/users/manage/housemate_detail.html:68
+msgid "ハウス管理者権限"
+msgstr "House administrator authority"
+
+#: templates/users/manage/housemate_detail.html:74
+msgid "本登録完了"
+msgstr "Complete registration"
+
+#: templates/users/manage/housemate_detail.html:80
+msgid "仮登録日"
+msgstr "Temporary registration date"
+
+#: templates/users/manage/manage.html:13
 msgid "ハウスメイト"
 msgstr "Housemate"
 
-#: templates/users/manage.html:25
+#: templates/users/manage/manage.html:25
 msgid "公益費"
 msgstr "Common expense"
 
-#: templates/users/manage.html:48
+#: templates/users/manage/manage.html:39 templates/users/manage/modal.html:85
+msgid "特定のハウスメイトをdeactivateする"
+msgstr "Deactivate a specific housemate"
+
+#: templates/users/manage/manage.html:48
 msgid "サマリ"
 msgstr "Summary"
 
-#: templates/users/manage.html:72 templates/users/manage_top.html:10
+#: templates/users/manage/manage.html:54
+msgid "有効/無効"
+msgstr "Enabled/disabled*"
+
+#: templates/users/manage/manage.html:68 templates/users/manage/modal.html:27
+msgid "追加"
+msgstr "Add"
+
+#: templates/users/manage/manage.html:71 templates/users/manage/modal.html:69
+msgid "削除"
+msgstr "Delete"
+
+#: templates/users/manage/manage.html:76
+#: templates/users/manage/manage_top.html:10
 msgid "ユーザー画面に戻る"
 msgstr "Back to user screen"
 
-#: templates/users/pls_activate.html:7
-msgid "あなたのメールアドレス宛てに本登録用のメールを送りました。"
-msgstr ""
-"We have sent an e-mail for official registration to your e-mail address."
+#: templates/users/manage/modal.html:11
+msgid "家事を追加"
+msgstr "Add housechore"
 
-#: templates/users/pls_activate.html:10
-msgid "メールのURLをクリックして、本登録を完了させてください。"
-msgstr "Click the URL in the email to complete the main registration."
+#: templates/users/manage/modal.html:43
+msgid "特定の家事を削除する"
+msgstr "Delete certain housechores"
 
-#: templates/users/request_house_owner.html:19
-msgid "申請フォームを記入してください。"
-msgstr "lease fill in the application form."
-
-#: templates/users/signup.html:8 templates/users/signup.html:30
-msgid "新規登録"
-msgstr "Sign up"
-
-#: templates/users/signup.html:20
-msgid "パスワード(確認):"
-msgstr "Password (confirmation):"
-
-#: templates/users/signup.html:36
-msgid "Googleで新規登録"
-msgstr "New registration on Google"
-
-#: templates/users/signup.html:54
-msgid "ハウス管理者"
-msgstr "House manager"
-
-#: templates/users/signup_doing.html:8
-msgid "2段階認証を実行します。"
-msgstr "We are going to do two-step authentication."
-
-#: templates/users/signup_doing.html:11
+#: templates/users/manage/modal.html:51
 msgid ""
-"以下のQRコードを読み込んで、ワンタイムパスワードを下に入力して送信してくださ"
-"い。"
+"削除された家事は復元できず、また、ハウス管理画面の家事一覧に表示されなくなり"
+"ます。"
 msgstr ""
-"Please read the QR code below and enter the one-time password below to send."
+"Deleted household chores cannot be restored and will no longer appear in the "
+"household chores list on the house management screen."
 
-#: templates/users/signup_doing.html:14
+#: templates/users/manage/modal.html:55
 msgid ""
-"※ このページを閉じると<br>再度QRコードを表示出来ないためご注意ください。"
+"ハウスメイトの人数が減って家事が余った場合は、”削除”ではなく、”更新”ボタンか"
+"ら”有効/無効”を”無効”にしてください。"
 msgstr ""
-"※ Please note that if you close this page, you will not be able to display "
-"the QR code again."
+"If the number of housemates decreases and you have extra housework, please "
+"change ”Enable / Disable” to ”Disable” from the ”Update” button instead of "
+"”Delete”."
 
-#: templates/users/signup_done.html:7
-msgid "本登録が完了しました。"
-msgstr "This registration is complete."
-
-#: templates/users/signup_done.html:10
-msgid "ログインページへ"
-msgstr "Go to login page"
-
-#: templates/users/update_housechore.html:27
-msgid "選択"
-msgstr "Select"
-
-#: templates/users/withdraw.html:8
-msgid "アカウントがdeactivateされ、退会処理が完了しました。"
+#: templates/users/manage/modal.html:93
+msgid ""
+"deactivateされたユーザーはログインできなくなり、また、ハウス管理画面のハウス"
+"メイト一覧に表示されなくなります。"
 msgstr ""
-"Your account has been deactivated and the withdrawal process is complete."
-#: templates/users/withdraw.html:10
-msgid "ご利用ありがとうございました。"
-msgstr "Thank you for using."
+"The deactivated user will not be able to log in and will no longer appear in "
+"the Housemates list on the House Management screen."
+
+#: templates/users/manage/modal.html:96
+msgid ""
+"誤ってユーザーをdeactivateしてしまった場合は、ヘルプセンターにお問い合わせく"
+"ださい。"
+msgstr "If you accidentally deactivate a user, please contact the Help Center."
+
+#: templates/users/manage/modal.html:109
+msgid "deactivate"
+msgstr "deactivate"
 
 #: users/admin.py:25
 msgid "Permissions"
@@ -400,26 +411,18 @@ msgstr "重要な日付"
 msgid "選択してください"
 msgstr "Please select"
 
-#: users/forms.py:28
-msgid "ワンタイムパスワード"
-msgstr "One-Time Password"
-
-#: users/forms.py:33
-msgid "Google Authenticatorの結果と合致しませんでした。"
-msgstr "It did not match the result of Google Authenticator."
-
-#: users/models.py:16
+#: users/models.py:14
 msgid "メールアドレスは必須です"
 msgstr "Email address is required"
 
-#: users/models.py:52
+#: users/models.py:50
 msgid "ユーザー"
 msgstr "User"
 
-#: users/models.py:56
+#: users/models.py:54
 msgid "割り当てられていません"
 msgstr "not assigned"
 
-#: users/models.py:57
+#: users/models.py:55
 msgid "詳細なし"
 msgstr "no description"

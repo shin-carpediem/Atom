@@ -82,7 +82,7 @@ def assign_chore(request):
                       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
                       <br><br>
                       <p>今週の自分が担当する家事をご確認ください。</p>
-                      <p>Please check the housework you are in charge of this week.</p>
+                      <p>Please check the housechore you are in charge of this week.</p>
                       <hr>
                       <p>家事のサマリ|Summary：{{ housemate_housechore_title }}</p>
                       <p>詳細|Description：{{ housemate_housechore_desc }}</p>
@@ -93,7 +93,7 @@ def assign_chore(request):
                     </body>
                     </html>
                     """
-                    msg['Subject'] = '【Atom】今週の家事が割り振られました / This week’s housework has been allocated'
+                    msg['Subject'] = '【Atom】今週の家事が割り振られました / This week’s housechore has been allocated'
                     msg['From'] = house_owner_email
                     msg['To'] = TO
                     html = Template(html)
@@ -114,11 +114,11 @@ def assign_chore(request):
                             request, f"{TO}さんへのメール送信に失敗しましたが、割り振りは完了しました。別途アナウンスをしてください。/ Email sending to {TO} failed, but allocation is complete. Please make a separate announcement.")
         elif UserNum > HouseChoreNum:
             messages.warning(
-                request, f"家事の数が足りません。家事をしなくてもいい人数分、「今週はなし」という家事を作成してください。/ There are not enough housework. Create a housework called ”Nothing this week” for the number of people who do not have to do the housework.")
+                request, f"家事の数が足りません。家事をしなくてもいい人数分、「今週はなし」という家事を作成してください。/ There are not enough housechore. Create a housechore called ”Nothing this week” for the number of people who do not have to do the housechore.")
             return redirect('users:manage')
         else:
             messages.warning(
-                request, f"家事の数がオーバーしています。(メール認証が完了している)ハウスメイトの人数分まで家事を削除してください。/ The number of household chores is over. Delete up to the number of housemates (whose email verification has been completed).")
+                request, f"家事の数がオーバーしています。(メール認証が完了している)ハウスメイトの人数分まで家事を削除してください。/ The number of housechore is over. Delete up to the number of housemates (whose email verification has been completed).")
             return redirect('users:manage')
     return redirect('app:room')
 
@@ -219,7 +219,7 @@ def finish_task(request):
             s.sendmail(EMAIL, TO, msg.as_string())
             s.quit()
             messages.success(
-                request, f"報告できました。/ The a report was successful.")
+                request, f"報告できました。/ The report was successful.")
         except:
             messages.warning(
                 request, f"メール送信に失敗しましたが、ステータスは変更できました。/ Failed to send an email, but your status has been successfully changed.")

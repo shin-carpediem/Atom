@@ -71,9 +71,9 @@
     </p>
   </div>
   <div class="pb-3 d-flex">
-    <a class="pr-1" href="{% url 'users:logout' %}">
+    <p class="logout pr-2" id="logout">
       {% trans "ログアウト" %}
-    </a>
+    </p>
     {% if user.is_staff %}
     <a href="{% url 'users:manage' %}" target="_blank" rel="noopener noreferrer">
       {% trans "ハウス管理" %}

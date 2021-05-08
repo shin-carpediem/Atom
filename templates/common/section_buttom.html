@@ -1,0 +1,47 @@
+{% load i18n %}
+{% load static %}
+
+<div class="d-flex mx-2 justify-content-between mt-3">
+  <p class="link" data-toggle="modal" data-target="#help_center">
+    {% trans "ヘルプセンター" %}
+  </p>
+  <!-- language -->
+  <form class="mb-3" action="{% url 'set_language' %}" method="POST">{% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}">
+    <select name="language" id="changeLangUsers">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            <option value="{{ language.code }}"
+            {% if language.code == LANGUAGE_CODE %}
+              selected
+            {% endif %}>
+                {{ language.name_local }}
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" id="langBtnUsers" style="display: none;">
+  </form>
+</div>
+
+<!-- breadcrumb -->
+<nav class="mx-1" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item breadcrumb_active" id="login_page">
+      <a href="{% url 'users:login' %}">
+        {% trans "ログイン" %}
+      </a>
+    </li>
+    <li class="breadcrumb-item breadcrumb_hide" id="index_page">
+      <a href="{% url 'users:index' %}">
+        {% trans "ハウス" %}
+      </a>
+    </li>
+    <li class="breadcrumb-item breadcrumb_hide" id="room_page">
+      <a href="{% url 'app:room' %}">
+        {% trans "家事" %}
+      </a>
+    </li>
+  </ol>
+</nav>

@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load static %}
+
 {% for message in messages %}
   <p class="message-{{ message.tags }} text-center py-2">{{ message }}</p>
 {% endfor %}

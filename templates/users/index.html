@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% block content %}
-<div class="text-center my-5">
+<div class="px-2 text-center my-5">
   {% if request.user.house == None %}
   <p>
       {% trans "住んでいるハウスを選択してください" %}
@@ -28,7 +28,7 @@
   </form>
   {% endif %}
 
-  <div class="pt-3 text-left">
+  <div class="px-2 pt-3 text-left">
       <p class="logout" id="logout">
         {% trans "ログアウト" %}
       </p>
