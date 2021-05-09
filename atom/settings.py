@@ -80,6 +80,15 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:index'
 LOGOUT_REDIRECT_URL = 'users:login'
 
+# 永続的なデータベース接続を有効化すると、リクエストのプロセス時間の多くの部分に対するデータベースアカウントへの接続が高速化。
+# 限られたネットワーク性能の仮想化ホストにおいて効果的。
+CONN_MAX_AGE = 0
+
+# 誤ってHTTPによってCSRFクッキーを送信してしまうのを防ぐにはTrueをセット。
+CSRF_COOKIE_SECURE = env.bool('DEBUG', False)
+# 誤ってHTTPによってセッションクッキーを送信してしまうのを防ぐにはTrueをセット。
+SESSION_COOKIE_SECURE = env.bool('DEBUG', False)
+
 # http://yuki-yamashita.site/blog/post/django-recaptchaV2-how-to/
 RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
