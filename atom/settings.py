@@ -63,6 +63,11 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:index'
 LOGOUT_REDIRECT_URL = 'users:login'
 
+CONN_MAX_AGE = 0
+
+CSRF_COOKIE_SECURE = env.bool('DEBUG', False)
+SESSION_COOKIE_SECURE = env.bool('DEBUG', False)
+
 RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
 
@@ -110,7 +115,6 @@ TEMPLATES = [
     },
 ]
 
-# キャッシュの設定。django.core.cache.backends.locmem.LocMemCache を使っている場合は設定
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -121,10 +125,9 @@ CACHES = {
 }
 
 AXES_CACHE = 'axes'
-AXES_FAILURE_LIMIT = 7   # ログイン失敗7回まで
-AXES_LOCKOUT_TEMPLATE = 'users:axes_locked'   # 自作したテンプレートを指定
-AXES_COOLOFF_TIME = 1   # ログインを連続で失敗した場合は1時間アカウントがロック
-# デフォルトのロガーは'axes.watch_login'となっている。
+AXES_FAILURE_LIMIT = 7
+AXES_LOCKOUT_TEMPLATE = 'users:axes_locked'
+AXES_COOLOFF_TIME = 1
 
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")

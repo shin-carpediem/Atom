@@ -41,67 +41,35 @@ def signup(request):
                 msg['Subject'] = '【Atom】本登録をしてください / Please make a formal registration'
                 msg['From'] = DEFAULT_FROM_EMAIL
                 msg['To'] = TO
-                if DEBUG:
-                    html = """\
-                    <head>
-                      <link rel="preconnect" href="https://fonts.gstatic.com">
+                html = """\
+                <head>
+                    <link rel="preconnect" href="https://fonts.gstatic.com">
 　　　　　　            <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-                      <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-                      <style type="text/css">
-                        p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
-                      </style>
-                    </head>
-                    <body>
-                      <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
-                      <br><br>
-                      <p>{{ TO }} 様</p>
-                      <p>Atomをご利用いただきありがとうございます。</p>
-                      <p>あなたのアカウント（{{ TO }}）は現在、仮登録の状態です。</p>
-                      <p>1時間以内に以下のURLをクリックして、アカウントの本登録を行なってください。</p>
-                      <br>
-                      <p>{{ protocol }}://{{ domain }}{% url 'users:signup_doing' token %}</p>
-                      <br><br>
-                      <p>Dear {{ TO }}</p>
-                      <p>Thank you for using Atom. </p>
-                      <p>Your account（{{ TO }}）is currently in a temporary registration status.</p>
-                      <p>Click the URL below to register your account within 1 hour.</p>
-                      <br>
-                      <p>{{ protocol }}://{{ domain }}{% url 'users:signup_doing' token %}</p>
-                      <br>
-                      <p>Thank you.</p>
-                    </body>
-                    </html>
-                    """
-                else:
-                    html = """\
-                    <head>
-                      <link rel="preconnect" href="https://fonts.gstatic.com">
-　　　　　　            <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-                      <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-                      <style type="text/css">
-                        p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
-                      </style>
-                    </head>
-                    <body>
-                      <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
-                      <br><br>
-                      <p>{{ TO }} 様</p>
-                      <p>Atomをご利用いただきありがとうございます。</p>
-                      <p>あなたのアカウント（{{ TO }}）は現在、仮登録の状態です。</p>
-                      <p>1時間以内に以下のURLをクリックして、アカウントの本登録を行なってください。</p>
-                      <br>
-                      <p>{{ protocol }}://{{ domain }}{% url 'users:signup_doing' token %}</p>
-                      <br><br>
-                      <p>Thank you for using Atom. </p>
-                      <p>Your account（{{ TO }}）is currently in a temporary registration status.</p>
-                      <p>Click the URL below to register your account within 1 hour.</p>
-                      <br>
-                      <p>{{ protocol }}://{{ domain }}{% url 'users:signup_doing' token %}</p>
-                      <br>
-                      <p>Thank you.</p>
-                    </body>
-                    </html>
-                    """
+                    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+                    <style type="text/css">
+                    p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
+                    </style>
+                </head>
+                <body>
+                    <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
+                    <br><br>
+                    <p>{{ TO }} 様</p>
+                    <p>Atomをご利用いただきありがとうございます。</p>
+                    <p>あなたのアカウント（{{ TO }}）は現在、仮登録の状態です。</p>
+                    <p>1時間以内に以下のURLをクリックして、アカウントの本登録を行なってください。</p>
+                    <br>
+                    <p>{{ protocol }}://{{ domain }}{% url 'users:signup_doing' token %}</p>
+                    <br><br>
+                    <p>Thank you for using Atom. </p>
+                    <p>Your account（{{ TO }}）is currently in a temporary registration status.</p>
+                    <p>Click the URL below to register your account within 1 hour.</p>
+                    <br>
+                    <p>{{ protocol }}://{{ domain }}{% url 'users:signup_doing' token %}</p>
+                    <br>
+                    <p>Thank you.</p>
+                </body>
+                </html>
+                """
                 html = Template(html)
                 context = Context({
                     'TO': TO,
