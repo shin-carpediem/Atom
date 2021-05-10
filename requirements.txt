@@ -1,7 +1,7 @@
 Django==3.0.14
 # postgreSQLドライバ
 psycopg2==2.7.6
-psycopg2-binary==2.7.7
+# psycopg2-binary==2.7.7
 # herokuに必要
 gunicorn
 django-heroku
