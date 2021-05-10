@@ -89,6 +89,14 @@ CSRF_COOKIE_SECURE = env.bool('DEBUG', False)
 # 誤ってHTTPによってセッションクッキーを送信してしまうのを防ぐにはTrueをセット。
 SESSION_COOKIE_SECURE = env.bool('DEBUG', False)
 
+# defaultは2週間のセッションを30分に変更。
+SESSION_COOKIE_AGE = 1800
+# スマホのスリープのように、最後に操作してから放置した時間で期限切れにする。
+SESSION_SAVE_EVERY_REQUEST = True
+# Web ブラウザを閉じたらセッションを終了。
+# https://qiita.com/3244/items/9eb03e733b986c20ee16
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 # http://yuki-yamashita.site/blog/post/django-recaptchaV2-how-to/
 RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
