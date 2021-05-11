@@ -41,6 +41,7 @@ jobs:
             pipenv run python manage.py test
 
   deploy:
+    executor: heroku/default
     steps:
       - checkout
       - run:
