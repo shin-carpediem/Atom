@@ -1,5 +1,6 @@
 # https://circleci.com/docs/ja/2.0/project-walkthrough/
-# master のビルドが成功した後、Heroku に自動的に master をデプロイするには、workflows セクションを追加して build ジョブと deploy ジョブをリンクさせます。
+# master のビルドが成功した後、Heroku に自動的に master をデプロイするには、
+# workflows セクションを追加して build ジョブと deploy ジョブをリンクさせる。
 workflows:
   version: 2.1
   build-deploy:
@@ -44,6 +45,7 @@ jobs:
     executor: heroku/default
     steps:
       - checkout
+      - heroku/install
       - run:
           name: deploy master branch to Heroku
           command: |
