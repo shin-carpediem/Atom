@@ -1,17 +1,19 @@
 # https://circleci.com/docs/ja/2.0/project-walkthrough/
 # master のビルドが成功した後、Heroku に自動的に master をデプロイするには、
 # workflows セクションを追加して build ジョブと deploy ジョブをリンクさせる。
-workflows:
-  version: 2
-  build-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+# TODO: 自動デプロイを成功させるにはHerokuのSSL認証が必要だが、無料プランではそれができないので、一旦保留。
+
+# workflows:
+#   version: 2
+#   build-deploy:
+#     jobs:
+#       - build
+#       - deploy:
+#           requires:
+#             - build
+#           filters:
+#             branches:
+#               only: master
 
 version: 2
 jobs:
@@ -39,30 +41,30 @@ jobs:
             sudo pip install pipenv
             pipenv install
             pipenv run python manage.py test
-  deploy:
-    working_directory: ~/Atom
-    docker:
-      - image: circleci/python:3.7.10 # primary container for the build job
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD # context / project UI env-var reference
-        environment:
-          PIPENV_VENV_IN_PROJECT: true
-          DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
-      - image: circleci/postgres:9.6.2 # an example of how to specify a service container
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD # context / project UI env-var reference
-        environment:
-          POSTGRES_USER: root
-          POSTGRES_DB: circle_test
-    steps:
-      - checkout
-      - run:
-          name: deploy master branch to Heroku
-          command: |
-            sudo pip install pipenv
-            pipenv install
-            pipenv run python manage.py makemigrations
-            pipenv run python manage.py migrate
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+  # deploy:
+  #   working_directory: ~/Atom
+  #   docker:
+  #     - image: circleci/python:3.7.10 # primary container for the build job
+  #       auth:
+  #         username: mydockerhub-user
+  #         password: $DOCKERHUB_PASSWORD # context / project UI env-var reference
+  #       environment:
+  #         PIPENV_VENV_IN_PROJECT: true
+  #         DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
+  #     - image: circleci/postgres:9.6.2 # an example of how to specify a service container
+  #       auth:
+  #         username: mydockerhub-user
+  #         password: $DOCKERHUB_PASSWORD # context / project UI env-var reference
+  #       environment:
+  #         POSTGRES_USER: root
+  #         POSTGRES_DB: circle_test
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: deploy master branch to Heroku
+  #         command: |
+  #           sudo pip install pipenv
+  #           pipenv install
+  #           pipenv run python manage.py makemigrations
+  #           pipenv run python manage.py migrate
+  #           git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
