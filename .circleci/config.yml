@@ -25,12 +25,18 @@ jobs:
             pipenv install
             pipenv run python manage.py test
   deploy:
+    executor: heroku/default
     steps:
       - checkout
+      - heroku/install
       - run:
           name: deploy master branch to Heroku
+          command: >
+            echo "python manage.py makemigrations"
+            echo "python manage.py migrate"
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+      - heroku/deploy-via-git
 
 # version: 2.1
 # orbs:
