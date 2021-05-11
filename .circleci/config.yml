@@ -1,21 +1,55 @@
+# version: 2.1
+
+# orbs:
+#   python: circleci/python@0.2.1
+
+# jobs:
+#   build-and-test:
+#     executor: python/default
+#     steps:
+#       - checkout
+#       - python/load-cache
+#       - python/install-deps
+#       - python/save-cache
+#       - run:
+#           command: ./manage.py test
+#           name: Test
+#           when: always
+
+# workflows:
+#   main:
+#     jobs:
+#       - build-and-test
 version: 2.1
-
 orbs:
-  python: circleci/python@0.2.1
-
+  python: circleci/python@1.0.0
+  # https://circleci.com/orbs/registry/orb/circleci/heroku
+  heroku: circleci/heroku@0.0.4
 jobs:
-  build-and-test:
-    executor: python/default
+  build:
+    docker:
+      - image: cimg/python:3.7.10
+        environment:
+          DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
+      - image: circleci/postgres:9.6.2
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
     steps:
       - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
+      - python/install-packages
       - run:
-          command: ./manage.py test
-          name: Test
-
-workflows:
-  main:
-    jobs:
-      - build-and-test
+          name: Run django tests
+          command: |
+            pipenv run python manage.py test
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+    deploy:
+      executor: heroku/default
+      steps:
+        - checkout
+        - heroku/install
+        - heroku/deploy-via-git:
+            only-branch: master
