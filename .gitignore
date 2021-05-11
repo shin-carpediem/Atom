@@ -188,6 +188,3 @@ tempCodeRunnerFile.py
 
 # GCP
 GOOGLE_APPLICATION_CREDENTIALS.json
-
-# circle_ci
-.circle_ci/
