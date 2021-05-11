@@ -1,8 +1,23 @@
+# https://circleci.com/docs/ja/2.0/project-walkthrough/
+# master のビルドが成功した後、Heroku に自動的に master をデプロイするには、workflows セクションを追加して build ジョブと deploy ジョブをリンクさせます。
+workflows:
+  version: 2.1
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+
 version: 2.1
 jobs:
   build: # required for runs that don't use workflows
     working_directory: ~/Atom
     docker:
+
       - image: circleci/python:3.7.10 # primary container for the build job
         auth:
           username: mydockerhub-user
@@ -24,18 +39,16 @@ jobs:
             sudo pip install pipenv
             pipenv install
             pipenv run python manage.py test
+
   deploy:
-    executor: heroku/default
     steps:
       - checkout
-      - heroku/install
       - run:
           name: deploy master branch to Heroku
           command: |
-            echo "python manage.py makemigrations"
-            echo "python manage.py migrate"
+            python manage.py makemigrations
+            python manage.py migrate
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-      - heroku/deploy-via-git
 
 # version: 2.1
 # orbs:
