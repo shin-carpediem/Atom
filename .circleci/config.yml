@@ -1,17 +1,62 @@
 version: 2.1
-orbs:
-  # https://circleci.com/orbs/registry/orb/circleci/heroku
-  heroku: circleci/heroku@1.2.6
 jobs:
-  build:
-  :
-  deploy:
-    executor: heroku/default
+  build:  # required for runs that don't use workflows
+    working_directory: ~/Atom
+    docker:
+      - image: circleci/python:3.7.10  # primary container for the build job
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
+          DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
+      - image: circleci/postgres:9.6.2 # an example of how to specify a service container
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
     steps:
-      - checkout
-      - heroku/install
-      - heroku/deploy-via-git:
-          only-branch: master
+      - checkout  # checkout source code to working directory
+      - run:
+          command: |  # use pipenv to install dependencies
+            sudo pip install pipenv
+            pipenv install
+            pipenv run python manage.py test
+  deploy:
+      executor: heroku/default
+      steps:
+        - checkout
+        - heroku/install
+        - run:
+            command: >
+              echo "python manage.py makemigrations"
+              echo "python manage.py migrate"
+        - heroku/deploy-via-git
+orbs:
+  heroku: circleci/heroku@x.y
+version: 2.1
+workflows:
+  heroku_deploy:
+    jobs:
+      - deploy
+
+
+# version: 2.1
+# orbs:
+#   # https://circleci.com/orbs/registry/orb/circleci/heroku
+#   heroku: circleci/heroku@1.2.6
+# jobs:
+#   build:
+#   :
+#   deploy:
+#     executor: heroku/default
+#     steps:
+#       - checkout
+#       - heroku/install
+#       - heroku/deploy-via-git:
+#           only-branch: master
 # version: 2.1
 
 # orbs:
