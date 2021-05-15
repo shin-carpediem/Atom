@@ -140,6 +140,22 @@ html {
             }
           }
         }
+        .housechore__card {
+          border-radius: 4px;
+          background-color: $light-grey;
+          box-shadow: 2px $grey;
+          &:hover {
+            cursor: pointer;
+            background-color: $grey;
+          }
+          input {
+            visibility: hidden;
+          }
+        }
+        .tapped_housechore {
+          transform: rotate(-0.01turn);
+          background-color: $light-yellow;
+        }
         .logout,
         .withdraw {
           color: $light-blue;
@@ -194,3 +210,4 @@ html {
     color: $black;
   }
 }
+
