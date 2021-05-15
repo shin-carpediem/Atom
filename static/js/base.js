@@ -28,11 +28,43 @@ if (path !== "/") {
   logOutConfirm();
 }
 
+if (path == "/room") {
+  const weeklyTapHouseChore = () => {
+    const weeklyCard = document.getElementById("weekly__card");
+    const weeklyCheck = document.getElementById("weekly__check");
+
+    weeklyCard.addEventListener("click", () => {
+      if (weeklyCheck.hasAttribute("checked")) {
+        weeklyCard.classList.remove("tapped_housechore");
+        weeklyCheck.removeAttribute("checked", "checked");
+      } else {
+        weeklyCard.classList.add("tapped_housechore");
+        weeklyCheck.setAttribute("checked", "checked");
+      }
+    });
+  };
+  weeklyTapHouseChore();
+
+  const monthlyTapHouseChore = () => {
+    const monthlyCard = document.getElementById("monthly__card");
+    const monthlyCheck = document.getElementById("monthly__check");
+    monthlyCard.addEventListener("click", () => {
+      if (monthlyCheck.hasAttribute("checked")) {
+        monthlyCard.classList.remove("tapped_housechore");
+        monthlyCheck.removeAttribute("checked", "checked");
+      } else {
+        monthlyCard.classList.add("tapped_housechore");
+        monthlyCheck.setAttribute("checked", "checked");
+      }
+    });
+  };
+  monthlyTapHouseChore();
+}
+
 const breadCrumb = () => {
   const loginLi = document.getElementById("login_page");
   const indexLi = document.getElementById("index_page");
   const roomLi = document.getElementById("room_page");
-  console.log(path);
 
   if (path == "/") {
     loginLi.classList.add("breadcrumb_current");

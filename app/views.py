@@ -206,84 +206,90 @@ def finish_task(request):
         user_housechore_desc = user.housechore_desc
 
         values = request.POST.getlist('task')
-        if 'weekly' in values and 'monthly' in values:
-            user.done_weekly = True
-            user.done_monthly = True
-        elif 'weekly' in values:
-            user.done_weekly = True
-        elif 'monthly' in values:
-            user.done_monthly = True
-        else:
-            messages.warning(
-                request, f"チェックボックスにチェックを入れてください。/ Please check the check box.")
-            return render(request, 'app/room.html')
-
-        user.save()
-        user_done_weekly = user.done_weekly
-        user_done_monthly = user.done_monthly
-
-        EMAIL = request.user.email
-        PASSWORD = EMAIL_HOST_PASSWORD
-        TO = User.objects.filter(house=request.user.house, is_active='True',
-                                 is_staff='True').values_list('email')[0][0]
-
-        # Create message container - the correct MIME type is multipart/alternative.
-        msg = MIMEMultipart('alternative')
-        msg['Subject'] = '【Atom】ハウスメイトから家事完了の連絡を受けました'
-        msg['From'] = EMAIL
-        msg['To'] = TO
-
-        # Create the body of the message (a plain-text and an HTML version).
-        html = """\
-        <html>
-        <head>
-          <link rel="preconnect" href="https://fonts.gstatic.com">
-　　　　　　<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-          <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-          <style type="text/css">
-            p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
-          </style>
-        </head>
-        <body>
-          <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
-          <br><br>
-          <p>ハウスメイトの{{ user_email }}さんから家事完了の連絡を受けました。</p>
-          <p>You received a notification from your housemate {{ user_email }} that he/she finised the housework.</p>
-          <hr>
-          <p>家事のサマリ|Summary：{{ user_housechore_title }}</p>
-          <p>詳細|Description：{{ user_housechore_desc }}</p>
-          <p>ステータス|Status：{{ user_done_weekly }}</p>
-          <p>共益費の支払い完了|Completion of payment of common service fee：{{ user_done_monthly }}</p>
-          <hr>
-          <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ / Go to admin page</a>
-          <br>
-          <p>Thank you.</p>
-        </body>
-        </html>
-        """
-
-        html = Template(html)
-        context = Context(
-            {'user_email': user_email,
-             'user_housechore_title': user_housechore_title,
-             'user_housechore_desc': user_housechore_desc,
-             'user_done_weekly': user_done_weekly,
-             'user_done_monthly': user_done_monthly})
-        template = MIMEText(html.render(context=context), 'html')
-        msg.attach(template)
-
-        try:
-            s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
-            s.starttls()
-            s.login(DEFAULT_FROM_EMAIL, PASSWORD)
-            s.sendmail(EMAIL, TO, msg.as_string())
-            s.quit()
-
+        # 全て家事を終わっているか否か
+        if user.done_weekly == True and user.done_monthly == True:
             messages.success(
-                request, f"報告できました。/ The report was successful.")
-        except:
-            messages.warning(
-                request, f"メール送信に失敗しましたが、ステータスは変更できました。/ Failed to send an email, but your status has been successfully changed.")
+                request, f"あなたは全ての家事を終えています。/ You have done all the housechore.")
+
+        else:
+            if 'weekly' in values and 'monthly' in values:
+                user.done_weekly = True
+                user.done_monthly = True
+            elif 'weekly' in values:
+                user.done_weekly = True
+            elif 'monthly' in values:
+                user.done_monthly = True
+            else:
+                messages.warning(
+                    request, f"チェックボックスにチェックを入れてください。/ Please check the check box.")
+                return redirect('app:room')
+
+            user.save()
+            user_done_weekly = user.done_weekly
+            user_done_monthly = user.done_monthly
+
+            EMAIL = request.user.email
+            PASSWORD = EMAIL_HOST_PASSWORD
+            TO = User.objects.filter(house=request.user.house, is_active='True',
+                                     is_staff='True').values_list('email')[0][0]
+
+            # Create message container - the correct MIME type is multipart/alternative.
+            msg = MIMEMultipart('alternative')
+            msg['Subject'] = '【Atom】ハウスメイトから家事完了の連絡を受けました'
+            msg['From'] = EMAIL
+            msg['To'] = TO
+
+            # Create the body of the message (a plain-text and an HTML version).
+            html = """\
+            <html>
+            <head>
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+    　　　　　　<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+            <style type="text/css">
+                p, a {font-size:10.0pt; font-family:'Krona One', sans-serif; color:#383636;}
+            </style>
+            </head>
+            <body>
+            <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
+            <br><br>
+            <p>ハウスメイトの{{ user_email }}さんから家事完了の連絡を受けました。</p>
+            <p>You received a notification from your housemate {{ user_email }} that he/she finised the housework.</p>
+            <hr>
+            <p>家事のサマリ|Summary：{{ user_housechore_title }}</p>
+            <p>詳細|Description：{{ user_housechore_desc }}</p>
+            <p>ステータス|Status：{{ user_done_weekly }}</p>
+            <p>共益費の支払い完了|Completion of payment of common service fee：{{ user_done_monthly }}</p>
+            <hr>
+            <a href="https://atom-production.herokuapp.com/manage_top/">管理画面へ / Go to admin page</a>
+            <br>
+            <p>Thank you.</p>
+            </body>
+            </html>
+            """
+
+            html = Template(html)
+            context = Context(
+                {'user_email': user_email,
+                 'user_housechore_title': user_housechore_title,
+                 'user_housechore_desc': user_housechore_desc,
+                 'user_done_weekly': user_done_weekly,
+                 'user_done_monthly': user_done_monthly})
+            template = MIMEText(html.render(context=context), 'html')
+            msg.attach(template)
+
+            try:
+                s = smtplib.SMTP(EMAIL_HOST, EMAIL_POST)
+                s.starttls()
+                s.login(DEFAULT_FROM_EMAIL, PASSWORD)
+                s.sendmail(EMAIL, TO, msg.as_string())
+                s.quit()
+
+                messages.success(
+                    request, f"報告できました。/ The report was successful.")
+            except:
+                messages.warning(
+                    request, f"メール送信に失敗しましたが、ステータスは変更できました。/ Failed to send an email, but your status has been successfully changed.")
 
     except:
         messages.warning(
