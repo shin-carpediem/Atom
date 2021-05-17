@@ -56,7 +56,9 @@
       {% trans "送信ボタンを押してください" %}
     </p>
     {% if user.done_weekly == False %}
-    <div class="housechore__card p-3 mb-2" id="weekly__card">
+    <div class="housechore__card p-3 mb-2" id="weekly__card"
+    {% if user.housechore_title == '割り当てられていません' %}
+    style="background-color:#f8f8f8;"{% endif %}>
       <div class="d-flex">
         {% if user.housechore_title != '割り当てられていません' %}
           <input type="checkbox" class="mt-1" id="weekly__check" name="task" value="weekly">

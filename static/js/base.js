@@ -14,7 +14,7 @@ const changeLangUsers = () => {
 };
 changeLangUsers();
 
-if (path !== "/") {
+if (path !== "/" || path !== "/signup/*") {
   const logOutConfirm = () => {
     const logout = document.getElementById("logout");
 
@@ -28,7 +28,7 @@ if (path !== "/") {
   logOutConfirm();
 }
 
-if (path == "/room") {
+if (path === "/room") {
   const weeklyTapHouseChore = () => {
     if (document.getElementById("weekly__card") != null) {
       const weeklyCard = document.getElementById("weekly__card");
@@ -71,14 +71,14 @@ const breadCrumb = () => {
   const indexLi = document.getElementById("index_page");
   const roomLi = document.getElementById("room_page");
 
-  if (path == "/") {
+  if (path === "/") {
     loginLi.classList.add("breadcrumb_current");
 
     indexLi.classList.add("prop_hide");
 
     roomLi.classList.add("prop_hide");
   }
-  if (path == "/index") {
+  if (path === "/index") {
     loginLi.classList.remove("breadcrumb_current");
     loginLi.classList.add("breadcrumb_active");
 
@@ -88,7 +88,7 @@ const breadCrumb = () => {
     roomLi.classList.remove("breadcrumb_current");
     roomLi.classList.add("prop_hide");
   }
-  if (path == "/room") {
+  if (path === "/room") {
     loginLi.classList.remove("breadcrumb_current");
     loginLi.classList.add("breadcrumb_active");
 

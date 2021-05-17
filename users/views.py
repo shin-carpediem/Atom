@@ -23,6 +23,14 @@ from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASS
 
 
 # Create your views here.
+# https://www.sejuku.net/blog/31661
+# def session_control(request):
+#     if request.session.get(request, False):
+#         messages.warning(
+#             request, f"複数回連続では実行できません。/ You cannot execute multiple times in a row.")
+#     request.session[request] = True
+
+
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -247,6 +255,9 @@ def index(request):
 @login_required
 @require_POST
 def request_house_owner(request):
+    # 連続投稿を防ぐ
+    session_control()
+
     user = request.user
     user_id = user.id
     RequestHouseOwner(email=user.email, house=user.house).save()
@@ -305,6 +316,7 @@ def request_house_owner(request):
     return redirect('users:index')
 
 
+@login_required
 def inquire(request):
     content = request.GET.get(key='content')
     inquire = Inquire(content=content,)

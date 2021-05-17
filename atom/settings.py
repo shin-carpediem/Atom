@@ -80,6 +80,7 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:index'
 LOGOUT_REDIRECT_URL = 'users:login'
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 # 永続的なデータベース接続を有効化すると、リクエストのプロセス時間の多くの部分に対するデータベースアカウントへの接続が高速化。
 # 限られたネットワーク性能の仮想化ホストにおいて効果的。
 CONN_MAX_AGE = 0
