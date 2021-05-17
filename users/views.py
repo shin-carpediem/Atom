@@ -21,6 +21,7 @@ from app.forms import AddHousechoreForm
 from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_POST
 
 
+# Create your views here.
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -258,6 +259,7 @@ def request_house_owner(request):
     return redirect('users:index')
 
 
+@login_required
 def inquire(request):
     content = request.GET.get(key='content')
     inquire = Inquire(content=content,)

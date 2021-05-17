@@ -184,7 +184,7 @@ def finish_task(request):
                 user.done_monthly = True
             else:
                 messages.warning(
-                    request, f"チェックボックスにチェックを入れてください。/ Please check the check box.")
+                    request, f"カードをタップしてください。/ Please tap the card.")
                 return redirect('app:room')
 
             user.save()

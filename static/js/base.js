@@ -14,7 +14,7 @@ const changeLangUsers = () => {
 };
 changeLangUsers();
 
-if (path !== "/") {
+if (path !== "/" || path !== "/signup/*") {
   const logOutConfirm = () => {
     const logout = document.getElementById("logout");
 
@@ -28,35 +28,40 @@ if (path !== "/") {
   logOutConfirm();
 }
 
-if (path == "/room") {
+if (path === "/room") {
   const weeklyTapHouseChore = () => {
-    const weeklyCard = document.getElementById("weekly__card");
-    const weeklyCheck = document.getElementById("weekly__check");
+    if (document.getElementById("weekly__card") != null) {
+      const weeklyCard = document.getElementById("weekly__card");
+      const weeklyCheck = document.getElementById("weekly__check");
 
-    weeklyCard.addEventListener("click", () => {
-      if (weeklyCheck.hasAttribute("checked")) {
-        weeklyCard.classList.remove("tapped_housechore");
-        weeklyCheck.removeAttribute("checked", "checked");
-      } else {
-        weeklyCard.classList.add("tapped_housechore");
-        weeklyCheck.setAttribute("checked", "checked");
-      }
-    });
+      weeklyCard.addEventListener("click", () => {
+        if (weeklyCheck.hasAttribute("checked")) {
+          weeklyCard.classList.remove("tapped_housechore");
+          weeklyCheck.removeAttribute("checked", "checked");
+        } else {
+          weeklyCard.classList.add("tapped_housechore");
+          weeklyCheck.setAttribute("checked", "checked");
+        }
+      });
+    }
   };
   weeklyTapHouseChore();
 
   const monthlyTapHouseChore = () => {
-    const monthlyCard = document.getElementById("monthly__card");
-    const monthlyCheck = document.getElementById("monthly__check");
-    monthlyCard.addEventListener("click", () => {
-      if (monthlyCheck.hasAttribute("checked")) {
-        monthlyCard.classList.remove("tapped_housechore");
-        monthlyCheck.removeAttribute("checked", "checked");
-      } else {
-        monthlyCard.classList.add("tapped_housechore");
-        monthlyCheck.setAttribute("checked", "checked");
-      }
-    });
+    if (document.getElementById("monthly__card") != null) {
+      const monthlyCard = document.getElementById("monthly__card");
+      const monthlyCheck = document.getElementById("monthly__check");
+
+      monthlyCard.addEventListener("click", () => {
+        if (monthlyCheck.hasAttribute("checked")) {
+          monthlyCard.classList.remove("tapped_housechore");
+          monthlyCheck.removeAttribute("checked", "checked");
+        } else {
+          monthlyCard.classList.add("tapped_housechore");
+          monthlyCheck.setAttribute("checked", "checked");
+        }
+      });
+    }
   };
   monthlyTapHouseChore();
 }
@@ -66,14 +71,14 @@ const breadCrumb = () => {
   const indexLi = document.getElementById("index_page");
   const roomLi = document.getElementById("room_page");
 
-  if (path == "/") {
+  if (path === "/") {
     loginLi.classList.add("breadcrumb_current");
 
     indexLi.classList.add("prop_hide");
 
     roomLi.classList.add("prop_hide");
   }
-  if (path == "/index") {
+  if (path === "/index") {
     loginLi.classList.remove("breadcrumb_current");
     loginLi.classList.add("breadcrumb_active");
 
@@ -83,7 +88,7 @@ const breadCrumb = () => {
     roomLi.classList.remove("breadcrumb_current");
     roomLi.classList.add("prop_hide");
   }
-  if (path == "/room") {
+  if (path === "/room") {
     loginLi.classList.remove("breadcrumb_current");
     loginLi.classList.add("breadcrumb_active");
 
