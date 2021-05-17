@@ -30,33 +30,38 @@ if (path !== "/") {
 
 if (path == "/room") {
   const weeklyTapHouseChore = () => {
-    const weeklyCard = document.getElementById("weekly__card");
-    const weeklyCheck = document.getElementById("weekly__check");
+    if (document.getElementById("weekly__card") != null) {
+      const weeklyCard = document.getElementById("weekly__card");
+      const weeklyCheck = document.getElementById("weekly__check");
 
-    weeklyCard.addEventListener("click", () => {
-      if (weeklyCheck.hasAttribute("checked")) {
-        weeklyCard.classList.remove("tapped_housechore");
-        weeklyCheck.removeAttribute("checked", "checked");
-      } else {
-        weeklyCard.classList.add("tapped_housechore");
-        weeklyCheck.setAttribute("checked", "checked");
-      }
-    });
+      weeklyCard.addEventListener("click", () => {
+        if (weeklyCheck.hasAttribute("checked")) {
+          weeklyCard.classList.remove("tapped_housechore");
+          weeklyCheck.removeAttribute("checked", "checked");
+        } else {
+          weeklyCard.classList.add("tapped_housechore");
+          weeklyCheck.setAttribute("checked", "checked");
+        }
+      });
+    }
   };
   weeklyTapHouseChore();
 
   const monthlyTapHouseChore = () => {
-    const monthlyCard = document.getElementById("monthly__card");
-    const monthlyCheck = document.getElementById("monthly__check");
-    monthlyCard.addEventListener("click", () => {
-      if (monthlyCheck.hasAttribute("checked")) {
-        monthlyCard.classList.remove("tapped_housechore");
-        monthlyCheck.removeAttribute("checked", "checked");
-      } else {
-        monthlyCard.classList.add("tapped_housechore");
-        monthlyCheck.setAttribute("checked", "checked");
-      }
-    });
+    if (document.getElementById("monthly__card") != null) {
+      const monthlyCard = document.getElementById("monthly__card");
+      const monthlyCheck = document.getElementById("monthly__check");
+
+      monthlyCard.addEventListener("click", () => {
+        if (monthlyCheck.hasAttribute("checked")) {
+          monthlyCard.classList.remove("tapped_housechore");
+          monthlyCheck.removeAttribute("checked", "checked");
+        } else {
+          monthlyCard.classList.add("tapped_housechore");
+          monthlyCheck.setAttribute("checked", "checked");
+        }
+      });
+    }
   };
   monthlyTapHouseChore();
 }

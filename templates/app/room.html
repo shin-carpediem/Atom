@@ -64,8 +64,8 @@
         <h5 class="pl-1">{{ user.housechore_title }}</h5>
       </div>
         <p class="pl-3 pt-1">{{ user.housechore_desc }}</p>
-      {% endif %}
     </div>
+    {% endif %}
     {% if user.done_monthly == False %}
     <div class="d-flex housechore__card p-3 mb-3" id="monthly__card">
       <input type="checkbox" class="mt-1" id="monthly__check" name="task" value="monthly">
