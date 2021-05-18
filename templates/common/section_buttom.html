@@ -2,11 +2,9 @@
 {% load static %}
 
 <div class="d-flex mx-2 justify-content-between mt-3">
-  {% if user.is_authenticated %}
   <p class="link" data-toggle="modal" data-target="#help_center">
     {% trans "ヘルプセンター" %}
   </p>
-  {% endif %}
   <!-- language -->
   <form class="mb-3" action="{% url 'set_language' %}" method="POST">{% csrf_token %}
     <input name="next" type="hidden" value="{{ redirect_to }}">

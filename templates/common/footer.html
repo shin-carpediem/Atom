@@ -38,7 +38,7 @@
   </div>
 </div>
 
-<!-- help center -->
+<!-- help center modal -->
 <div class="modal fade" id="help_center" tabindex="-1" role="dialog" aria-labelledby="help_center_ModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -55,7 +55,11 @@
         <form action="{% url 'users:inquire' %}" method="GET">
           <div class="form-group">
             <label>Email:</label>
+            {% if user.is_authenticated %}
             <input class="my-3 w-50" type="email" name="email" value="{{ user.email }}" readonly style="border: none; pointer-events: none;"><br>
+            {% else %}
+            <input class="my-3 w-50" type="email" name="email"><br>
+            {% endif %}
             <label>
               {% trans "お問い合わせ内容" %}
             </label><br>

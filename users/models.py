@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.sessions.models import Session
 from django.db.models.deletion import PROTECT
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -83,6 +84,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Inquire(models.Model):
     email = models.EmailField("email", blank=True, null=True)
+    # アカウントを保持しないユーザーも質問できるようにする
+    session = models.ForeignKey(Session, blank=True, null=True, on_delete=models.SET_NULL)
     content = models.CharField("問い合わせ内容", max_length=256, blank=True, null=True)
     created_at = models.DateTimeField("日付", auto_now=True)
 

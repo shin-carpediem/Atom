@@ -91,7 +91,7 @@ CSRF_COOKIE_SECURE = env.bool('DEBUG', False)
 SESSION_COOKIE_SECURE = env.bool('DEBUG', False)
 
 # defaultは2週間のセッションを30分に変更。
-SESSION_COOKIE_AGE = 1800
+SESSION_COOKIE_AGE = 60 * 30
 # スマホのスリープのように、最後に操作してから放置した時間で期限切れにする。
 SESSION_SAVE_EVERY_REQUEST = True
 # Web ブラウザを閉じたらセッションを終了。

@@ -53,8 +53,8 @@ class HouseAdmin(GuardedModelAdmin):
 
 @admin.register(Inquire)
 class InquireAdmin(GuardedModelAdmin):
-    fields = ['email', 'content']
-    list_display = ('email', 'content', 'created_at')
+    fields = ['email', 'session', 'content']
+    list_display = ('email', 'session', 'content', 'created_at')
     search_fields = ('email', )
     ordering = ('email', )
 

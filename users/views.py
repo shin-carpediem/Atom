@@ -1,4 +1,6 @@
 import smtplib
+from django.contrib.auth.models import AnonymousUser
+from django.contrib.sessions.models import Session
 from django.http import request
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
@@ -316,15 +318,28 @@ def request_house_owner(request):
     return redirect('users:index')
 
 
-@login_required
 def inquire(request):
+    user = request.user
     content = request.GET.get(key='content')
-    inquire = Inquire(content=content,)
-    inquire.save()
 
-    user = User.objects.get(id=request.user.id)
-    user_id = user.id
-    EMAIL = user.email
+    # AnonymousUserだった場合
+    if not user.is_authenticated:
+        try:
+            session = Session.objects.get(pk=request.session.session_key)
+        except Session.DoesNotExist:
+            session = request.session.create()
+        EMAIL = request.GET.get(key='email')
+        inquire = Inquire(email=EMAIL, session=session, content=content,)
+        inquire.save()
+
+    else:
+        EMAIL = user.email
+        inquire = Inquire(email=EMAIL, content=content,)
+        inquire.save()
+
+        user = User.objects.get(id=request.user.id)
+        user_id = user.id
+
     PASSWORD = EMAIL_HOST_PASSWORD
     TO = DEFAULT_FROM_EMAIL
 
@@ -346,7 +361,7 @@ def inquire(request):
     <body>
       <p style="font-size:20.0pt; font-family:'Monoton', cursive;">Hi! We are the ATOM's mail system.</p>
       <br><br>
-      <p>ユーザー（ユーザーID：{{ user_id }}）（メールアドレス：{{ EMAIL }}）から問い合わせが受けました。</p>
+      <p>ユーザー{% if user.is_authenticated %}（ユーザーID：{{ user_id }}）{% endif %}（メールアドレス：{{ EMAIL }}）から問い合わせが受けました。</p>
       <hr>
       <p>問い合わせ内容</p>
       <p>{{ content }}</p>
@@ -359,8 +374,13 @@ def inquire(request):
     """
 
     html = Template(html)
-    context = Context(
-        {'user_id': user_id, 'EMAIL': EMAIL, 'content': content})
+    if user.is_authenticated:
+        context = Context(
+            {'user_id': user_id, 'EMAIL': EMAIL, 'content': content})
+    else:
+        context = Context(
+            {'EMAIL': EMAIL, 'content': content}
+        )
     template = MIMEText(html.render(context=context), 'html')
     msg.attach(template)
 
