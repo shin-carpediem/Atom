@@ -84,9 +84,11 @@
       </p>
     </div>
     {% endif %}
+    {% if user.housechore_title != '割り当てられていません' or user.done_monthly == False %}
     <button type="submit" class="btn w-100 mb-2" onclick="loading_show()">
       {% trans "送信" %}
     </button>
+    {% endif %}
   </form>
 </div>
 <hr>
