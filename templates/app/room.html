@@ -51,9 +51,13 @@
       {% trans "さんが担当する家事" %}
     </b></p><br>
     <p style="font-size:smaller;">
-      {% trans "終わったらカードをタップして" %}
-      <br>
-      {% trans "送信ボタンを押してください" %}
+      {% if user.housechore_title != '割り当てられていません' or user.done_monthly == False %}
+        {% trans "終わったらカードをタップして" %}
+        <br>
+        {% trans "送信ボタンを押してください" %}
+      {% elif user.housechore_title == '割り当てられていません' and user.done_weekly == False %}
+        {% trans "現在担当している家事はありません" %}
+      {% endif %}
     </p>
     {% if user.done_weekly == False %}
     <div class="housechore__card p-3 mb-2" id="weekly__card"
