@@ -239,9 +239,9 @@ def index(request):
             return redirect("app:room")
 
     # ログイン情報を保持するなら2週間保持する
-    print(request.POST.get("save__login"))
-    if request.POST.get("save__login") != None:
-        request.session.set_expiry(60*60*24*14)
+    # print(request.POST.get("save__login"))
+    # if request.POST.get("save__login") != None:
+    #     request.session.set_expiry(60*60*24*14)
 
     ctx = {
         'house_choose_form': house_choose_form,
