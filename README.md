@@ -181,6 +181,7 @@ $ heroku ps:scale web=1
 ```
 $ heroku logs --tail
 ```
+
 - [ ] To connect with database at heroku from local,
 
 ```
@@ -230,3 +231,10 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 ```
 
 - [ ] Then, enable Procfile at Heroku GUI.
+
+[NOTE for myself]
+To clear sessions,
+
+```
+python manage.py clearsessions
+```

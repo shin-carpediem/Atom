@@ -1,5 +1,4 @@
 import smtplib
-from django.contrib.auth.models import AnonymousUser
 from django.contrib.sessions.models import Session
 from django.http import request
 from django.http.response import HttpResponseBadRequest
@@ -25,14 +24,6 @@ from atom.settings import DEBUG, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASS
 
 
 # Create your views here.
-# https://www.sejuku.net/blog/31661
-# def session_control(request):
-#     if request.session.get(request, False):
-#         messages.warning(
-#             request, f"複数回連続では実行できません。/ You cannot execute multiple times in a row.")
-#     request.session[request] = True
-
-
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -247,6 +238,11 @@ def index(request):
                 request, f"ハウス管理者に、あなたが新規登録した事を報告できませんでした。直接お伝えください。/ Could not report to the house manager that you have newly registered. Please tell him/her directly.")
             return redirect("app:room")
 
+    # ログイン情報を保持するなら2週間保持する
+    print(request.POST.get("save__login"))
+    if request.POST.get("save__login") != None:
+        request.session.set_expiry(60*60*24*14)
+
     ctx = {
         'house_choose_form': house_choose_form,
     }
@@ -257,9 +253,6 @@ def index(request):
 @login_required
 @require_POST
 def request_house_owner(request):
-    # 連続投稿を防ぐ
-    session_control()
-
     user = request.user
     user_id = user.id
     RequestHouseOwner(email=user.email, house=user.house).save()

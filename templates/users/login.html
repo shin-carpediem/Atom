@@ -21,6 +21,8 @@
       {% trans "パスワード:" %}
     </label><br>
     <input type="password" name="password" class="w-100 py-1"><br>
+    <input type="checkbox" class="mt-3" name="save__login" value="save__login">
+      {% trans "ログイン状態を保持する" %}
     <div class="text-center mt-4 mb-3">
       <button type="submit" class="btn px-3" onclick="loading_show()">
         {% trans "ログイン" %}
