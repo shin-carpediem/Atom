@@ -51,12 +51,22 @@
       {% trans "さんが担当する家事" %}
     </b></p><br>
     <p style="font-size:smaller;">
-      {% if user.housechore_title != '割り当てられていません' or user.done_monthly == False %}
-        {% trans "終わったらカードをタップして" %}
-        <br>
-        {% trans "送信ボタンを押してください" %}
-      {% elif user.housechore_title == '割り当てられていません' and user.done_weekly == False %}
-        {% trans "現在担当している家事はありません" %}
+      {% if user.housechore_title == '割り当てられていません' %}
+        {% if user.done_monthly == True %}
+          {% trans "現在担当している家事はありません" %}
+        {% else %}
+          {% trans "終わったらカードをタップして" %}
+          <br>
+          {% trans "送信ボタンを押してください" %}
+        {% endif %}
+      {% else %}
+        {% if user.done_weekly == True and user.done_monthly == True %}
+          {% trans "現在担当している家事はありません" %}
+        {% else %}
+          {% trans "終わったらカードをタップして" %}
+          <br>
+          {% trans "送信ボタンを押してください" %}
+        {% endif %}
       {% endif %}
     </p>
     {% if user.done_weekly == False %}
@@ -84,7 +94,7 @@
       </p>
     </div>
     {% endif %}
-    {% if user.housechore_title != '割り当てられていません' or user.done_monthly == False %}
+    {% if user.done_weekly == False or user.done_monthly == False %}
     <button type="submit" class="btn w-100 mb-2" onclick="loading_show()">
       {% trans "送信" %}
     </button>

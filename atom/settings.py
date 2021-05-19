@@ -79,10 +79,8 @@ DEFAULT_FROM_EMAIL = env("GMAIL_HOST_USER")
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:index'
 LOGOUT_REDIRECT_URL = 'users:login'
-# https://stackoverflow.com/questions/56141178/getting-authstatemissing-session-value-state-missing-when-going-to-callba
-SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 # 永続的なデータベース接続を有効化すると、リクエストのプロセス時間の多くの部分に対するデータベースアカウントへの接続が高速化。
 # 限られたネットワーク性能の仮想化ホストにおいて効果的。
 CONN_MAX_AGE = 0
