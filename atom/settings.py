@@ -62,9 +62,7 @@ DEFAULT_FROM_EMAIL = env("GMAIL_HOST_USER")
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:index'
 LOGOUT_REDIRECT_URL = 'users:login'
-SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 CONN_MAX_AGE = 0
 
 CSRF_COOKIE_SECURE = env.bool('DEBUG', False)
