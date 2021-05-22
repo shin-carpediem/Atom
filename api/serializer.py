@@ -15,19 +15,20 @@ class UserSerializer(serializers.ModelSerializer):
 class InquireSerializer(serializers.ModelSerializer):
     class Meta:
         model = Inquire
-        fields = ('email', 'session', 'content', 'created_at')
+        fields = ('id', 'email', 'session', 'content', 'created_at')
 
 
 class RequestChHouseSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestChHouse
-        fields = ('email', 'current_house', 'request_house', 'created_at')
+        fields = ('id', 'email', 'current_house',
+                  'request_house', 'created_at')
 
 
 class RequestHouseOwnerSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestHouseOwner
-        fields = ('email', 'house', 'created_at')
+        fields = ('id', 'email', 'house', 'created_at')
 
 
 class HouseSerializer(serializers.ModelSerializer):
@@ -39,4 +40,4 @@ class HouseSerializer(serializers.ModelSerializer):
 class HouseChoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = HouseChore
-        fields = ('title', 'description', 'house')
+        fields = ('id', 'title', 'description', 'house')
